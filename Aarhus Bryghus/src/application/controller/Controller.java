@@ -1,5 +1,7 @@
 package application.controller;
 
+import application.model.ProduktGruppe;
+import application.model.Salgssituation;
 import storage.Storage;
 
 public class Controller {
@@ -13,4 +15,15 @@ public class Controller {
 
     private Controller()
     {storage=Storage.getInstance();}
+
+    public ProduktGruppe createProduktGruppe(String navn){
+        ProduktGruppe pg = new ProduktGruppe(navn);
+        //ikke færdig
+    }
+
+    public Salgssituation createSalgssituation(String navn, String deltagerinfo){
+        Salgssituation ss = new Salgssituation(navn, deltagerinfo);
+        //ikke færdig
+    }
+
     }
