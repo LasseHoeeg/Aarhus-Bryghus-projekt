@@ -1,5 +1,6 @@
 package gui;
 
+import application.controller.Controller;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.text.Text;
@@ -11,7 +12,7 @@ import javafx.scene.control.ListView;
 import javafx.scene.layout.GridPane;
 
 public class Gui extends Application {
-
+private Controller controller;
 
         @Override
         public void start(Stage stage) {
