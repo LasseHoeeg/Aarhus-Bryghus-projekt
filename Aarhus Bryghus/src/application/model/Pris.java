@@ -13,8 +13,10 @@ public class Pris {
         this.salgssituation = salgssituation;
     }
 
-    public Pris(double beloeb, Produkt produkt){
+    Pris(double beloeb, Produkt produkt, Salgssituation salgssituation){
         this.beloeb = beloeb;
+        this.produkt = produkt;
+        this.salgssituation = salgssituation;
     }
 
     public double getBeloeb() {
@@ -46,7 +48,17 @@ public class Pris {
     }
 
     public void setProdukt(Produkt produkt) {
-        this.produkt = produkt;
+        if (this.produkt != produkt) {
+            Produkt oldProdukt = this.produkt;
+            if (oldProdukt != null) {
+                oldProdukt.removePris(this);
+            }
+            this.produkt = produkt;
+            if (produkt != null) {
+                produkt.addPris(this);
+            }
+        }
     }
+
 
 }
