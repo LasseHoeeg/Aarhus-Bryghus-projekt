@@ -9,7 +9,7 @@ public class Produkt {
     private ArrayList<Pris> priser = new ArrayList<>();
 
 
-    public Produkt(String navn, String beskrivelse, ProduktGruppe produktGruppe) {
+    Produkt(String navn, String beskrivelse, ProduktGruppe produktGruppe) {
         this.navn = navn;
         this.beskrivelse = beskrivelse;
         this.produktGruppe = produktGruppe;
