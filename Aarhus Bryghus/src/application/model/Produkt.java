@@ -3,10 +3,17 @@ package application.model;
 public class Produkt {
     private String navn;
     private String beskrivelse;
+    private ProduktGruppe produktGruppe;
 
-    public Produkt(String navn, String beskrivelse) {
+
+    public Produkt(String navn, String beskrivelse, ProduktGruppe produktGruppe) {
         this.navn = navn;
         this.beskrivelse = beskrivelse;
+        this.produktGruppe = produktGruppe;
+    }
+
+    public ProduktGruppe getProduktGruppe() {
+        return produktGruppe;
     }
 
     public String getNavn() {
