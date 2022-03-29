@@ -3,10 +3,18 @@ package application.model;
 public class Pris {
     private double beloeb;
     private int antalKlip;
+    private Produkt produkt;
+    private Salgssituation salgssituation;
 
-    public Pris(double beloeb, int antalKlip) {
+    Pris(double beloeb, int antalKlip, Produkt produkt, Salgssituation salgssituation) {
         this.beloeb = beloeb;
         this.antalKlip = antalKlip;
+        this.produkt = produkt;
+        this.salgssituation = salgssituation;
+    }
+
+    public Pris(double beloeb, Produkt produkt){
+        this.beloeb = beloeb;
     }
 
     public double getBeloeb() {
@@ -24,4 +32,21 @@ public class Pris {
     public void setAntalKlip(int antalKlip) {
         this.antalKlip = antalKlip;
     }
+
+    public Salgssituation getSalgssituation() {
+        return salgssituation;
+    }
+
+    public void setSalgssituation(Salgssituation salgssituation) {
+        this.salgssituation = salgssituation;
+    }
+
+    public Produkt getProdukt() {
+        return produkt;
+    }
+
+    public void setProdukt(Produkt produkt) {
+        this.produkt = produkt;
+    }
+
 }
