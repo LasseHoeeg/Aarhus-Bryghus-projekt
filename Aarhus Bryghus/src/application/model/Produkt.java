@@ -36,19 +36,27 @@ public class Produkt {
     }
 
     public ArrayList<Pris> getPriser() {
-        return priser;
+        return new ArrayList<Pris>(priser);
     }
 
     public void addPris(Pris pris) {
-        if (!priser.contains(pris))
-            for (Pris p : priser){
-                if (priser) //slagssit
+        boolean found = false;
+        if (!priser.contains(pris)) {
+            for (Pris p : priser) {
+                if (pris.getSalgssituation() == p.getSalgssituation()) {
+                    found = true;
+                }
             }
-        priser.add(pris);
+            if (found) {
+                priser.add(pris);
+                pris.setProdukt(this);
+            }
+        }
     }
 
     public void removePris(Pris pris) {
         if (priser.contains(pris))
         priser.remove(pris);
+        pris.getSalgssituation().removePris(pris);
     }
 }
