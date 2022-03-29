@@ -66,8 +66,13 @@ private Controller controller;
             // Buttons
             pane.add(btnSalgsSituationCreate, 2, 2);
             btnSalgsSituationCreate.setText("Create");
-            pane.add(btnSalgsSituationUpdate, 1, 3);
+//            btnSalgsSituationCreate.setOnAction(e -> SalgsSituationCreate());
+
+
+
+        pane.add(btnSalgsSituationUpdate, 1, 3);
             btnSalgsSituationUpdate.setText("Update");
+
             pane.add(btnSalgsSituationDelete, 2, 3);
             btnSalgsSituationDelete.setText("Delete");
 
@@ -82,10 +87,13 @@ private Controller controller;
             pane.add(txfSalgsSituationBeskrivelse, 1, 2);
             txfSalgsSituationBeskrivelse.setPromptText("Beskrivelse:");
 
-
-
-
-
     }
-    }
+//    private void SalgsSituationCreate() {
+//        Controller.getInstance().createSalgssituation(txfSalgsSituationNavn.getText(), )
+//        if (selected!=null) {
+//            txfVinder.setText(selected.getVinder());
+//        }
+//    }
+
+}
 
