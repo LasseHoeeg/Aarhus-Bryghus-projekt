@@ -299,7 +299,7 @@ public class Gui extends Application {
     private void createProduktGruppe() {
         if (txfProduktGruppeNavn.getText() != null) {
             Controller.getInstance().createProduktGruppe(txfProduktGruppeNavn.getText());
-            lwProduktGruppe.getItems().setAll(Controller.getInstance().getProduktgrupper());
+            lwProduktGruppe.getItems().setAll(Controller.getInstance().getProduktGrupper());
         }
     }
 
@@ -308,15 +308,15 @@ public class Gui extends Application {
         if (selected != null) {
             //TODO brug update
             selected.setNavn(txfProduktGruppeNavn.getText());
-            lwProduktGruppe.getItems().setAll(Controller.getInstance().getProduktgrupper());
+            lwProduktGruppe.getItems().setAll(Controller.getInstance().getProduktGrupper());
         }
     }
 
     private void deleteProduktGruppe() {
         ProduktGruppe selected = lwProduktGruppe.getSelectionModel().getSelectedItem();
         if (selected != null) {
-            Controller.getInstance().removeProduktgruppe(selected);
-            lwProduktGruppe.getItems().setAll(Controller.getInstance().getProduktgrupper());
+            Controller.getInstance().removeProduktGruppe(selected);
+            lwProduktGruppe.getItems().setAll(Controller.getInstance().getProduktGrupper());
         }
     }
 
@@ -325,7 +325,7 @@ public class Gui extends Application {
     private void selectionChangedSalgssituation() {
         Salgssituation selected = lwSalgsSituation.getSelectionModel().getSelectedItem();
         txfSalgsSituationNavn.setText(selected.getNavn());
-        txfSalgsSituationBeskrivelse.setText(selected.getDeltagerInfo());
+        txfSalgsSituationBeskrivelse.setText(selected.getBeskrivelse());
         //TODO (Tjek om given produkt har pris til salgsituation)
         lwPris.getItems().setAll(selected.getPriser());
     }
@@ -342,7 +342,7 @@ public class Gui extends Application {
         if (selected != null) {
             //TODO brug update
             selected.setNavn(txfSalgsSituationNavn.getText());
-            selected.setDeltagerInfo(txfSalgsSituationBeskrivelse.getText());
+            selected.setBeskrivelse(txfSalgsSituationBeskrivelse.getText());
             lwSalgsSituation.getItems().setAll(Controller.getInstance().getSalgssituationer());
         }
     }
@@ -368,7 +368,7 @@ public class Gui extends Application {
     private void createProdukt() {
         if (txfProduktNavn.getText() != null && txfProduktBeskrivelse.getText() != null) {
             ProduktGruppe selected = lwProduktGruppe.getSelectionModel().getSelectedItem();
-            selected.createProdukt(txfProduktNavn.getText(),txfProduktBeskrivelse.getText(),selected);
+            selected.createProdukt(txfProduktNavn.getText(),txfProduktBeskrivelse.getText());
             lwProdukt.getItems().setAll(selected.getProdukter());
         }
     }
@@ -404,13 +404,13 @@ public class Gui extends Application {
         Produkt selectedPro = lwProdukt.getSelectionModel().getSelectedItem();
         if (selectedSS!=null && selectedPro!=null) {
             if (txfPrisBeløb.getText() != null && txfPrisKlip.getText() != null) {
-                selectedSS.createPris(Double.parseDouble(txfPrisBeløb.getText()), Integer.parseInt(txfPrisKlip.getText()), selectedPro,selectedSS);
+                selectedSS.createPris(Double.parseDouble(txfPrisBeløb.getText()), Integer.parseInt(txfPrisKlip.getText()), selectedPro);
                 lwPris.getItems().setAll(selectedSS.getPriser());
 
             }
             if (txfPrisBeløb.getText() != null && txfPrisKlip.getText()==null) {
                 Salgssituation selected = lwSalgsSituation.getSelectionModel().getSelectedItem();
-                selectedSS.createPris(Double.parseDouble(txfPrisBeløb.getText()), selectedPro,selectedSS);
+                selectedSS.createPris(Double.parseDouble(txfPrisBeløb.getText()), selectedPro);
                 lwPris.getItems().setAll(selectedSS.getPriser());
             }
         }
