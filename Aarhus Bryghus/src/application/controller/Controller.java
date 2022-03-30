@@ -19,11 +19,14 @@ public class Controller {
     public ProduktGruppe createProduktGruppe(String navn){
         ProduktGruppe pg = new ProduktGruppe(navn);
         //ikke færdig
+        return null;
     }
 
     public Salgssituation createSalgssituation(String navn, String deltagerinfo){
         Salgssituation ss = new Salgssituation(navn, deltagerinfo);
         //ikke færdig
+        return null;
+
     }
 
     }
