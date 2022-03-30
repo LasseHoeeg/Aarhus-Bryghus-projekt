@@ -35,4 +35,8 @@ public class ProduktGruppe {
         this.navn = navn;
     }
 
+    @Override
+    public String toString() {
+        return navn;
+    }
 }

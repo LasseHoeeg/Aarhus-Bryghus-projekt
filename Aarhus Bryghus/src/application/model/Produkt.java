@@ -59,4 +59,9 @@ public class Produkt {
         priser.remove(pris);
         pris.getSalgssituation().removePris(pris);
     }
+
+    @Override
+    public String toString() { 
+        return navn;
+    }
 }
