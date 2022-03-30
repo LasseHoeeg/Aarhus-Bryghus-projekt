@@ -1,8 +1,11 @@
 package application.controller;
 
+import application.model.Produkt;
 import application.model.ProduktGruppe;
 import application.model.Salgssituation;
 import storage.Storage;
+
+import java.util.ArrayList;
 
 public class Controller {
     private static Controller uniqueInstance;
@@ -13,17 +16,36 @@ public class Controller {
         return uniqueInstance;
     }
 
-    private Controller()
-    {storage=Storage.getInstance();}
+    private Controller(){
+        storage=Storage.getInstance();
+    }
 
     public ProduktGruppe createProduktGruppe(String navn){
         ProduktGruppe pg = new ProduktGruppe(navn);
-        //ikke færdig
+        Storage.getInstance().addProduktGruppe(pg);
+        return pg;
     }
 
     public Salgssituation createSalgssituation(String navn, String deltagerinfo){
         Salgssituation ss = new Salgssituation(navn, deltagerinfo);
-        //ikke færdig
+        Storage.getInstance().addSalgssituation(ss);
+        return ss;
     }
 
+    public ArrayList<ProduktGruppe> getProduktgrupper(){
+        return Storage.getInstance().getProduktGrupper();
     }
+
+    public void removeSalgssituation(Salgssituation salgssituation) {
+        Storage.getInstance().removeSalgssituation(salgssituation);
+    }
+
+    public ArrayList<Salgssituation> getSalgssituationer(){
+        return Storage.getInstance().getSalgssituationer();
+    }
+
+    public void removeProduktgruppe(ProduktGruppe produktGruppe){
+            Storage.getInstance().removeProduktGruppe(produktGruppe);
+        }
+    }
+
