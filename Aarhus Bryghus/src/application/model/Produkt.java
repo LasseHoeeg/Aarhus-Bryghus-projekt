@@ -1,5 +1,6 @@
 package application.model;
 
+import java.sql.SQLOutput;
 import java.util.ArrayList;
 
 public class Produkt {
@@ -40,18 +41,13 @@ public class Produkt {
     }
 
     public void addPris(Pris pris) {
-        boolean found = false;
-        if (!priser.contains(pris)) {
             for (Pris p : priser) {
                 if (pris.getSalgssituation() == p.getSalgssituation()) {
-                    found = true;
+                    throw new RuntimeException("Produktet har allerede en pris for den pågældende salgssituation");
+                    }
                 }
-            }
-            if (found) {
-                priser.add(pris);
-                pris.setProdukt(this);
-            }
-        }
+            priser.add(pris);
+            pris.setProdukt(this);
     }
 
     public void removePris(Pris pris) {
