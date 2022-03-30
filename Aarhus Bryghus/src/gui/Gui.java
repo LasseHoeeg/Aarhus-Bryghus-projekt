@@ -1,6 +1,11 @@
 package gui;
 
 import application.controller.Controller;
+import application.model.Pris;
+import application.model.Produkt;
+import application.model.ProduktGruppe;
+import application.model.Salgssituation;
+import javafx.beans.value.ChangeListener;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.text.Text;
@@ -29,7 +34,7 @@ public class Gui extends Application {
     // - Salgssituation
 
     // listviews
-    private final ListView lwSalgsSituationRead = new ListView();
+    private final ListView<Salgssituation> lwSalgsSituation = new ListView();
 
     // buttons
     private final Button btnSalgsSituationCreate = new Button();
@@ -48,7 +53,7 @@ public class Gui extends Application {
     // - Produkt Gruppe
 
     // listviews
-    private final ListView lwProduktGruppe = new ListView();
+    private final ListView<ProduktGruppe> lwProduktGruppe = new ListView();
 
     // buttons
     private final Button btnProduktGruppeCreate = new Button();
@@ -66,7 +71,7 @@ public class Gui extends Application {
     // - Pris
 
     // listviews
-    private final ListView lwPris = new ListView();
+    private final ListView<Pris> lwPris = new ListView();
 
     // buttons
     private final Button btnPrisCreate = new Button();
@@ -85,7 +90,7 @@ public class Gui extends Application {
     // - Produkt
 
     // listviews
-    private final ListView lwProdukt = new ListView();
+    private final ListView<Produkt> lwProdukt = new ListView();
 
     // buttons
     private final Button btnProduktCreate = new Button();
@@ -118,9 +123,9 @@ public class Gui extends Application {
 //Salgssituation
 
         // Listviews
-        pane.add(lwSalgsSituationRead, 0, 1, 3, 1);
-        lwSalgsSituationRead.setPrefWidth(50);
-        lwSalgsSituationRead.setPrefHeight(150);
+        pane.add(lwSalgsSituation, 0, 1, 3, 1);
+        lwSalgsSituation.setPrefWidth(50);
+        lwSalgsSituation.setPrefHeight(150);
 
 
         // Buttons
@@ -197,22 +202,25 @@ public class Gui extends Application {
         pane.add(lwProduktGruppe, 3, 1, 3, 1);
         lwProduktGruppe.setPrefWidth(50);
         lwProduktGruppe.setPrefHeight(150);
-
+        ChangeListener<ProduktGruppe> listener = (ov, oldString, newString) -> this.selectionChangedProduktGruppe();
+        lwProduktGruppe.getSelectionModel().selectedItemProperty().addListener(listener);
 
         // Buttons
         pane.add(btnProduktGruppeCreate, 5, 2);
         btnProduktGruppeCreate.setText("Create");
-//            btnSalgsSituationCreate.setOnAction(e -> SalgsSituationCreate());
         btnProduktGruppeCreate.setPrefWidth(60);
-
+        btnProduktGruppeCreate.setOnAction(e-> createProduktGruppe());
 
         pane.add(btnProduktGruppeUpdate, 5, 3);
         btnProduktGruppeUpdate.setText("Update");
         btnProduktGruppeUpdate.setPrefWidth(60);
+        btnProduktGruppeUpdate.setOnAction(e-> updateProduktGruppe());
 
         pane.add(btnProduktGruppeDelete, 3, 3);
         btnProduktGruppeDelete.setText("Delete");
         btnProduktGruppeDelete.setPrefWidth(60);
+        btnProduktGruppeDelete.setOnAction(e-> deleteProduktGruppe());
+
 
         // Texts
 
@@ -267,5 +275,33 @@ public class Gui extends Application {
 //        }
 //    }
 
+    private void selectionChangedProduktGruppe() {
+        ProduktGruppe selected = lwProduktGruppe.getSelectionModel().getSelectedItem();
+        txfProduktGruppeNavn.setText(selected.getNavn());
+        lwProdukt.getItems().setAll(selected.getProdukter());
+    }
+
+    private void createProduktGruppe() {
+        if (txfProduktGruppeNavn.getText()!=null) {
+            Controller.getInstance().createProduktGruppe(txfProduktGruppeNavn.getText());
+            lwProduktGruppe.getItems().setAll(Controller.getInstance().getProduktgrupper());
+        }
+    }
+    private void updateProduktGruppe() {
+        ProduktGruppe selected = lwProduktGruppe.getSelectionModel().getSelectedItem();
+        if (selected != null){
+            //TODO brug update
+            selected.setNavn(txfProduktGruppeNavn.getText());
+            lwProduktGruppe.getItems().setAll(Controller.getInstance().getProduktgrupper());
+        }
+    }
+    private void deleteProduktGruppe() {
+        ProduktGruppe selected = lwProduktGruppe.getSelectionModel().getSelectedItem();
+        if (selected != null){
+            Controller.getInstance().removeProduktgruppe(selected);
+            lwProduktGruppe.getItems().setAll(Controller.getInstance().getProduktgrupper());
+        }
+    }
 }
+
 
