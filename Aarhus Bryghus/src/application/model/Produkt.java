@@ -51,6 +51,7 @@ public class Produkt {
                 priser.add(pris);
                 pris.setProdukt(this);
             }
+            //Todo Runtime exception
         }
     }
 
