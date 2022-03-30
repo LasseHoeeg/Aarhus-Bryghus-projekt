@@ -6,6 +6,7 @@ import application.model.Salgssituation;
 import storage.Storage;
 
 import java.util.ArrayList;
+import java.util.TreeSet;
 
 public class Controller {
     private static Controller uniqueInstance;
@@ -26,26 +27,38 @@ public class Controller {
         return pg;
     }
 
-    public Salgssituation createSalgssituation(String navn, String deltagerinfo){
-        Salgssituation ss = new Salgssituation(navn, deltagerinfo);
+    public Salgssituation createSalgssituation(String navn, String beskrivelse){
+        Salgssituation ss = new Salgssituation(navn, beskrivelse);
         Storage.getInstance().addSalgssituation(ss);
         return ss;
     }
 
-    public ArrayList<ProduktGruppe> getProduktgrupper(){
+    public ArrayList<ProduktGruppe> getProduktGrupper(){
         return Storage.getInstance().getProduktGrupper();
+    }
+
+    public void updateProduktGruppe(ProduktGruppe produktGruppe, String navn){
+        produktGruppe.setNavn(navn);
+    }
+
+    public void removeProduktGruppe(ProduktGruppe produktGruppe){
+        Storage.getInstance().removeProduktGruppe(produktGruppe);
+    }
+
+
+
+    public ArrayList<Salgssituation> getSalgssituationer(){
+        return Storage.getInstance().getSalgssituationer();
+    }
+
+    public void updateSalgssituation(Salgssituation salgssituation, String navn, String beskrivelse){
+        salgssituation.setNavn(navn);
+        salgssituation.setBeskrivelse(beskrivelse);
     }
 
     public void removeSalgssituation(Salgssituation salgssituation) {
         Storage.getInstance().removeSalgssituation(salgssituation);
     }
 
-    public ArrayList<Salgssituation> getSalgssituationer(){
-        return Storage.getInstance().getSalgssituationer();
-    }
-
-    public void removeProduktgruppe(ProduktGruppe produktGruppe){
-            Storage.getInstance().removeProduktGruppe(produktGruppe);
-        }
-    }
+}
 
