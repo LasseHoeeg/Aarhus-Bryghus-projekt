@@ -60,5 +60,9 @@ public class Pris {
         }
     }
 
-
+    @Override
+    public String toString() {
+        return  produkt + ", " + beloeb;
+        //return  produkt + ", " + beloeb + ", " + antalKlip;       //til når klippekort oprettes
+    }
 }

@@ -48,4 +48,9 @@ public class Salgssituation {
     public void setDeltagerInfo(String deltagerInfo) {
         this.deltagerInfo = deltagerInfo;
     }
+
+    @Override
+    public String toString() {
+        return navn;
+    }
 }
