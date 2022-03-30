@@ -152,6 +152,44 @@ public class Gui extends Application {
         txfSalgsSituationBeskrivelse.setPromptText("Beskrivelse:");
         txfSalgsSituationBeskrivelse.setPrefWidth(100);
 
+//Pris
+
+        // Listviews
+        pane.add(lwPris, 0, 6, 3, 1);
+        lwPris.setPrefWidth(50);
+        lwPris.setPrefHeight(150);
+
+
+        // Buttons
+        pane.add(btnPrisCreate, 2, 7);
+        btnPrisCreate.setText("Create");
+//            btnSalgsSituationCreate.setOnAction(e -> SalgsSituationCreate());
+        btnPrisCreate.setPrefWidth(60);
+
+
+        pane.add(btnPrisUpdate, 2, 8);
+        btnPrisUpdate.setText("Update");
+        btnPrisUpdate.setPrefWidth(60);
+
+        pane.add(btnPrisDelete, 0, 8);
+        btnPrisDelete.setText("Delete");
+        btnPrisDelete.setPrefWidth(60);
+
+        // Texts
+
+        pane.add(txtPris, 0, 5);
+
+        // Textfields
+
+        pane.add(txfPrisBeløb, 0, 7);
+        txfPrisBeløb.setPromptText("Beløb:");
+        txfPrisBeløb.setPrefWidth(100);
+
+        pane.add(txfKlip, 1, 7);
+        txfKlip.setPromptText("Klip:");
+        txfKlip.setPrefWidth(100);
+
+
 
 //ProduktGruppe
 
@@ -184,43 +222,6 @@ public class Gui extends Application {
 
         pane.add(txfProduktGruppeNavn, 3, 2,2,1);
         txfProduktGruppeNavn.setPromptText("Navn:");
-
-//Pris
-
-        // Listviews
-        pane.add(lwPris, 6, 1, 3, 1);
-        lwPris.setPrefWidth(50);
-        lwPris.setPrefHeight(150);
-
-
-        // Buttons
-        pane.add(btnPrisCreate, 8, 2);
-        btnPrisCreate.setText("Create");
-//            btnSalgsSituationCreate.setOnAction(e -> SalgsSituationCreate());
-        btnPrisCreate.setPrefWidth(60);
-
-
-        pane.add(btnPrisUpdate, 8, 3);
-        btnPrisUpdate.setText("Update");
-        btnPrisUpdate.setPrefWidth(60);
-
-        pane.add(btnPrisDelete, 6, 3);
-        btnPrisDelete.setText("Delete");
-        btnPrisDelete.setPrefWidth(60);
-
-        // Texts
-
-        pane.add(txtPris, 6, 0);
-
-        // Textfields
-
-        pane.add(txfPrisBeløb, 6, 2);
-        txfPrisBeløb.setPromptText("Beløb:");
-        txfPrisBeløb.setPrefWidth(100);
-
-        pane.add(txfKlip, 7, 2);
-        txfKlip.setPromptText("Klip:");
-        txfKlip.setPrefWidth(100);
 
 //Produkt
 
