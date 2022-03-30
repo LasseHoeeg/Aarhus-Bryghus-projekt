@@ -4,25 +4,25 @@ import java.util.ArrayList;
 
 public class Salgssituation {
     private String navn;
-    private String deltagerInfo;
+    private String beskrivelse;
     private ArrayList<Pris> priser = new ArrayList<>();
 
-    public Salgssituation(String navn, String deltagerInfo) {
+    public Salgssituation(String navn, String beskrivelse) {
         this.navn = navn;
-        this.deltagerInfo = deltagerInfo;
+        this.beskrivelse = beskrivelse;
     }
 
     public ArrayList<Pris> getPriser(){
         return new ArrayList<>(priser);
     }
-    public Pris createPris(double beloeb, Produkt produkt, Salgssituation salgssituation){
-        Pris pris = new Pris(beloeb, produkt, salgssituation);
+    public Pris createPris(double beloeb, Produkt produkt){
+        Pris pris = new Pris(beloeb, produkt, this);
         priser.add(pris);
         return pris;
     }
 
-    public Pris createPris(double beloeb, int antalKlip, Produkt produkt, Salgssituation salgssituation){
-        Pris pris = new Pris(beloeb, antalKlip, produkt, salgssituation);
+    public Pris createPris(double beloeb, int antalKlip, Produkt produkt){
+        Pris pris = new Pris(beloeb, antalKlip, produkt, this);
         priser.add(pris);
         return pris;
     }
@@ -41,12 +41,12 @@ public class Salgssituation {
         this.navn = navn;
     }
 
-    public String getDeltagerInfo() {
-        return deltagerInfo;
+    public String getBeskrivelse() {
+        return beskrivelse;
     }
 
-    public void setDeltagerInfo(String deltagerInfo) {
-        this.deltagerInfo = deltagerInfo;
+    public void setBeskrivelse(String beskrivelse) {
+        this.beskrivelse = beskrivelse;
     }
 
     @Override
