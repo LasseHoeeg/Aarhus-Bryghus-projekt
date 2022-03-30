@@ -21,7 +21,9 @@ public class Storage {
         salgssituationer.add(salgssituation);
     }
     public void removeSalgssituation(Salgssituation salgssituation){
-        salgssituationer.remove(salgssituation);
+        if (salgssituationer.contains(salgssituation)) {
+            salgssituationer.remove(salgssituation);
+        }
     }
     public ArrayList<Salgssituation> getSalgssituationer() {
         return new ArrayList<>(salgssituationer);
@@ -32,7 +34,9 @@ public class Storage {
         produktGrupper.add(produktGruppe);
     }
     public void removeProduktGruppe(ProduktGruppe produktGruppe){
-        produktGrupper.remove(produktGruppe);
+        if (produktGrupper.contains(produktGruppe)) {
+            produktGrupper.remove(produktGruppe);
+        }
     }
     public ArrayList<ProduktGruppe> getProduktGrupper() {
         return new ArrayList<>(produktGrupper);
