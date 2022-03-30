@@ -18,12 +18,14 @@ public class Salgssituation {
     public Pris createPris(double beloeb, Produkt produkt){
         Pris pris = new Pris(beloeb, produkt, this);
         priser.add(pris);
+        produkt.addPris(pris);
         return pris;
     }
 
     public Pris createPris(double beloeb, int antalKlip, Produkt produkt){
         Pris pris = new Pris(beloeb, antalKlip, produkt, this);
         priser.add(pris);
+        produkt.addPris(pris);
         return pris;
     }
 

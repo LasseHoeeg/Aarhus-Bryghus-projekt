@@ -57,7 +57,17 @@ public class _ControllerTest {
         Pris pr17 = s2.createPris(775, p11);
         Pris pr18 = s2.createPris(775, p12);
 
-
+        System.out.println(pg1.getProdukter());
+        System.out.println();
+        System.out.println(s1.getPriser());
+        System.out.println();
+        System.out.println(pr1.getSalgssituation());
+        System.out.println();
+        System.out.println(pr1.getProdukt());
+        System.out.println();
+        System.out.println(p1.getPriser());
+        System.out.println();
+        System.out.println(p1.getProduktGruppe());
 
 
     }
