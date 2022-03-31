@@ -69,6 +69,7 @@ public class _ControllerTest {
         System.out.println();
         System.out.println(p1.getProduktGruppe());
 
+        //TODO Static på salg test
 
     }
 

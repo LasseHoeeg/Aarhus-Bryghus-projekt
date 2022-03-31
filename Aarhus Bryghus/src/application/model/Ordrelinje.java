@@ -13,7 +13,23 @@ Ordrelinje(int nr, int antal, Produkt produkt){  //når rabat tilføj: , Rabat r
     //this.rabat = rabat;
 }
 
-    public int getNr() {
+    public Rabat getRabat() {
+        return rabat;
+    }
+
+    public Rabat createRabatBeloeb(double beloeb) {
+            Rabat rabat = new RabatBeløb(beloeb);
+
+            return person;
+        }
+
+    public Rabat createRabatProcent() {
+        Person person = new Person(personName);
+        persons.add(person);
+        return person;
+    }
+
+        public int getNr() {
         return nr;
     }
 
