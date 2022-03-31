@@ -1,19 +1,20 @@
 package application.model;
 
+import java.util.HashSet;
 import java.util.Set;
 import java.util.TreeSet;
 
 public class ProduktGruppe {
     private String navn;
 
-    private final Set<Produkt> produkter = new TreeSet<>();
+    private final HashSet<Produkt> produkter = new HashSet<>();
 
     public ProduktGruppe(String navn) {
         this.navn = navn;
     }
 
-    public TreeSet<Produkt> getProdukter() {
-        return new TreeSet<>(produkter);
+    public HashSet<Produkt> getProdukter() {
+        return new HashSet<>(produkter);
     }
 
     public Produkt createProdukt(String navn, String beskrivelse) {

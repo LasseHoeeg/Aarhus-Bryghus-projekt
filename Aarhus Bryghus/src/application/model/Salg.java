@@ -8,7 +8,7 @@ public class Salg {
     private double samletBeloeb;
     private int samletAntalKlip;
     private static int salgsID = 0;
-    private ArrayList<Ordrelinje> ordrelinjer;
+    private ArrayList<Ordrelinje> ordrelinjer = new ArrayList<>();
     private Rabat rabat;
     private Salgssituation salgssituation;
     //private ArrayList<Betaling> betalinger;
@@ -34,6 +34,7 @@ public class Salg {
     public Ordrelinje createOrdrelinje(int antal, Produkt produkt){
         ordrelinjeAntal++;
         Ordrelinje ordrelinje = new Ordrelinje(ordrelinjeAntal, antal, produkt, this);
+        ordrelinjer.add(ordrelinje);
         return ordrelinje;
     }
 
@@ -103,8 +104,8 @@ public class Salg {
     @Override
     public String toString() {
         return tidspunktBetaling +
-                " "+ samletBeloeb +
-                " "+ salgsID;
+                ", "+ samletBeloeb +
+                ", "+ salgsID;
     }
 
 

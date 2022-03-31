@@ -1,9 +1,6 @@
 package application.controller;
 
-import application.model.Pris;
-import application.model.Produkt;
-import application.model.ProduktGruppe;
-import application.model.Salgssituation;
+import application.model.*;
 
 public class _ControllerTest {
     public static void main(String[] args) {
@@ -69,9 +66,30 @@ public class _ControllerTest {
         System.out.println();
         System.out.println(p1.getProduktGruppe());
 
+        // Controllertest
+
+        Salg salg = Controller.getInstance().createSalg(s1);
+        Ordrelinje ordrelinje = salg.createOrdrelinje(5, p1);
+        Ordrelinje ordrelinje2 = salg.createOrdrelinje(10, p1);
+
+
+
+        System.out.println("Ordrelinjepris i beløb linje 2: "+ordrelinje2.getOrdrelinjePris() +"0 kr");
+        System.out.println("Ordrelinjepris i Klip linje 2: "+ordrelinje2.getOrdrelinjeKlip()+" klip");
+        salg.beregnSamletBeloebOgKlip();
+        System.out.println("ol? "+salg.getOrdrelinjer());
+        System.out.println("Salgspris total beløb: "+salg.getSamletBeloeb());
+        System.out.println("Salgspris total antalKlip: "+salg.getSamletAntalKlip());
+
+
+
+
         //TODO Static på salg test
 
         //TODO Tjek om rabat
+
+
+
 
     }
 

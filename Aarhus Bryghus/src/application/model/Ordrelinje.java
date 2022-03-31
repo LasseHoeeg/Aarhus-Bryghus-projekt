@@ -88,7 +88,7 @@ public class Ordrelinje {
                 else {
                     setOrdrelinjePris(salg.getSalgssituation().getPriser().get(i).getBeloeb() * antal);
                 }
-                setOrdrelinjeKlip(salg.getSalgssituation().getPriser().get(i).getAntalKlip());
+                setOrdrelinjeKlip(salg.getSalgssituation().getPriser().get(i).getAntalKlip() * antal);
                 found = true;
             } else i++;
         }
@@ -99,7 +99,7 @@ public class Ordrelinje {
         return produkt.getNavn() + ", " +
                 +antal +
                 ", " + getOrdrelinjePris() +
-                " kr.";
+                "0 kr."+ "\t";
     }
 }
 
