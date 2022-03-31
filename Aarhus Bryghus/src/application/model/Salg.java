@@ -12,7 +12,7 @@ public class Salg {
     private ArrayList<Ordrelinje> ordrelinjer;
     private Rabat rabat;
     private Salgssituation salgssituation;
-    private ArrayList<Betaling> betalinger;
+    //private ArrayList<Betaling> betalinger;
     private static int ordrelinjeAntal;
 
     public Salg(Salgssituation salgssituation){
@@ -20,7 +20,16 @@ public class Salg {
        salgsID++;
        this.salgssituation = salgssituation;
        ordrelinjeAntal = 0;
+    }
 
+    public double beregnSamletPris() {
+        for (Ordrelinje o: ordrelinjer) {
+            samletPris += o.getOrdrelinjePris();
+        }
+        if (rabat != null){
+            samletPris = samletPris - rabat.getRabat(samletPris);
+        }
+        return samletPris;
     }
 
     public Ordrelinje createOrdrelinje(int antal, Produkt produkt){
@@ -37,6 +46,7 @@ public class Salg {
 
     public Rabat createRabatBeloeb(double beloeb){
         Rabat rabatBeloeb = new RabatBeloeb(beloeb);
+        this.rabat = rabatBeloeb;
         return rabatBeloeb;
     }
 
@@ -72,9 +82,9 @@ public class Salg {
         return salgssituation;
     }
 
-    public ArrayList<Betaling> getBetalinger() {
-        return betalinger;
-    }
+//    public ArrayList<Betaling> getBetalinger() {
+//        return betalinger;
+//    }
 
     //add remove betaling?
 
