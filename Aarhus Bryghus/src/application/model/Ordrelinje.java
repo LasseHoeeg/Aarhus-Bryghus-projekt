@@ -27,11 +27,6 @@ public class Ordrelinje {
         return rabat;
     }
 
-//    public double getRabatPris() {
-//    int sum=0;
-//        if (rabat instanceof RabatProcent) {
-//            rabat.getRabat()}
-//    }
 
     public Rabat createRabatBeloeb(double beloeb) {
             Rabat rabat = new RabatBeloeb(beloeb);
@@ -84,10 +79,11 @@ public class Ordrelinje {
     public void beregnOrdrelinjePrisOgKlip() {
         int i = 0;
         boolean found = false;
-        while (i < salg.getSalgssituation().getPriser().size()&&found==false) {
+        while (i < salg.getSalgssituation().getPriser().size()&&!found) {
             if (this.produkt == salg.getSalgssituation().getPriser().get(i).getProdukt()) {
                 if (getRabat()!=null){
-                    setOrdrelinjePris(getRabat().getRabat(getOrdrelinjePris())-(salg.getSalgssituation().getPriser().get(i).getBeloeb() * antal));
+                    setOrdrelinjePris(getRabat().getRabat(getOrdrelinjePris())-
+                            (salg.getSalgssituation().getPriser().get(i).getBeloeb() * antal));
                 }
                 else {
                     setOrdrelinjePris(salg.getSalgssituation().getPriser().get(i).getBeloeb() * antal);
@@ -103,7 +99,7 @@ public class Ordrelinje {
         return produkt.getNavn() + ", " +
                 +antal +
                 ", " + getOrdrelinjePris() +
-                "kr.";
+                " kr.";
     }
 }
 

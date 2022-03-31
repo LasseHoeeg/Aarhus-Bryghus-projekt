@@ -5,7 +5,6 @@ import storage.Storage;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.TreeSet;
 
 public class Controller {
     private static Controller uniqueInstance;
@@ -68,9 +67,11 @@ public class Controller {
         return salg;
     }
 
-    public void updateSalg(Salg salg, LocalDateTime tidspunktBetaling, double samletPris){
+    public void updateSalg(Salg salg, LocalDateTime tidspunktBetaling, double samletBeloeb, int samletAntalKlip){
         salg.setTidspunktBetaling(tidspunktBetaling);
-        salg.setSamletPris(samletPris);    }
+        salg.setSamletBeloeb(samletBeloeb);
+        salg.setSamletAntalKlip(samletAntalKlip);
+    }
 
     public void removeSalg(Salg salg){
         Storage.getInstance().removeSalg(salg);

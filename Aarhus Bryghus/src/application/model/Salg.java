@@ -1,13 +1,12 @@
 package application.model;
 
-import application.controller.Controller;
-
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 public class Salg {
     private LocalDateTime tidspunktBetaling;
-    private double samletPris;
+    private double samletBeloeb;
+    private int samletAntalKlip;
     private static int salgsID = 0;
     private ArrayList<Ordrelinje> ordrelinjer;
     private Rabat rabat;
@@ -22,14 +21,14 @@ public class Salg {
        ordrelinjeAntal = 0;
     }
 
-    public double beregnSamletPris() {
+    public void beregnSamletBeloebOgKlip() {
         for (Ordrelinje o: ordrelinjer) {
-            samletPris += o.getOrdrelinjePris();
+            samletBeloeb += o.getOrdrelinjePris();
+            samletAntalKlip += o.getOrdrelinjeKlip();
         }
         if (rabat != null){
-            samletPris = samletPris - rabat.getRabat(samletPris);
+            samletBeloeb = samletBeloeb - rabat.getRabat(samletBeloeb);
         }
-        return samletPris;
     }
 
     public Ordrelinje createOrdrelinje(int antal, Produkt produkt){
@@ -58,12 +57,20 @@ public class Salg {
         this.tidspunktBetaling = tidspunktBetaling;
     }
 
-    public double getSamletPris() {
-        return samletPris;
+    public double getSamletBeloeb() {
+        return samletBeloeb;
     }
 
-    public void setSamletPris(double samletPris) {
-        this.samletPris = samletPris;
+    public void setSamletBeloeb(double samletBeloeb) {
+        this.samletBeloeb = samletBeloeb;
+    }
+
+    public int getSamletAntalKlip() {
+        return samletAntalKlip;
+    }
+
+    public void setSamletAntalKlip(int samletAntalKlip){
+        this.samletAntalKlip = samletAntalKlip;
     }
 
     public int getSalgsID() {
@@ -96,7 +103,7 @@ public class Salg {
     @Override
     public String toString() {
         return tidspunktBetaling +
-                " "+ samletPris +
+                " "+ samletBeloeb +
                 " "+ salgsID;
     }
 
