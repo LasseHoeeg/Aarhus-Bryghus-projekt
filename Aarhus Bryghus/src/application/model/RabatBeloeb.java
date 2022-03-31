@@ -8,8 +8,10 @@ public class RabatBeloeb extends Rabat {
     }
 
     public double getRabat(double pris) {
-      pris = beloeb;
-        return pris;
+        if (beloeb > pris) {
+            beloeb = pris;
+        }
+        return beloeb;
     }
 
     public double getBeloeb() {
