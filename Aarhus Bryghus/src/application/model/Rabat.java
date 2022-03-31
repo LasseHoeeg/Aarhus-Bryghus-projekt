@@ -1,4 +1,5 @@
 package application.model;
 
-public class Rabat {
+public abstract class Rabat {
+    public abstract double getRabat(double pris);
 }
