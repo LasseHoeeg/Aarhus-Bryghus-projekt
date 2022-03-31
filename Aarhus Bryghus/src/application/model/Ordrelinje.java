@@ -44,7 +44,7 @@ public class Ordrelinje {
         return getRabat();
     }
 
-        public int getNr() {
+    public int getNr() {
         return nr;
     }
 
@@ -73,8 +73,18 @@ public class Ordrelinje {
     }
 
     public void beregnOrdrelinjePris() {
-        if (produkt==salg.getSalgssituation.getPris.getProdukt){
-            setOrdrelinjePris(salg.getSalgssituation.getPris*antal);
+        int i = 0;
+        boolean found = false;
+        while (i < salg.getSalgssituation().getPriser().size()&&found==false) {
+            if (this.produkt == salg.getSalgssituation().getPriser().get(i).getProdukt()) {
+                if (getRabat()!=null){
+                    setOrdrelinjePris(getRabat().getRabat(getOrdrelinjePris())-(salg.getSalgssituation().getPriser().get(i).getBeloeb() * antal));
+                }
+                else {
+                    setOrdrelinjePris(salg.getSalgssituation().getPriser().get(i).getBeloeb() * antal);
+                }
+                found = true;
+            } else i++;
         }
     }
 

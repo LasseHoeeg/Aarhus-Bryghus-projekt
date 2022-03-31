@@ -36,7 +36,7 @@ public class Salg {
     }
 
     public Rabat createRabatBeloeb(double beloeb){
-        Rabat rabatBeloeb = new RabatBeloeb();
+        Rabat rabatBeloeb = new RabatBeloeb(beloeb);
         return rabatBeloeb;
     }
 
