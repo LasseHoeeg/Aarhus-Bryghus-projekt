@@ -57,7 +57,7 @@ public class Controller {
         Storage.getInstance().removeSalgssituation(salgssituation);
     }
 
-    public Salg getSalgsliste(){
+    public ArrayList<Salg> getSalgsliste(){
         return Storage.getInstance().getSalgsliste();
     }
 
@@ -71,7 +71,7 @@ public class Controller {
         salg.setTidspunktBetaling(tidspunktBetaling);
         salg.setSamletPris(samletPris);    }
 
-    public void removeSalg(){
+    public void removeSalg(Salg salg){
         Storage.getInstance().removeSalg(salg);
     }
     // -------------------------------------------------------------------------------------------------------------
