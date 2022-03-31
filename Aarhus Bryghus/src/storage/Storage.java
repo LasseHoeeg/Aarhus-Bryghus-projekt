@@ -10,7 +10,7 @@ public class Storage {
     private static Storage uniqueInstance;
     private final ArrayList<Salgssituation> salgssituationer = new ArrayList<>();
     private final ArrayList<ProduktGruppe> produktGrupper = new ArrayList<>();
-    private final ArrayList<Salg> salgsListe = new ArrayList<>();
+    private final ArrayList<Salg> salgsliste = new ArrayList<>();
 
     public static Storage getInstance() {
         if (uniqueInstance == null) {uniqueInstance = new Storage();
@@ -45,12 +45,14 @@ public class Storage {
     }
     // ----------------------------------------------------------------------------------------
     public void addSalg(Salg salg) {
-        salgsListe.add(salg);
+        salgsliste.add(salg);
     }
-    public ArrayList<Salg> getSalgsListe() {
-        return new ArrayList<>(salgsListe);
+    public ArrayList<Salg> getSalgsliste() {
+        return new ArrayList<>(salgsliste);
     }
     public void removeSalg(Salg salg) {
-        salgsListe.remove(salg);
+        if (salgsliste.contains(salg)) {
+            salgsliste.remove(salg);
+        }
     }
 }
