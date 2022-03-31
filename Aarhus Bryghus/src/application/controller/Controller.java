@@ -1,11 +1,9 @@
 package application.controller;
 
-import application.model.Pris;
-import application.model.Produkt;
-import application.model.ProduktGruppe;
-import application.model.Salgssituation;
+import application.model.*;
 import storage.Storage;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.TreeSet;
 
@@ -58,6 +56,24 @@ public class Controller {
     public void removeSalgssituation(Salgssituation salgssituation) {
         Storage.getInstance().removeSalgssituation(salgssituation);
     }
+
+    public Salg getSalgsliste(){
+        return Storage.getInstance().getSalgsliste();
+    }
+
+    public Salg createSalg(Salgssituation salgssituation){
+        Salg salg = new Salg(salgssituation);
+        Storage.getInstance().addSalg(salg);
+        return salg;
+    }
+
+    public void updateSalg(Salg salg, LocalDateTime tidspunktBetaling, double samletPris){
+        salg.setTidspunktBetaling(tidspunktBetaling);
+        salg.setSamletPris(samletPris);    }
+
+    public void removeSalg(){
+        Storage.getInstance().removeSalg(salg);
+    }
     // -------------------------------------------------------------------------------------------------------------
 
     private void initStorage() {
@@ -84,8 +100,8 @@ public class Controller {
         Produkt p11 = pg4.createProdukt("India Pale Ale", "20 liter");
         Produkt p12 = pg4.createProdukt("Julebryg", "20 liter");
 
-        Salgssituation s1 = Controller.getInstance().createSalgssituation("Fredagsbar", "Studerende");
-        Salgssituation s2 = Controller.getInstance().createSalgssituation("Butik", "Arbejde");
+        Salgssituation s1 = Controller.getInstance().createSalgssituation("Fredagsbar", "Flaskeøl og fadøl");
+        Salgssituation s2 = Controller.getInstance().createSalgssituation("Butik", "Salg af alle produkter");
 
         Pris pr1 = s1.createPris(70, 2, p1);
         Pris pr2 = s1.createPris(70, 2, p2);
