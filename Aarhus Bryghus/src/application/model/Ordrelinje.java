@@ -4,6 +4,7 @@ public class Ordrelinje {
     private int nr;
     private int antal;
     private double ordrelinjePris;
+    private int ordrelinjeKlip;
     private Produkt produkt;
     private Rabat rabat;
     private Salg salg;
@@ -14,7 +15,7 @@ public class Ordrelinje {
     this.antal = antal;
     this.produkt = produkt;
     this.salg = salg;
-    beregnOrdrelinjePris();
+    beregnOrdrelinjePrisOgKlip();
 }
 
     public Salg getSalg() {
@@ -64,6 +65,14 @@ public class Ordrelinje {
         return produkt;
     }
 
+    public void setOrdrelinjeKlip(int ordrelinjeKlip) {
+        this.ordrelinjeKlip = ordrelinjeKlip;
+    }
+
+    public int getOrdrelinjeKlip() {
+        return ordrelinjeKlip;
+    }
+
     public void setOrdrelinjePris(double ordrelinjePris) {
         this.ordrelinjePris = ordrelinjePris;
     }
@@ -72,7 +81,7 @@ public class Ordrelinje {
         return ordrelinjePris;
     }
 
-    public void beregnOrdrelinjePris() {
+    public void beregnOrdrelinjePrisOgKlip() {
         int i = 0;
         boolean found = false;
         while (i < salg.getSalgssituation().getPriser().size()&&found==false) {
@@ -83,6 +92,7 @@ public class Ordrelinje {
                 else {
                     setOrdrelinjePris(salg.getSalgssituation().getPriser().get(i).getBeloeb() * antal);
                 }
+                setOrdrelinjeKlip(salg.getSalgssituation().getPriser().get(i).getAntalKlip());
                 found = true;
             } else i++;
         }
