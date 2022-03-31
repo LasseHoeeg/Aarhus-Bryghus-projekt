@@ -10,23 +10,28 @@ Ordrelinje(int nr, int antal, Produkt produkt){  //når rabat tilføj: , Rabat r
     this.nr = nr;
     this.antal = antal;
     this.produkt = produkt;
-    //this.rabat = rabat;
 }
 
     public Rabat getRabat() {
         return rabat;
     }
 
-    public Rabat createRabatBeloeb(double beloeb) {
-            Rabat rabat = new RabatBeløb(beloeb);
+//    public double getRabatPris() {
+//    int sum=0;
+//        if (rabat instanceof RabatProcent) {
+//            rabat.getRabat()}
+//    }
 
-            return person;
+    public Rabat createRabatBeloeb(double beloeb) {
+            Rabat rabat = new RabatBeloeb(beloeb);
+            this.rabat = rabat;
+            return getRabat();
         }
 
-    public Rabat createRabatProcent() {
-        Person person = new Person(personName);
-        persons.add(person);
-        return person;
+    public Rabat createRabatProcent(double procent) {
+        Rabat rabat = new RabatProcent(procent);
+        this.rabat = rabat;
+        return getRabat();
     }
 
         public int getNr() {
@@ -48,13 +53,5 @@ Ordrelinje(int nr, int antal, Produkt produkt){  //når rabat tilføj: , Rabat r
     public Produkt getProdukt() {
         return produkt;
     }
-
-
-    //Til når rabat kodes:
-
-//    public Rabat getRabat() {
-//        return rabat;
-//    }
-
 
 }

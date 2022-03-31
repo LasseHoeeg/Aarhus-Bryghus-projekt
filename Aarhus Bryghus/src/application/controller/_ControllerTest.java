@@ -71,6 +71,8 @@ public class _ControllerTest {
 
         //TODO Static på salg test
 
+        //TODO Tjek om rabat
+
     }
 
 
