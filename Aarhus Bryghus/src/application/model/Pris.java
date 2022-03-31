@@ -39,10 +39,6 @@ public class Pris {
         return salgssituation;
     }
 
-    public void setSalgssituation(Salgssituation salgssituation) {
-        this.salgssituation = salgssituation;
-    }
-
     public Produkt getProdukt() {
         return produkt;
     }

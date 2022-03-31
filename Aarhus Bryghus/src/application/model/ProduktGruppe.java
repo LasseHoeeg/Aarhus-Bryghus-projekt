@@ -1,18 +1,20 @@
 package application.model;
 
 import java.util.ArrayList;
+import java.util.Set;
+import java.util.TreeSet;
 
 public class ProduktGruppe {
     private String navn;
 
-    private final ArrayList<Produkt> produkter = new ArrayList<>();
+    private final Set<Produkt> produkter = new TreeSet<>();
 
     public ProduktGruppe(String navn) {
         this.navn = navn;
     }
 
-    public ArrayList<Produkt> getProdukter() {
-        return new ArrayList<>(produkter);
+    public TreeSet<Produkt> getProdukter() {
+        return new TreeSet<>(produkter);
     }
 
     public Produkt createProdukt(String navn, String beskrivelse) {
@@ -26,6 +28,8 @@ public class ProduktGruppe {
             produkter.remove(produkt);
         }
     }
+
+
 
     public String getNavn() {
         return navn;
