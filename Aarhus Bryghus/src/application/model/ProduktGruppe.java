@@ -1,11 +1,12 @@
 package application.model;
 
-import java.util.ArrayList;
+import java.util.Set;
 import java.util.TreeSet;
 
 public class ProduktGruppe {
     private String navn;
-    private final TreeSet<Produkt> produkter = new TreeSet<>();
+
+    private final Set<Produkt> produkter = new TreeSet<>();
 
     public ProduktGruppe(String navn) {
         this.navn = navn;

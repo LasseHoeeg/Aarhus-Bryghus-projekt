@@ -199,6 +199,9 @@ public class Gui extends Application {
         pane.add(txfPrisBeløb, 0, 7);
         txfPrisBeløb.setPromptText("Beløb:");
         txfPrisBeløb.setPrefWidth(100);
+//        ChangeListener<> listenerPG = (ov, oldString, newString) -> this.selectionChangedProduktGruppe();
+//        txfPrisBeløb.getSelectionModel().selectedItemProperty().addListener(listenerPG);
+
 
         pane.add(txfPrisKlip, 1, 7);
         txfPrisKlip.setPromptText("Klip:");
