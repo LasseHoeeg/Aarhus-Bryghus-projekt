@@ -26,6 +26,10 @@ public class Salg {
         ordrelinjeAntal = 0;
     }
 
+    /**
+     * Beregner samlet pris for hele salget i hhv. samletBeloeb og samletAntalKlip.
+     * Tager forbehold for evt. rabat.
+     */
     public void beregnSamletBeloebOgKlip() {
         double sumBeloeb = 0.0;
         int sumKlip = 0;
@@ -40,7 +44,10 @@ public class Salg {
         samletBeloeb = sumBeloeb;
         samletAntalKlip = sumKlip;
     }
-
+    /**
+     * Opretter en ordrelinje og tilføjer det til salgets arraylist af ordrelinjer.
+     * Beregner den opdaterede samlede pris for salget.
+     */
     public Ordrelinje createOrdrelinje(int antal, Produkt produkt) {
         int contains = this.containsProduct(produkt);
         Ordrelinje ordrelinje = null;
@@ -76,6 +83,10 @@ public class Salg {
         }
     }
 
+    /**
+     * Opretter rabatProcent og opdaterer ordrelinjePris
+     * Rabatten sættes til ordrelinjen
+     */
     public Rabat createRabatPct(double procent) {
         Rabat rabatPct = new RabatProcent(procent);
         this.rabat = rabatPct;
@@ -83,7 +94,11 @@ public class Salg {
         return rabatPct;
     }
 
-    public Rabat createRabatBeloeb(double beloeb) {
+    /**
+     * Opretter rabatBeloeb og opdaterer ordrelinjePris
+     * Rabatten sættes til ordrelinjen
+     */
+    public Rabat createRabatBeloeb(double beloeb){
         Rabat rabatBeloeb = new RabatBeloeb(beloeb);
         this.rabat = rabatBeloeb;
         beregnSamletBeloebOgKlip();
