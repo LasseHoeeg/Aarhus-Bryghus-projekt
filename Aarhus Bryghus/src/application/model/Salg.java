@@ -31,6 +31,9 @@ public class Salg {
      * Tager forbehold for evt. rabat.
      */
     public void beregnSamletBeloebOgKlip() {
+      if (ordrelinjer.size() == 0){
+          throw new IllegalArgumentException("Salget skal minimum have en ordrelinje");
+      }
         double sumBeloeb = 0.0;
         int sumKlip = 0;
 
@@ -162,6 +165,4 @@ public class Salg {
                 ", " + samletBeloeb +
                 "0, " + salgsID;
     }
-
-
-}
+ }
