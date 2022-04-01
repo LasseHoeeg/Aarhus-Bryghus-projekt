@@ -10,7 +10,7 @@ public class Ordrelinje {
     private Salg salg;
 
 
-    Ordrelinje(int nr, int antal, Produkt produkt, Salg salg){  //når rabat tilføj: , Rabat rabat){
+    Ordrelinje(int nr, int antal, Produkt produkt, Salg salg){
     this.nr = nr;
     this.antal = antal;
     this.produkt = produkt;
@@ -31,12 +31,14 @@ public class Ordrelinje {
     public Rabat createRabatBeloeb(double beloeb) {
             Rabat rabat = new RabatBeloeb(beloeb);
             this.rabat = rabat;
+            beregnOrdrelinjePrisOgKlip();
             return getRabat();
         }
 
     public Rabat createRabatProcent(double procent) {
         Rabat rabat = new RabatProcent(procent);
         this.rabat = rabat;
+        beregnOrdrelinjePrisOgKlip();
         return getRabat();
     }
 
@@ -82,8 +84,8 @@ public class Ordrelinje {
         while (i < salg.getSalgssituation().getPriser().size()&&!found) {
             if (this.produkt == salg.getSalgssituation().getPriser().get(i).getProdukt()) {
                 if (getRabat()!=null){
-                    setOrdrelinjePris(getRabat().getRabat(getOrdrelinjePris())-
-                            (salg.getSalgssituation().getPriser().get(i).getBeloeb() * antal));
+                    setOrdrelinjePris((salg.getSalgssituation().getPriser().get(i).getBeloeb() * antal)
+                            - getRabat().getRabat(getOrdrelinjePris()));
                 }
                 else {
                     setOrdrelinjePris(salg.getSalgssituation().getPriser().get(i).getBeloeb() * antal);

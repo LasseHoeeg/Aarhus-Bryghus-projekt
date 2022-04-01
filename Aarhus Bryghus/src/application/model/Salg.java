@@ -1,10 +1,11 @@
 package application.model;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 public class Salg {
-    private LocalDateTime tidspunktBetaling;
+    private LocalDate tidspunktBetaling;
     private double samletBeloeb;
     private int samletAntalKlip;
     private static int salgsID = 0;
@@ -15,46 +16,54 @@ public class Salg {
     private static int ordrelinjeAntal;
 
     public Salg(Salgssituation salgssituation){
-       tidspunktBetaling = LocalDateTime.now();
+       tidspunktBetaling = LocalDate.now();
        salgsID++;
        this.salgssituation = salgssituation;
        ordrelinjeAntal = 0;
     }
 
     public void beregnSamletBeloebOgKlip() {
+        double sumBeloeb = 0.0;
+        int sumKlip = 0;
+
         for (Ordrelinje o: ordrelinjer) {
-            samletBeloeb += o.getOrdrelinjePris();
-            samletAntalKlip += o.getOrdrelinjeKlip();
+            sumBeloeb += o.getOrdrelinjePris();
+            sumKlip += o.getOrdrelinjeKlip();
         }
         if (rabat != null){
-            samletBeloeb = samletBeloeb - rabat.getRabat(samletBeloeb);
+            sumBeloeb = sumBeloeb - rabat.getRabat(sumBeloeb);
         }
+        samletBeloeb = sumBeloeb;
+        samletAntalKlip = sumKlip;
     }
 
     public Ordrelinje createOrdrelinje(int antal, Produkt produkt){
         ordrelinjeAntal++;
         Ordrelinje ordrelinje = new Ordrelinje(ordrelinjeAntal, antal, produkt, this);
         ordrelinjer.add(ordrelinje);
+        beregnSamletBeloebOgKlip();
         return ordrelinje;
     }
 
     public Rabat createRabatPct(double procent){
         Rabat rabatPct = new RabatProcent(procent);
         this.rabat = rabatPct;
+        beregnSamletBeloebOgKlip();
         return rabatPct;
     }
 
     public Rabat createRabatBeloeb(double beloeb){
         Rabat rabatBeloeb = new RabatBeloeb(beloeb);
         this.rabat = rabatBeloeb;
+        beregnSamletBeloebOgKlip();
         return rabatBeloeb;
     }
 
-    public LocalDateTime getTidspunktBetaling() {
+    public LocalDate getTidspunktBetaling() {
         return tidspunktBetaling;
     }
 
-    public void setTidspunktBetaling(LocalDateTime tidspunktBetaling) {
+    public void setTidspunktBetaling(LocalDate tidspunktBetaling) {
         this.tidspunktBetaling = tidspunktBetaling;
     }
 
@@ -105,7 +114,7 @@ public class Salg {
     public String toString() {
         return tidspunktBetaling +
                 ", "+ samletBeloeb +
-                ", "+ salgsID;
+                "0, "+ salgsID;
     }
 
 
