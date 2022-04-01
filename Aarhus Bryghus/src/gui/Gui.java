@@ -49,6 +49,8 @@ public class Gui extends Application {
 
     // combobox
     private final ComboBox<Salgssituation> cbSalgssituation = new ComboBox();
+
+    // atributter
     private Salg salg;
     private int antal;
 

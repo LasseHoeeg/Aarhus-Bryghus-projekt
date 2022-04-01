@@ -15,34 +15,54 @@ public class Salg {
     //private ArrayList<Betaling> betalinger;
     private static int ordrelinjeAntal;
 
-    public Salg(Salgssituation salgssituation){
-       tidspunktBetaling = LocalDate.now();
-       salgsID++;
-       this.salgssituation = salgssituation;
-       ordrelinjeAntal = 0;
+    public Salg(Salgssituation salgssituation) {
+        tidspunktBetaling = LocalDate.now();
+        salgsID++;
+        this.salgssituation = salgssituation;
+        ordrelinjeAntal = 0;
     }
 
     public void beregnSamletBeloebOgKlip() {
         double sumBeloeb = 0.0;
         int sumKlip = 0;
 
-        for (Ordrelinje o: ordrelinjer) {
+        for (Ordrelinje o : ordrelinjer) {
             sumBeloeb += o.getOrdrelinjePris();
             sumKlip += o.getOrdrelinjeKlip();
         }
-        if (rabat != null){
+        if (rabat != null) {
             sumBeloeb = sumBeloeb - rabat.getRabat(sumBeloeb);
         }
         samletBeloeb = sumBeloeb;
         samletAntalKlip = sumKlip;
     }
 
-    public Ordrelinje createOrdrelinje(int antal, Produkt produkt){
-        ordrelinjeAntal++;
-        Ordrelinje ordrelinje = new Ordrelinje(ordrelinjeAntal, antal, produkt, this);
-        ordrelinjer.add(ordrelinje);
-        beregnSamletBeloebOgKlip();
+    public Ordrelinje createOrdrelinje(int antal, Produkt produkt) {
+        int contains = this.containsProduct(produkt);
+        Ordrelinje ordrelinje = null;
+        if (contains != -1){
+            this.getOrdrelinjer().get(contains).setAntal(this.getOrdrelinjer().get(contains).getAntal()+antal);
+        }
+        else{
+            ordrelinjeAntal++;
+            ordrelinje = new Ordrelinje(ordrelinjeAntal, antal, produkt, this);
+            ordrelinjer.add(ordrelinje);
+            beregnSamletBeloebOgKlip();
+        }
         return ordrelinje;
+    }
+
+    public int containsProduct(Produkt produkt) {
+        int i = 0;
+        int foundIndex = -1;
+        while (i < this.getOrdrelinjer().size() && foundIndex == -1) {
+            if (this.getOrdrelinjer().get(i).getProdukt() == produkt) {
+                foundIndex = i;
+            } else {
+                i++;
+            }
+        }
+        return foundIndex;
     }
 
     public void removeOrdrelinje(Ordrelinje ordrelinje) {
@@ -52,14 +72,14 @@ public class Salg {
         }
     }
 
-    public Rabat createRabatPct(double procent){
+    public Rabat createRabatPct(double procent) {
         Rabat rabatPct = new RabatProcent(procent);
         this.rabat = rabatPct;
         beregnSamletBeloebOgKlip();
         return rabatPct;
     }
 
-    public Rabat createRabatBeloeb(double beloeb){
+    public Rabat createRabatBeloeb(double beloeb) {
         Rabat rabatBeloeb = new RabatBeloeb(beloeb);
         this.rabat = rabatBeloeb;
         beregnSamletBeloebOgKlip();
@@ -86,7 +106,7 @@ public class Salg {
         return samletAntalKlip;
     }
 
-    public void setSamletAntalKlip(int samletAntalKlip){
+    public void setSamletAntalKlip(int samletAntalKlip) {
         this.samletAntalKlip = samletAntalKlip;
     }
 
@@ -120,8 +140,8 @@ public class Salg {
     @Override
     public String toString() {
         return tidspunktBetaling +
-                ", "+ samletBeloeb +
-                "0, "+ salgsID;
+                ", " + samletBeloeb +
+                "0, " + salgsID;
     }
 
 

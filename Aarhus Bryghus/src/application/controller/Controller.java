@@ -79,7 +79,9 @@ public class Controller {
     }
     // -------------------------------------------------------------------------------------------------------------
 
-    private void initStorage() {
+    //TODO metoede returner map/collection af leje salg
+
+    public void initStorage() {
         Controller controller = Controller.getInstance();
 
         ProduktGruppe pg1 = controller.createProduktGruppe("Flaske");

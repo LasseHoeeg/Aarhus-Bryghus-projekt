@@ -92,12 +92,13 @@ public class SystemObjektPane extends GridPane {
         this.setVgap(10);
         this.setGridLinesVisible(false);
 
+        // Listviews
         this.add(lwSalgsSituation, 0, 1, 3, 1);
         lwSalgsSituation.setPrefWidth(50);
         lwSalgsSituation.setPrefHeight(150);
         ChangeListener<Salgssituation> listenerSS = (ov, oldString, newString) -> this.selectionChangedSalgssituation();
         lwSalgsSituation.getSelectionModel().selectedItemProperty().addListener(listenerSS);
-
+        lwSalgsSituation.getItems().setAll(Controller.getInstance().getSalgssituationer());
 
         // Buttons
         this.add(btnSalgsSituationCreate, 2, 2);
@@ -185,6 +186,8 @@ public class SystemObjektPane extends GridPane {
         lwProduktGruppe.setPrefHeight(150);
         ChangeListener<ProduktGruppe> listenerPG = (ov, oldString, newString) -> this.selectionChangedProduktGruppe();
         lwProduktGruppe.getSelectionModel().selectedItemProperty().addListener(listenerPG);
+        lwProduktGruppe.getItems().setAll(Controller.getInstance().getProduktGrupper());
+
 
         // Buttons
         this.add(btnProduktGruppeCreate, 5, 2);
@@ -222,10 +225,10 @@ public class SystemObjektPane extends GridPane {
         lwProdukt.getSelectionModel().selectedItemProperty().addListener(listenerPro);
 
 
+
         // Buttons
         this.add(btnProduktCreate, 5, 7);
         btnProduktCreate.setText("Create");
-//            btnSalgsSituationCreate.setOnAction(e -> SalgsSituationCreate());
         btnProduktCreate.setPrefWidth(60);
         btnProduktCreate.setOnAction(e -> createProdukt());
 
@@ -337,8 +340,8 @@ public class SystemObjektPane extends GridPane {
     }
 
     private void createProdukt() {
-        if (txfProduktNavn.getText() != null && txfProduktBeskrivelse.getText() != null) {
-            ProduktGruppe selected = lwProduktGruppe.getSelectionModel().getSelectedItem();
+        ProduktGruppe selected = lwProduktGruppe.getSelectionModel().getSelectedItem();
+        if (txfProduktNavn.getText() != null && txfProduktBeskrivelse.getText() != null && selected !=null) {
             selected.createProdukt(txfProduktNavn.getText(), txfProduktBeskrivelse.getText());
             lwProdukt.getItems().setAll(selected.getProdukter());
         }
