@@ -3,6 +3,7 @@ package application.controller;
 import application.model.*;
 import storage.Storage;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 
@@ -67,7 +68,7 @@ public class Controller {
         return salg;
     }
 
-    public void updateSalg(Salg salg, LocalDateTime tidspunktBetaling, double samletBeloeb, int samletAntalKlip){
+    public void updateSalg(Salg salg, LocalDate tidspunktBetaling, double samletBeloeb, int samletAntalKlip){
         salg.setTidspunktBetaling(tidspunktBetaling);
         salg.setSamletBeloeb(samletBeloeb);
         salg.setSamletAntalKlip(samletAntalKlip);

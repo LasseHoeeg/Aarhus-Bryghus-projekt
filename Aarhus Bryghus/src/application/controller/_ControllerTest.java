@@ -70,18 +70,26 @@ public class _ControllerTest {
 
         Salg salg = Controller.getInstance().createSalg(s1);
         Ordrelinje ordrelinje = salg.createOrdrelinje(5, p1);
-        Ordrelinje ordrelinje2 = salg.createOrdrelinje(10, p1);
+        Ordrelinje ordrelinje2 = salg.createOrdrelinje(2, p1);
+        Ordrelinje ordrelinje3 = salg.createOrdrelinje(1, p1);
 
 
 
-        System.out.println("Ordrelinjepris i beløb linje 2: "+ordrelinje2.getOrdrelinjePris() +"0 kr");
+        System.out.println("Ordrelinjepris i beløb linje 2: "+ordrelinje2.getOrdrelinjePris() +" kr");
         System.out.println("Ordrelinjepris i Klip linje 2: "+ordrelinje2.getOrdrelinjeKlip()+" klip");
-        salg.beregnSamletBeloebOgKlip();
+     //   salg.beregnSamletBeloebOgKlip();
         System.out.println("ol? "+salg.getOrdrelinjer());
         System.out.println("Salgspris total beløb: "+salg.getSamletBeloeb());
         System.out.println("Salgspris total antalKlip: "+salg.getSamletAntalKlip());
+        System.out.println(salg.getSamletBeloeb());
 
+        Rabat rabat1 = ordrelinje.createRabatProcent(20);
+        Rabat rabat2 = ordrelinje2.createRabatBeloeb(20);
+        System.out.println(ordrelinje2.getOrdrelinjePris());
 
+        Rabat rabat3 = salg.createRabatPct(10);
+        Rabat rabat4 = salg.createRabatBeloeb(100);
+        System.out.println(salg.getSamletBeloeb());
 
 
         //TODO Static på salg test
