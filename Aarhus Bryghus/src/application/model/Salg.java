@@ -29,6 +29,9 @@ public class Salg {
      * Tager forbehold for evt. rabat.
      */
     public void beregnSamletBeloebOgKlip() {
+      if (ordrelinjer.size() == 0){
+          throw new IllegalArgumentException("Salget skal minimum have en ordrelinje");
+      }
         double sumBeloeb = 0.0;
         int sumKlip = 0;
 
@@ -66,7 +69,7 @@ public class Salg {
      * Opretter rabatProcent og opdaterer ordrelinjePris
      * Rabatten sættes til ordrelinjen
      */
-    public Rabat createRabatPct(double procent){
+    public Rabat createRabatPct(double procent){    //fixme
         Rabat rabatPct = new RabatProcent(procent);
         this.rabat = rabatPct;
         beregnSamletBeloebOgKlip();
@@ -139,6 +142,4 @@ public class Salg {
                 ", "+ samletBeloeb +
                 "0, "+ salgsID;
     }
-
-
-}
+ }
