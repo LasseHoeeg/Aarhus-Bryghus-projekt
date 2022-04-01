@@ -52,6 +52,9 @@ public class Salg {
      * Beregner den opdaterede samlede pris for salget.
      */
     public Ordrelinje createOrdrelinje(int antal, Produkt produkt) {
+        if (antal <= 0){
+            throw new IllegalArgumentException("Antal skal være større end 0");
+        }
         int contains = this.containsProduct(produkt);
         Ordrelinje ordrelinje = null;
         if (contains != -1){
@@ -91,6 +94,9 @@ public class Salg {
      * Rabatten sættes til ordrelinjen
      */
     public Rabat createRabatPct(double procent) {
+        if (procent <= 0){
+            throw new IllegalArgumentException("procent skal være større end 0");
+        }
         Rabat rabatPct = new RabatProcent(procent);
         this.rabat = rabatPct;
         beregnSamletBeloebOgKlip();
@@ -102,6 +108,9 @@ public class Salg {
      * Rabatten sættes til ordrelinjen
      */
     public Rabat createRabatBeloeb(double beloeb){
+        if (beloeb <= 0){
+            throw new IllegalArgumentException("beløb skal være større end 0");
+        }
         Rabat rabatBeloeb = new RabatBeloeb(beloeb);
         this.rabat = rabatBeloeb;
         beregnSamletBeloebOgKlip();

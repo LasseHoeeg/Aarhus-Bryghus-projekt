@@ -3,7 +3,11 @@ package application.model;
 public class RabatBeloeb extends Rabat {
     private double beloeb;
 
-    public RabatBeloeb(double beloeb) {
+     /**
+     Oprettes af enten Ordrelinje eller Salg
+     Pre: beloeb > 0
+     */
+    RabatBeloeb(double beloeb) {
         this.beloeb = beloeb;
     }
 

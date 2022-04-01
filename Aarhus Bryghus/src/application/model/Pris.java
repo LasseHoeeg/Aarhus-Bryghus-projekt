@@ -9,19 +9,10 @@ public class Pris {
     /**
      * Constructor med beløb og antalKlip
      * Da constructoren ikke er public oprettes pris-objekter kun igennem Salgssituation-klassen
-     * Pre: En Salgssituation skal være oprettet før man kan oprette ordrelinjer
-     * Note: Hvis beloeb og/eller antalKlip <= 0 oprettes objektet ikke
+     * Pre: antalKlip > 0 && beloeb > 0
      */
     Pris(double beloeb, int antalKlip, Produkt produkt, Salgssituation salgssituation) {
-        if (beloeb <= 0)
-        {
-            throw new IllegalArgumentException("Pris skal være større end 0");
-        }
         this.beloeb = beloeb;
-        if (antalKlip <= 0)
-        {
-            throw new IllegalArgumentException("AntalKlip skal være større end 0");
-        }
         this.antalKlip = antalKlip;
         this.produkt = produkt;
         this.salgssituation = salgssituation;
@@ -30,14 +21,9 @@ public class Pris {
     /**
      * Constructor med beløb uden antalKlip
      * Da constructoren ikke er public oprettes pris-objekter kun igennem Salgssituation-klassen
-     * Pre: En Salgssituation skal være oprettet før man kan oprette ordrelinjer
-     * Note: Hvis beloeb <= 0 oprettes objektet ikke
+     * Pre: beloeb > 0
      */
     Pris(double beloeb, Produkt produkt, Salgssituation salgssituation){
-        if (beloeb <= 0)
-        {
-            throw new IllegalArgumentException("Pris skal være større end 0");
-        }
         this.beloeb = beloeb;
         this.produkt = produkt;
         this.salgssituation = salgssituation;

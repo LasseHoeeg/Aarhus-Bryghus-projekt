@@ -21,6 +21,9 @@ public class Salgssituation {
      * priser og til det bestemte produkts arraylist af priser
      */
     public Pris createPris(double beloeb, Produkt produkt){
+        if (beloeb <= 0) {
+            throw new IllegalArgumentException("Beløb skal være større end 0");
+        }
         Pris pris = new Pris(beloeb, produkt, this);
         priser.add(pris);
         produkt.addPris(pris);
@@ -32,6 +35,12 @@ public class Salgssituation {
      * priser og til det bestemte produkts arraylist af priser
      */
     public Pris createPris(double beloeb, int antalKlip, Produkt produkt){
+        if (beloeb <= 0) {
+            throw new IllegalArgumentException("Beløb skal være større end 0");
+        }
+        if (antalKlip <= 0) {
+            throw new IllegalArgumentException("AntalKlip skal være større end 0");
+        }
         Pris pris = new Pris(beloeb, antalKlip, produkt, this);
         priser.add(pris);
         produkt.addPris(pris);

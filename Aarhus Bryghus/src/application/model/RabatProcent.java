@@ -3,7 +3,11 @@ package application.model;
 public class RabatProcent extends Rabat {
     private double procent;
 
-    public RabatProcent(double procent) {
+    /**
+     Oprettes af enten Ordrelinje eller Salg
+     Pre: procent > 0
+     */
+    RabatProcent(double procent) {
         this.procent = procent;
     }
 
