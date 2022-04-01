@@ -42,21 +42,42 @@ class SalgTest {
         salg3 = Controller.getInstance().createSalg(ss);
     }
 
-    @Test
-    void beregnSamletBeloebOgKlip() {
+        @Test
+        void beregnSamletBeloebOgKlip1() {
         //TC1
         assertEquals(210, salg1.getSamletBeloeb(), "Samlet beløb afviger fra 210");
+    }
+        @Test
+        void beregnSamletBeloebOgKlip2() {
         //TC2
-        //assertEquals(126, salg2.createRabatPct(10).getRabat(140)); //fixme returnerer 14 kr
+        Rabat rabat = salg2.createRabatPct(10);
+        assertEquals(126, salg2.getSamletBeloeb());
+        }
+        @Test
+        void beregnSamletBeloebOgKlip3() {
         //TC3
-        //assertEquals(130, salg2.createRabatBeloeb(10).getRabat(140)); //fixme 10 kr - same
+        Rabat rabat3 = salg2.createRabatBeloeb(10);
+        assertEquals(130, salg2.getSamletBeloeb());
+        }
+
+        @Test
+        void beregnSamletBeloebOgKlip4() {
         //TC4
-        //assertEquals(IllegalArgumentException, salg3.getSamletBeloeb()); //todo import?
+        assertThrows(IllegalArgumentException.class, () -> salg3.beregnSamletBeloebOgKlip());
+        }
+
+        @Test
+        void beregnSamletBeloebOgKlip5() {
         //TC5
         assertEquals(140, salg2.getSamletBeloeb(), "samlet beløb afviger fra 140");
+        }
+
+        @Test
+        void beregnSamletBeloebOgKlip6() {
         //TC6
         assertEquals(210, salg1.getSamletBeloeb(), "samlet beløb afviger fra 210");
     }
+
 
     @Test
     void createOrdrelinje() {
