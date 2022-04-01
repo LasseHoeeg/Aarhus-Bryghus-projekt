@@ -45,6 +45,13 @@ public class Salg {
         return ordrelinje;
     }
 
+    public void removeOrdrelinje(Ordrelinje ordrelinje) {
+        if (ordrelinjer.contains(ordrelinje)) {
+            ordrelinjer.remove(ordrelinje);
+            beregnSamletBeloebOgKlip();
+        }
+    }
+
     public Rabat createRabatPct(double procent){
         Rabat rabatPct = new RabatProcent(procent);
         this.rabat = rabatPct;
