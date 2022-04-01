@@ -15,6 +15,10 @@ public class Salg {
     //private ArrayList<Betaling> betalinger;
     private static int ordrelinjeAntal;
 
+    /**
+     * Opretter et salgs-objekt som pr. default er dato for salgsoprettelsen og har seneste salgsnr +1
+     * og ordrelinejAntal = 0 så første oprettelse af en ordrelinje starter fra 1.
+     */
     public Salg(Salgssituation salgssituation) {
         tidspunktBetaling = LocalDate.now();
         salgsID++;
