@@ -6,7 +6,6 @@ import java.util.TreeSet;
 
 public class ProduktGruppe {
     private String navn;
-
     private final HashSet<Produkt> produkter = new HashSet<>();
 
     public ProduktGruppe(String navn) {
@@ -17,6 +16,9 @@ public class ProduktGruppe {
         return new HashSet<>(produkter);
     }
 
+    /**
+     * Opretter et produkt-objekt og tilføjer det til sin ProduktGruppes HashSet af produkter
+     */
     public Produkt createProdukt(String navn, String beskrivelse) {
         Produkt produkt = new Produkt(navn, beskrivelse, this);
         produkter.add(produkt);

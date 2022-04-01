@@ -14,14 +14,20 @@ public class Salg {
     private Salgssituation salgssituation;
     //private ArrayList<Betaling> betalinger;
     private static int ordrelinjeAntal;
-
+    /**
+     * Opretter et salgs-objekt som pr. default er dato for salgsoprettelsen og har seneste salgsnr +1
+     * og ordrelinejAntal = 0 så første oprettelse af en ordrelinje starter fra 1.
+     */
     public Salg(Salgssituation salgssituation){
        tidspunktBetaling = LocalDate.now();
        salgsID++;
        this.salgssituation = salgssituation;
        ordrelinjeAntal = 0;
     }
-
+    /**
+     * Beregner samlet pris for hele salget i hhv. samletBeloeb og samletAntalKlip.
+     * Tager forbehold for evt. rabat.
+     */
     public void beregnSamletBeloebOgKlip() {
         double sumBeloeb = 0.0;
         int sumKlip = 0;
@@ -37,6 +43,10 @@ public class Salg {
         samletAntalKlip = sumKlip;
     }
 
+    /**
+     * Opretter en ordrelinje og tilføjer det til salgets arraylist af ordrelinjer.
+     * Beregner den opdaterede samlede pris for salget.
+     */
     public Ordrelinje createOrdrelinje(int antal, Produkt produkt){
         ordrelinjeAntal++;
         Ordrelinje ordrelinje = new Ordrelinje(ordrelinjeAntal, antal, produkt, this);
@@ -44,14 +54,20 @@ public class Salg {
         beregnSamletBeloebOgKlip();
         return ordrelinje;
     }
-
+    /**
+     * Opretter rabatProcent og opdaterer ordrelinjePris
+     * Rabatten sættes til ordrelinjen
+     */
     public Rabat createRabatPct(double procent){
         Rabat rabatPct = new RabatProcent(procent);
         this.rabat = rabatPct;
         beregnSamletBeloebOgKlip();
         return rabatPct;
     }
-
+    /**
+     * Opretter rabatBeloeb og opdaterer ordrelinjePris
+     * Rabatten sættes til ordrelinjen
+     */
     public Rabat createRabatBeloeb(double beloeb){
         Rabat rabatBeloeb = new RabatBeloeb(beloeb);
         this.rabat = rabatBeloeb;
@@ -102,7 +118,6 @@ public class Salg {
 //    public ArrayList<Betaling> getBetalinger() {
 //        return betalinger;
 //    }
-
     //add remove betaling?
 
     public static int getOrdrelinjeAntal() {

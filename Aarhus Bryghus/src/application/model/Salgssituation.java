@@ -15,6 +15,11 @@ public class Salgssituation {
     public ArrayList<Pris> getPriser(){
         return new ArrayList<>(priser);
     }
+
+    /**
+     * Opretter et pris-objekt uden klip og tilføjer det til hhv. Salgssituationens arraylist af
+     * priser og til det bestemte produkts arraylist af priser
+     */
     public Pris createPris(double beloeb, Produkt produkt){
         Pris pris = new Pris(beloeb, produkt, this);
         priser.add(pris);
@@ -22,6 +27,10 @@ public class Salgssituation {
         return pris;
     }
 
+    /**
+     * Opretter et pris-objekt med klip og tilføjer det til hhv. Salgssituationens arraylist af
+     * priser og til det bestemte produkts arraylist af priser
+     */
     public Pris createPris(double beloeb, int antalKlip, Produkt produkt){
         Pris pris = new Pris(beloeb, antalKlip, produkt, this);
         priser.add(pris);
