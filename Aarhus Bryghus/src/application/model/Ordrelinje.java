@@ -9,9 +9,17 @@ public class Ordrelinje {
     private Rabat rabat;
     private Salg salg;
 
-
+/**
+ * Da constructoren ikke er public oprettes ordrelinje-objekter kun igennem Salg-klassen
+ * Ved oprettetlse af ny ordrelinje beregnes den samlede pris i hhv. ordrelinjePris og ordrelinjeKlip
+ * Pre: Et salg skal være oprettet før man kan oprette ordrelinjer
+ * Note: Hvis antal <= 0 oprettes ordrelinjeobjektet ikke
+ */
     Ordrelinje(int nr, int antal, Produkt produkt, Salg salg){
     this.nr = nr;
+    if (antal <= 0){
+        throw new IllegalArgumentException("Antal skal være større end 0");
+    }
     this.antal = antal;
     this.produkt = produkt;
     this.salg = salg;
@@ -27,19 +35,26 @@ public class Ordrelinje {
         return rabat;
     }
 
-
+     /**
+     * Opretter rabatBeløb og opdaterer ordrelinjePris og ordrelinjeKlip
+     * Rabatten sættes til ordrelinjen
+     */
     public Rabat createRabatBeloeb(double beloeb) {
             Rabat rabat = new RabatBeloeb(beloeb);
             this.rabat = rabat;
             beregnOrdrelinjePrisOgKlip();
-            return getRabat();
+            return rabat;
         }
 
+    /**
+     * Opretter rabatProcent og opdaterer ordrelinjePris og ordrelinjeKlip
+     * Rabatten sættes til ordrelinjen
+     */
     public Rabat createRabatProcent(double procent) {
         Rabat rabat = new RabatProcent(procent);
         this.rabat = rabat;
         beregnOrdrelinjePrisOgKlip();
-        return getRabat();
+        return rabat;
     }
 
     public int getNr() {
@@ -78,6 +93,9 @@ public class Ordrelinje {
         return ordrelinjePris;
     }
 
+    /**
+     * Beregner den samlede pris pr. ordrelinje i et salg i hhv. beløb og klip
+     */
     public void beregnOrdrelinjePrisOgKlip() {
         int i = 0;
         boolean found = false;

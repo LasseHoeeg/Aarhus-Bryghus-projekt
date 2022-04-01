@@ -10,6 +10,10 @@ public class Produkt {
     private ArrayList<Pris> priser = new ArrayList<>();
 
 
+     /**
+      *  Da constructoren ikke er public oprettes produkt-objekter kun igennem ProduktGruppe-klassen
+      *  Pre: En ProduktGruppe skal være oprettet før man kan oprette produkter
+      */
     Produkt(String navn, String beskrivelse, ProduktGruppe produktGruppe) {
         this.navn = navn;
         this.beskrivelse = beskrivelse;
@@ -40,6 +44,11 @@ public class Produkt {
         return new ArrayList<Pris>(priser);
     }
 
+
+    /** Tilføjer pris til en salgssituations arraylist af priser
+     * Note: Et produkt kan for en salgssituation kun have én pris.
+     * Ellers kastes exception og objektet oprettes ikke.
+     */
     public void addPris(Pris pris) {
             for (Pris p : priser) {
                 if (pris.getSalgssituation() == p.getSalgssituation()) {

@@ -11,6 +11,10 @@ public class Controller {
     private static Controller uniqueInstance;
     private Storage storage;
 
+    /**
+     * Sikrer at man kun kan oprette ét controller-objekt
+     * Note: Singleton
+     */
     public static Controller getInstance(){
         if (uniqueInstance==null){uniqueInstance = new Controller();}
         return uniqueInstance;
@@ -20,11 +24,21 @@ public class Controller {
         storage=Storage.getInstance();
     }
 
-    public ProduktGruppe createProduktGruppe(String navn){
-        ProduktGruppe pg = new ProduktGruppe(navn);
-        Storage.getInstance().addProduktGruppe(pg);
-        return pg;
-    }
+    /**
+     * Opretter et nyt objekt / en ny produktgruppe og tilføjer det til Storage
+     * Hvis produktgruppens navn allerede findes kastes IllegalArgumentException og produktgruppen oprettes ikke
+     */
+    public ProduktGruppe createProduktGruppe(String navn) {
+        for (int i = 0; i < Storage.getInstance().getProduktGrupper().size(); i++){
+        if (Storage.getInstance().getProduktGrupper().get(i).getNavn().equals(navn)) {
+        throw new IllegalArgumentException("Produktgruppen findes allerede");
+        }
+        }
+            ProduktGruppe pg = new ProduktGruppe(navn);
+            Storage.getInstance().addProduktGruppe(pg);
+            return pg;
+        }
+
     public ArrayList<ProduktGruppe> getProduktGrupper(){
         return Storage.getInstance().getProduktGrupper();
     }
@@ -38,13 +52,21 @@ public class Controller {
     }
     // -------------------------------------------------------------------------------------------------------------
 
+    /**
+     * Opretter et nyt objekt / en ny salgssituation og tilføjer det til Storage
+     * Hvis salgssituationens navn allerede er oprettet afbrydes oprettelsen og en IllegalArgumentException kastes
+     */
+    public Salgssituation createSalgssituation(String navn, String beskrivelse) {
+        for (int i = 0; i < Storage.getInstance().getSalgssituationer().size(); i++) {
+            if (Storage.getInstance().getSalgssituationer().get(i).getNavn().equals(navn)) {
+                throw new IllegalArgumentException("Salgssituation findes allerede");
+            }
+        }
+            Salgssituation ss = new Salgssituation(navn, beskrivelse);
+            Storage.getInstance().addSalgssituation(ss);
+            return ss;
+        }
 
-
-    public Salgssituation createSalgssituation(String navn, String beskrivelse){
-        Salgssituation ss = new Salgssituation(navn, beskrivelse);
-        Storage.getInstance().addSalgssituation(ss);
-        return ss;
-    }
     public ArrayList<Salgssituation> getSalgssituationer(){
         return Storage.getInstance().getSalgssituationer();
     }
@@ -62,6 +84,9 @@ public class Controller {
         return Storage.getInstance().getSalgsliste();
     }
 
+    /**
+     * Opretter et nyt objekt / et nyt salg og tilføjer det til Storage
+     */
     public Salg createSalg(Salgssituation salgssituation){
         Salg salg = new Salg(salgssituation);
         Storage.getInstance().addSalg(salg);
