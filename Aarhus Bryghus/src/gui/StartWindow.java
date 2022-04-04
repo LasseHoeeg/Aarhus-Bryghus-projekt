@@ -12,11 +12,14 @@ import javafx.scene.control.TabPane.TabClosingPolicy;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 
+import java.time.LocalDate;
+
 public class StartWindow extends Application {
 
     @Override
     public void init() {
         Controller.getInstance().initStorage();
+        System.out.println(Controller.getInstance().getDagsKvitteringer(LocalDate.now()));
     }
 
     @Override

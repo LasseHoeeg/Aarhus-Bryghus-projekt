@@ -2,7 +2,7 @@ package application.model;
 
 import java.time.LocalDate;
 
-public class KlippekortBetaling extends Betaling {
+public class KlippekortBetaling {
 
     private int samletAntalKlip = 0;
     private int samletAntalKlipForPeriode;

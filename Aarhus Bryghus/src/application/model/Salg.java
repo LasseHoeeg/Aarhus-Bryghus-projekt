@@ -5,7 +5,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 public class Salg {
-    private LocalDate tidspunktBetaling;
+    private LocalDateTime tidspunktBetaling;
     private double samletBeloeb;
     private int samletAntalKlip;
     private static int salgsID = 0;
@@ -20,7 +20,7 @@ public class Salg {
      * og ordrelinejAntal = 0 så første oprettelse af en ordrelinje starter fra 1.
      */
     public Salg(Salgssituation salgssituation) {
-        tidspunktBetaling = LocalDate.now();
+        tidspunktBetaling = LocalDateTime.now();
         salgsID++;
         this.salgssituation = salgssituation;
         ordrelinjeAntal = 0;
@@ -117,11 +117,11 @@ public class Salg {
         return rabatBeloeb;
     }
 
-    public LocalDate getTidspunktBetaling() {
+    public LocalDateTime getTidspunktBetaling() {
         return tidspunktBetaling;
     }
 
-    public void setTidspunktBetaling(LocalDate tidspunktBetaling) {
+    public void setTidspunktBetaling(LocalDateTime tidspunktBetaling) {
         this.tidspunktBetaling = tidspunktBetaling;
     }
 

@@ -93,7 +93,7 @@ public class Controller {
         return salg;
     }
 
-    public void updateSalg(Salg salg, LocalDate tidspunktBetaling, double samletBeloeb, int samletAntalKlip){
+    public void updateSalg(Salg salg, LocalDateTime tidspunktBetaling, double samletBeloeb, int samletAntalKlip){
         salg.setTidspunktBetaling(tidspunktBetaling);
         salg.setSamletBeloeb(samletBeloeb);
         salg.setSamletAntalKlip(samletAntalKlip);
@@ -109,7 +109,7 @@ public class Controller {
     public double getDagsopgoer(LocalDate date){
         double DagsSum = 0;
         for(Salg s : getSalgsliste())
-            if (s.getTidspunktBetaling() == date){
+            if (s.getTidspunktBetaling().toLocalDate() == date){
                 DagsSum=+s.getSamletBeloeb();
             }
         return DagsSum;
@@ -117,12 +117,21 @@ public class Controller {
 
     //Kan bruges en smartere ift Collections/Maps
     public ArrayList<Salg> getDagsKvitteringer(LocalDate date){
-        ArrayList<Salg> Kvitteringer = new ArrayList();
-        for(Salg s : getSalgsliste())
-            if (s.getTidspunktBetaling() == date){
-                Kvitteringer.add(s);
+        ArrayList<Salg> kvitteringer = new ArrayList();
+        for(Salg s : Controller.getInstance().getSalgsliste())
+            if (s.getTidspunktBetaling().toLocalDate() == date){
+                kvitteringer.add(s);
             }
-        return Kvitteringer;
+        return kvitteringer;
+    }
+
+    public ArrayList<Leje> getIkkeAfleveredeUdlejedeProdukter(){
+        ArrayList<Leje> lejeListe = new ArrayList();
+        for(Salg s : getSalgsliste())
+            if (s instanceof Leje && ((Leje) s).isBetalt()==false){
+                lejeListe.add((Leje) s);
+            }
+        return lejeListe;
     }
 
     public void initStorage() {
@@ -175,6 +184,16 @@ public class Controller {
         Pris pr16 = s2.createPris(775, p10);
         Pris pr17 = s2.createPris(775, p11);
         Pris pr18 = s2.createPris(775, p12);
+
+        Salg sa1 = controller.createSalg(s1);
+        sa1.createOrdrelinje(3, p4);
+        sa1.createOrdrelinje(2, p5);
+        sa1.createOrdrelinje(4, p1);
+
+        Salg sa2 = createSalg(s1);
+        Salg sa3 = createSalg(s1);
+        Salg sa4 = createSalg(s1);
+
     }
 }
 

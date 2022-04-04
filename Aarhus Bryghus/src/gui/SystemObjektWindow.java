@@ -40,12 +40,6 @@ public class SystemObjektWindow extends Stage {
         this(title, null);
     }
 
-//    private void initContent(GridPane pane) {
-//        pane.setPadding(new Insets(10));
-//        pane.setHgap(10);
-//        pane.setVgap(10);
-//        pane.setGridLinesVisible(false);}
-
     private final ListView<Salgssituation> lwSalgsSituation = new ListView();
 
     // buttons
