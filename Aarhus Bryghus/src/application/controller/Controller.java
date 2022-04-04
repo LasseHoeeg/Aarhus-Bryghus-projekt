@@ -106,6 +106,25 @@ public class Controller {
 
     //TODO metoede returner map/collection af leje salg
 
+    public double getDagsopgoer(LocalDate date){
+        double DagsSum = 0;
+        for(Salg s : getSalgsliste())
+            if (s.getTidspunktBetaling() == date){
+                DagsSum=+s.getSamletBeloeb();
+            }
+        return DagsSum;
+    }
+
+    //Kan bruges en smartere ift Collections/Maps
+    public ArrayList<Salg> getDagsKvitteringer(LocalDate date){
+        ArrayList<Salg> Kvitteringer = new ArrayList();
+        for(Salg s : getSalgsliste())
+            if (s.getTidspunktBetaling() == date){
+                Kvitteringer.add(s);
+            }
+        return Kvitteringer;
+    }
+
     public void initStorage() {
         Controller controller = Controller.getInstance();
 
