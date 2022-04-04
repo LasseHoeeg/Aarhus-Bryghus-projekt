@@ -12,7 +12,7 @@ public class Salg {
     private ArrayList<Ordrelinje> ordrelinjer = new ArrayList<>();
     private Rabat rabat;
     private Salgssituation salgssituation;
-    //private ArrayList<Betaling> betalinger;
+    private final ArrayList<Betaling> betalinger = new ArrayList<>();
     private static int ordrelinjeAntal;
 
     /**
@@ -157,16 +157,27 @@ public class Salg {
         return salgssituation;
     }
 
-//    public ArrayList<Betaling> getBetalinger() {
-//        return betalinger;
-//    }
+    public ArrayList<Betaling> getBetalinger() {
+        return new ArrayList<>(betalinger);
+    }
 
-    //add remove betaling?
+    public void addBetaling(Betaling betaling){
+        if (!betalinger.contains(betaling)){
+            betalinger.add(betaling);
+            betaling.addSalg(this);
+        }
+    }
+
+    public void removeBetaling(Betaling betaling){
+        if (betalinger.contains(betaling)){
+            betalinger.remove(betaling);
+            betaling.removeSalg(this);
+        }
+    }
 
     public static int getOrdrelinjeAntal() {
         return ordrelinjeAntal;
     }
-
 
     @Override
     public String toString() {
