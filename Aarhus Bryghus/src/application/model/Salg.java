@@ -1,7 +1,6 @@
 package application.model;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 public class Salg {
@@ -12,7 +11,7 @@ public class Salg {
     private ArrayList<Ordrelinje> ordrelinjer = new ArrayList<>();
     private Rabat rabat;
     private Salgssituation salgssituation;
-    private final ArrayList<Betaling> betalinger = new ArrayList<>();
+    private final ArrayList<Beloeb> alleBeloeb = new ArrayList<>();
     private static int ordrelinjeAntal;
 
     /**
@@ -157,22 +156,20 @@ public class Salg {
         return salgssituation;
     }
 
-    public ArrayList<Betaling> getBetalinger() {
-        return new ArrayList<>(betalinger);
+    public ArrayList<Beloeb> getAlleBeloeb() {
+        return new ArrayList<>(alleBeloeb);
     }
 
-    public void addBetaling(Betaling betaling){
-        if (!betalinger.contains(betaling)){
-            betalinger.add(betaling);
-            betaling.addSalg(this);
-        }
+    public Beloeb createBeloeb(double tilBetaling, Betalingsform betalingsform){
+        Beloeb b = new Beloeb(tilBetaling, betalingsform, this);
+        alleBeloeb.add(b);
+        return b;
     }
 
-    public void removeBetaling(Betaling betaling){
-        if (betalinger.contains(betaling)){
-            betalinger.remove(betaling);
-            betaling.removeSalg(this);
-        }
+    public Beloeb createBeloeb(double tilBetaling, LocalDate startDato, LocalDate slutDato, int kundeid, Betalingsform betalingsform){
+        Beloeb b = new Beloeb(tilBetaling, startDato, slutDato, kundeid, betalingsform, this);
+        alleBeloeb.add(b);
+        return b;
     }
 
     public static int getOrdrelinjeAntal() {

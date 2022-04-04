@@ -8,6 +8,7 @@ public class Ordrelinje {
     private Produkt produkt;
     private Rabat rabat;
     private Salg salg;
+    private Betalingsform betalingsform;
 
 /**
  * Da constructoren ikke er public oprettes ordrelinje-objekter kun igennem Salg-klassen
@@ -113,6 +114,23 @@ public class Ordrelinje {
                 setOrdrelinjeKlip(salg.getSalgssituation().getPriser().get(i).getAntalKlip() * antal);
                 found = true;
             } else i++;
+        }
+    }
+
+    public Betalingsform getBetalingsform() {
+        return betalingsform;
+    }
+
+    public void setBetalingsform(Betalingsform betalingsform) {
+        if (this.betalingsform != betalingsform){
+            Betalingsform oldBetalingsform = this.betalingsform;
+            if (oldBetalingsform != null){
+                oldBetalingsform.removeOrdrelinje(this);
+            }
+            this.betalingsform = betalingsform;
+            if (betalingsform != null){
+                betalingsform.addOrdrelinje(this);
+            }
         }
     }
 

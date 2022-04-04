@@ -75,8 +75,8 @@ public class _ControllerTest {
 
 
 
-        System.out.println("Ordrelinjepris i beløb linje 2: "+ordrelinje2.getOrdrelinjePris() +" kr");
-        System.out.println("Ordrelinjepris i Klip linje 2: "+ordrelinje2.getOrdrelinjeKlip()+" klip");
+        //System.out.println("Ordrelinjepris i beløb linje 2: "+ordrelinje2.getOrdrelinjePris() +" kr");
+        //System.out.println("Ordrelinjepris i Klip linje 2: "+ordrelinje2.getOrdrelinjeKlip()+" klip");
      //   salg.beregnSamletBeloebOgKlip();
         System.out.println("ol? "+salg.getOrdrelinjer());
         System.out.println("Salgspris total beløb: "+salg.getSamletBeloeb());
@@ -84,13 +84,20 @@ public class _ControllerTest {
         System.out.println(salg.getSamletBeloeb());
 
         Rabat rabat1 = ordrelinje.createRabatProcent(20);
-        Rabat rabat2 = ordrelinje2.createRabatBeloeb(20);
-        System.out.println(ordrelinje2.getOrdrelinjePris());
+        //Rabat rabat2 = ordrelinje2.createRabatBeloeb(20);
+        //System.out.println(ordrelinje2.getOrdrelinjePris());
 
         Rabat rabat3 = salg.createRabatPct(10);
         Rabat rabat4 = salg.createRabatBeloeb(100);
         System.out.println(salg.getSamletBeloeb());
 
+        //Test af betalingsformer
+        //KlippekortBetaling kb1 = new KlippekortBetaling("Klippekort-xx");
+        //KlippekortBetaling kb2 = new Betalingsform("Klippekort-yy");
+        //KlippekortBetaling kb3 =KlippekortBetaling.getInstance("Klip");
+
+        //Betalingsform kb4 =Betalingsform.getInstance("*Navn på betalingsform*");
+        //System.out.println("Test af betalingsform: "+kb4);
 
         //TODO Static på salg test
 
