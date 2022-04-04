@@ -1,10 +1,7 @@
 package gui;
 
 import application.controller.Controller;
-import application.model.Ordrelinje;
-import application.model.Pris;
-import application.model.Salg;
-import application.model.Salgssituation;
+import application.model.*;
 import javafx.beans.value.ChangeListener;
 import javafx.geometry.Insets;
 import javafx.scene.control.Button;
@@ -27,6 +24,8 @@ public class SalgPane extends GridPane {
     private final Button btnFjernOrdrelinje = new Button();
     private final Button btnRabat = new Button();
     private final Button btnBetal = new Button();
+    //TODO
+    private final Button btnLeje = new Button();
 
     // texts
     private final Text txtAarhusBryghus = new Text("Aarhus Bryghus Produkter:");
@@ -35,9 +34,14 @@ public class SalgPane extends GridPane {
     // textfields
     private final TextField txfAntalProdukter = new TextField();
     private final TextField txfSumOrdrelinje = new TextField();
+    //TODO
+    private final TextField txfBeloeb = new TextField();
+
 
     // combobox
     private final ComboBox<Salgssituation> cbSalgssituation = new ComboBox();
+    //TODO
+    private final ComboBox<Betaling> cbBetaling = new ComboBox();
 
     // atributter
     private Salg salg;
@@ -58,7 +62,7 @@ public class SalgPane extends GridPane {
         ChangeListener<Pris> listenerSSP = (ov, oldString, newString) -> this.selectionChangedSalgsSituationProdukter();
         lwSalgsSituationProdukter.getSelectionModel().selectedItemProperty().addListener(listenerSSP);
 
-        this.add(lwOrdrelinje, 2, 2, 2, 1);
+        this.add(lwOrdrelinje, 2, 2, 3, 1);
         lwOrdrelinje.setPrefWidth(50);
         lwOrdrelinje.setPrefHeight(150);
         ChangeListener<Ordrelinje> listenerOl = (ov, oldString, newString) -> this.selectionChangedOrdrelinje();
@@ -79,18 +83,23 @@ public class SalgPane extends GridPane {
 
         this.add(btnFjernOrdrelinje, 2, 3);
         btnFjernOrdrelinje.setText("Fjern");
-        btnFjernOrdrelinje.setPrefWidth(60);
+        btnFjernOrdrelinje.setPrefWidth(90);
         btnFjernOrdrelinje.setOnAction(e -> fjernOrdrelinje());
 
-        this.add(btnRabat, 2, 4);
+        this.add(btnRabat, 3, 3);
         btnRabat.setText("Rabat");
         btnRabat.setPrefWidth(60);
         btnRabat.setOnAction(e -> rabat());
 
-        this.add(btnBetal, 3, 4);
+        this.add(btnBetal, 4, 4);
         btnBetal.setText("Betal");
         btnBetal.setPrefWidth(60);
         btnBetal.setOnAction(e -> betal());
+
+        this.add(btnLeje, 4, 1);
+        btnLeje.setText("Leje");
+        btnLeje.setPrefWidth(60);
+        btnLeje.setOnAction(e -> rabat());
 
         // TextFields
 
@@ -98,7 +107,11 @@ public class SalgPane extends GridPane {
         txfAntalProdukter.setPromptText("Antal:");
         txfAntalProdukter.setPrefWidth(100);
 
-        this.add(txfSumOrdrelinje,3,3);
+        this.add(txfBeloeb,3,4);
+        txfBeloeb.setPromptText("Klip / Beløb");
+        txfBeloeb.setPrefWidth(60);
+
+        this.add(txfSumOrdrelinje,4,3);
         txfSumOrdrelinje.setPromptText("sum:");
         txfSumOrdrelinje.setPrefWidth(60);
         txfSumOrdrelinje.setDisable(true);
@@ -111,6 +124,14 @@ public class SalgPane extends GridPane {
         ChangeListener listenerSS = (ov, oldString, newString) -> this.selectionChangedSalgssituation();
         cbSalgssituation.getSelectionModel().selectedItemProperty().addListener(listenerSS);
         cbSalgssituation.setOnMouseClicked(e -> UpdateSalgssituation());
+
+        this.add(cbBetaling,2,4);
+        cbBetaling.setPromptText("Betaling");
+        cbBetaling.setPrefWidth(90);
+//        cbBetaling.getItems().setAll(Controller.getInstance().getSalgssituationer());
+//        ChangeListener listenerSS = (ov, oldString, newString) -> this.selectionChangedSalgssituation();
+        cbBetaling.getSelectionModel().selectedItemProperty().addListener(listenerSS);
+        cbBetaling.setOnMouseClicked(e -> UpdateSalgssituation());
 
 
 

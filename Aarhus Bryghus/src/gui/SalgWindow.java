@@ -1,10 +1,7 @@
 package gui;
 
 import application.controller.Controller;
-import application.model.Ordrelinje;
-import application.model.Pris;
-import application.model.Salg;
-import application.model.Salgssituation;
+import application.model.*;
 import javafx.beans.value.ChangeListener;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
@@ -62,6 +59,9 @@ public class SalgWindow extends Stage {
 
     // combobox
     private final ComboBox<Salgssituation> cbSalgssituation = new ComboBox();
+    //TODO
+    private final ComboBox<Betaling> cbBetaling = new ComboBox();
+
 
     // atributter
 //    private Salg salg;
@@ -77,7 +77,7 @@ public class SalgWindow extends Stage {
         lwSalgsSituationProdukter.setPrefWidth(50);
         lwSalgsSituationProdukter.setPrefHeight(150);
 
-        pane.add(lwOrdrelinje, 2, 2, 2, 1);
+        pane.add(lwOrdrelinje, 2, 2, 3, 1);
         lwOrdrelinje.setPrefWidth(50);
         lwOrdrelinje.setPrefHeight(150);
 
@@ -120,5 +120,8 @@ public class SalgWindow extends Stage {
         pane.add(cbSalgssituation,0,0);
         cbSalgssituation.setPromptText("Prislister");
 
+        //TODO
+        pane.add(cbSalgssituation,7,7);
+        cbSalgssituation.setPromptText("Betalingsform");
     }
 }
