@@ -3,15 +3,12 @@ package gui;
 import application.controller.Controller;
 import application.model.*;
 import javafx.beans.value.ChangeListener;
-import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
-import javafx.scene.control.ListView;
 import javafx.scene.layout.GridPane;
 
 public class Gui extends Application {
@@ -19,7 +16,7 @@ public class Gui extends Application {
 
     @Override
     public void start(Stage stage) {
-        stage.setTitle("CRUD Menu");
+        stage.setTitle("Statestik");
         GridPane pane = new GridPane();
         this.initContent(pane);
         Scene scene = new Scene(pane);
@@ -29,30 +26,42 @@ public class Gui extends Application {
 
     // -------------------------------------------------------------------------
 
+
+    // datepicker
+
+    private final DatePicker dpdateStart = new DatePicker();
+    private final DatePicker dpdateSlut = new DatePicker();
+    private final DatePicker dpDagsOpgoer = new DatePicker();
+
+
+
+
     // listviews
-    private final ListView<Pris> lwSalgsSituationProdukter = new ListView();
-    private final ListView<Ordrelinje> lwOrdrelinje = new ListView();
+    private final ListView<Salg> lwAntalKlipPrProduktPeriode = new ListView();
+    private final ListView<Salg> lwDagsOpgoer = new ListView();
+    private final ListView<Leje> lwLejedeUafleveredeProdukter = new ListView();
+
+
 
     // buttons
-    private final Button btnTilføjOrdrelinje = new Button();
-    private final Button btnFjernOrdrelinje = new Button();
-    private final Button btnRabat = new Button();
-    private final Button btnBetal = new Button();
+
 
     // texts
-    private final Text txtAarhusBryghus = new Text("Aarhus Bryghus Produkter:");
-    private final Text txtIndKurvOrdrelinje = new Text("Indkøbskurv:");
+    private final Text txtPeriodeForKlip = new Text("Klip");
+    private final Text txtPeriodeForKlipProdukt = new Text("Antal klip pr produkt periode:");
+    private final Text txtDagsOpgoer = new Text("Dagsopgør");
+    private final Text txtKviteringer = new Text("Kviteringer:");
+    private final Text txtUdeje = new Text("Udlejede Produkter:");
+    private final Text txtLeje = new Text("Leje");
+
+
+
+
 
     // textfields
-    private final TextField txfAntalProdukter = new TextField();
-    private final TextField txfSumOrdrelinje = new TextField();
+    private final TextField txfSumDagsOpgoer = new TextField();
+    private final TextField txfSumKlip = new TextField();
 
-    // combobox
-    private final ComboBox<Salgssituation> cbSalgssituation = new ComboBox();
-
-    // atributter
-    private Salg salg;
-    private int antal;
 
     private void initContent(GridPane pane) {
         // show or hide grid lines
@@ -69,63 +78,63 @@ public class Gui extends Application {
 
         // Listviews
 
-        pane.add(lwSalgsSituationProdukter, 0, 2, 2, 2);
-        lwSalgsSituationProdukter.setPrefWidth(50);
-        lwSalgsSituationProdukter.setPrefHeight(150);
-        ChangeListener<Pris> listenerSSP = (ov, oldString, newString) -> this.selectionChangedSalgsSituationProdukter();
-        lwSalgsSituationProdukter.getSelectionModel().selectedItemProperty().addListener(listenerSSP);
+        pane.add(lwAntalKlipPrProduktPeriode, 0, 3, 2, 2);
+        lwAntalKlipPrProduktPeriode.setPrefWidth(25);
+        lwAntalKlipPrProduktPeriode.setPrefHeight(200);
+//        ChangeListener<Pris> listenerK = (ov, oldString, newString) -> this.selectionChangedKlip();
+//        lwAntalKlipPrProduktPeriode.getSelectionModel().selectedItemProperty().addListener(listenerK);
 
-        pane.add(lwOrdrelinje, 2, 2, 2, 1);
-        lwOrdrelinje.setPrefWidth(50);
-        lwOrdrelinje.setPrefHeight(150);
-        ChangeListener<Ordrelinje> listenerOl = (ov, oldString, newString) -> this.selectionChangedOrdrelinje();
-        lwOrdrelinje.getSelectionModel().selectedItemProperty().addListener(listenerOl);
+        pane.add(lwDagsOpgoer, 3, 3, 1, 2);
+        lwDagsOpgoer.setPrefWidth(25);
+        lwDagsOpgoer.setPrefHeight(200);
+
+        pane.add(lwLejedeUafleveredeProdukter, 5, 3, 1, 3);
+        lwLejedeUafleveredeProdukter.setPrefWidth(100);
+        lwLejedeUafleveredeProdukter.setPrefHeight(200);
+//        ChangeListener<Pris> listenerK = (ov, oldString, newString) -> this.selectionChangedKlip();
+//        lwAntalKlipPrProduktPeriode.getSelectionModel().selectedItemProperty().addListener(listenerK);
+
 
         // Texts
 
-        pane.add(txtAarhusBryghus,0,1);
-        pane.add(txtIndKurvOrdrelinje,2,1);
+        pane.add(txtPeriodeForKlip,0,0);
+        pane.add(txtPeriodeForKlipProdukt,0,2);
+        pane.add(txtDagsOpgoer,3, 0);
+        pane.add(txtKviteringer,3, 2);
+        pane.add(txtLeje,5, 2);
 
 
-        // Buttons
+        // DatePicker
 
-        pane.add(btnTilføjOrdrelinje, 1, 4);
-        btnTilføjOrdrelinje.setText("Tilføj");
-        btnTilføjOrdrelinje.setPrefWidth(60);
-        btnTilføjOrdrelinje.setOnAction(e -> tilføjOrdrelinje());
+        pane.add(dpdateSlut, 1, 1);
+        dpdateSlut.setPromptText("Slut dato");
+        dpdateSlut.setEditable(false);
 
-        pane.add(btnFjernOrdrelinje, 2, 3);
-        btnFjernOrdrelinje.setText("Fjern");
-        btnFjernOrdrelinje.setPrefWidth(60);
-        btnFjernOrdrelinje.setOnAction(e -> fjernOrdrelinje());
 
-        pane.add(btnRabat, 2, 4);
-        btnRabat.setText("Rabat");
-        btnRabat.setPrefWidth(60);
-        btnRabat.setOnAction(e -> rabat());
+        pane.add(dpdateStart, 0, 1);
+        dpdateStart.setPromptText("Start dato");
+        dpdateStart.setEditable(false);
 
-        pane.add(btnBetal, 3, 4);
-        btnBetal.setText("Betal");
-        btnBetal.setPrefWidth(60);
-        btnBetal.setOnAction(e -> betal());
 
-        // TextFields
+        pane.add(dpDagsOpgoer, 3, 1);
+        dpDagsOpgoer.setPromptText("Dato Dagsopgør");
+        dpDagsOpgoer.setEditable(false);
+        dpDagsOpgoer.setOnMouseExited(e -> eventDagsOpgoer());
 
-        pane.add(txfAntalProdukter,0,4);
-        txfAntalProdukter.setPromptText("Antal:");
-        txfAntalProdukter.setPrefWidth(100);
 
-        pane.add(txfSumOrdrelinje,3,3);
-        txfSumOrdrelinje.setPromptText("sum:");
-        txfSumOrdrelinje.setPrefWidth(60);
-        txfSumOrdrelinje.setDisable(true);
+        // Textfields
 
-        // ComboBox
-        pane.add(cbSalgssituation,0,0);
-        cbSalgssituation.setPromptText("Prislister");
-        cbSalgssituation.getItems().setAll(Controller.getInstance().getSalgssituationer());
-        ChangeListener listenerSS = (ov, oldString, newString) -> this.selectionChangedSalgssituation();
-        lwOrdrelinje.getSelectionModel().selectedItemProperty().addListener(listenerSS);
+
+        pane.add(txfSumKlip,0,5, 2, 1);
+        txfSumKlip.setPromptText("sum:");
+        txfSumKlip.setPrefWidth(20);
+        txfSumKlip.setEditable(false);
+
+        pane.add(txfSumDagsOpgoer,3,5, 1, 1);
+        txfSumDagsOpgoer.setPromptText("sum:");
+        txfSumDagsOpgoer.setPrefWidth(20);
+        txfSumDagsOpgoer.setEditable(false);
+
 
 
 
@@ -135,42 +144,41 @@ public class Gui extends Application {
 
 // ProduktGruppe funktioner
 
-    private void selectionChangedSalgssituation() {
-        Salgssituation selected = cbSalgssituation.getSelectionModel().getSelectedItem();
-        lwSalgsSituationProdukter.getItems().setAll(selected.getPriser());
-        salg = new Salg(selected);
+    private void eventDagsOpgoer() {
+        if (dpDagsOpgoer!=null){
+            lwDagsOpgoer.getItems().setAll(Controller.getInstance().getDagsKvitteringer(dpDagsOpgoer.getValue()));
+            txfSumDagsOpgoer.setText("sum: " + Controller.getInstance().getDagsopgoer(dpDagsOpgoer.getValue()));
+        }
+
+//        Salgssituation selected = cbSalgssituation.getSelectionModel().getSelectedItem();
+//        lwAntalKlipPrProduktPeriode.getItems().setAll(selected.getPriser());
+//        salg = new Salg(selected);
+    }
+//TODO
+    private void selectionChangedKlip() {
+        if (dpdateStart!=null&&dpdateSlut!=null)
+            lwAntalKlipPrProduktPeriode.getItems().setAll();
     }
 
-    private void selectionChangedSalgsSituationProdukter() {
-        Pris selected = lwSalgsSituationProdukter.getSelectionModel().getSelectedItem();
-    }
-
-    private void selectionChangedOrdrelinje() {
-        Ordrelinje selected = lwOrdrelinje.getSelectionModel().getSelectedItem();
-    }
-
-    private void sumChanged() {
-        txfSumOrdrelinje.setText(salg.getSamletBeloeb()+"");
-    }
 
 
     private void tilføjOrdrelinje() {
-        Pris selected = lwSalgsSituationProdukter.getSelectionModel().getSelectedItem();
-        if (selected != null && Integer.parseInt(txfAntalProdukter.getText()) > 0) {
-            salg.createOrdrelinje(Integer.parseInt(txfAntalProdukter.getText()), selected.getProdukt());
-            lwOrdrelinje.getItems().setAll(salg.getOrdrelinjer());
-            sumChanged();
-        }
-    }
-
-    private void fjernOrdrelinje() {
-        Ordrelinje selected = lwOrdrelinje.getSelectionModel().getSelectedItem();
-        if (selected != null) {
-//            salg.removeOrdrelinje(selected);
+//        Pris selected = lwSalgsSituationProdukter.getSelectionModel().getSelectedItem();
+//        if (selected != null && Integer.parseInt(txfAntalProdukter.getText()) > 0) {
+//            salg.createOrdrelinje(Integer.parseInt(txfAntalProdukter.getText()), selected.getProdukt());
 //            lwOrdrelinje.getItems().setAll(salg.getOrdrelinjer());
 //            sumChanged();
-        }
+//        }
     }
+
+//    private void fjernOrdrelinje() {
+//        Ordrelinje selected = lwOrdrelinje.getSelectionModel().getSelectedItem();
+//        if (selected != null) {
+////            salg.removeOrdrelinje(selected);
+////            lwOrdrelinje.getItems().setAll(salg.getOrdrelinjer());
+////            sumChanged();
+//        }
+//    }
 
     private void rabat() {
 //        sumChanged();
