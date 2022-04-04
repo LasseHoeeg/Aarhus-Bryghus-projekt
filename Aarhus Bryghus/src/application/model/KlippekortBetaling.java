@@ -1,43 +1,24 @@
 package application.model;
 
-import java.time.LocalDate;
-
-public class KlippekortBetaling {
-
-    private int samletAntalKlip = 0;
-    private int samletAntalKlipForPeriode;
+public class KlippekortBetaling extends Betalingsform {
+    private int antalKlipBrugtPeriode;
     private static KlippekortBetaling uniqueInstance;
 
-    public KlippekortBetaling() {
-        super();
+    public KlippekortBetaling(String navn){
+        super(navn);
     }
 
-        public static KlippekortBetaling getInstance() {
-            if (uniqueInstance == null) {uniqueInstance = new KlippekortBetaling();
-            }
-            return uniqueInstance;
+    public static KlippekortBetaling getInstance(String navn) {
+        if (uniqueInstance == null) {
+            uniqueInstance = new KlippekortBetaling(navn);
+        }
+        return uniqueInstance;
     }
 
-    public int klip(int antalKlip) {
-     setSamletAntalKlip(antalKlip);
-     return antalKlip;
+    public int antalKlipForPeriode(){
+        int sum;
+        //for ()
+        return 0;
     }
 
-    private void setSamletAntalKlip(int antalKlip){
-        samletAntalKlip = samletAntalKlip+antalKlip;
-    }
-
-    public int getSamletAntalKlip() {
-        return samletAntalKlip;
-    }
-
-    public int getSamletAntalKlipForPeriode(LocalDate start, LocalDate slut) {
-
-        return samletAntalKlipForPeriode;
-    }
 }
-
-
-
-
-
