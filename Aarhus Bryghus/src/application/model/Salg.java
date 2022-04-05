@@ -1,6 +1,6 @@
 package application.model;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 public class Salg {
@@ -116,6 +116,12 @@ public class Salg {
         return rabatBeloeb;
     }
 
+    public Beloeb createBeloeb(double tilBetaling, Betaling betalingsform){
+        Beloeb b = new Beloeb(tilBetaling, betalingsform, this);
+        alleBeloeb.add(b);
+        return b;
+    }
+
     public LocalDateTime getTidspunktBetaling() {
         return tidspunktBetaling;
     }
@@ -160,17 +166,7 @@ public class Salg {
         return new ArrayList<>(alleBeloeb);
     }
 
-    public Beloeb createBeloeb(double tilBetaling, Betalingsform betalingsform){
-        Beloeb b = new Beloeb(tilBetaling, betalingsform, this);
-        alleBeloeb.add(b);
-        return b;
-    }
 
-    public Beloeb createBeloeb(double tilBetaling, LocalDate startDato, LocalDate slutDato, int kundeid, Betalingsform betalingsform){
-        Beloeb b = new Beloeb(tilBetaling, startDato, slutDato, kundeid, betalingsform, this);
-        alleBeloeb.add(b);
-        return b;
-    }
 
     public static int getOrdrelinjeAntal() {
         return ordrelinjeAntal;

@@ -1,40 +1,29 @@
 package application.model;
 
-import java.time.LocalDate;
-
 public class Beloeb {
     private double tilBetaling;
-    private LocalDate startDato;
-    private LocalDate slutDato;
-    private int kundeid;
-    private int firmaid;
     private Salg salg;
-    private Betalingsform betalingsform;
+    private Betaling betaling;
 
-    Beloeb(double tilBetaling, Betalingsform betalingsform, Salg salg){
+    Beloeb(double tilBetaling, Betaling betaling, Salg salg){
         this.tilBetaling = tilBetaling;
+        this.betaling = betaling;
+        this.salg = salg;
     }
 
-    Beloeb(double tilBetaling, LocalDate startDato, LocalDate slutDato, int kundeid, Betalingsform betalingsform, Salg salg){
-      this.tilBetaling=tilBetaling;
-      this.startDato=startDato;
-      this.slutDato=slutDato;
-      this.kundeid=kundeid;
+    public Betaling getBetaling() {
+        return betaling;
     }
 
-    public Betalingsform getBetalingsform() {
-        return betalingsform;
-    }
-
-    public void setBetalingsform(Betalingsform betalingsform){
-        if (this.betalingsform != betalingsform){
-            Betalingsform oldBetalingsform = this.betalingsform;
+    public void setBetaling(Betaling betaling){
+        if (this.betaling != betaling){
+            Betaling oldBetalingsform = this.betaling;
             if (oldBetalingsform != null){
                 oldBetalingsform.removeBeloeb(this);
             }
-            this.betalingsform = betalingsform;
-            if (betalingsform != null){
-                betalingsform.addBeloeb(this);
+            this.betaling = betaling;
+            if (betaling != null){
+                betaling.addBeloeb(this);
             }
         }
     }
@@ -45,30 +34,6 @@ public class Beloeb {
 
     public void setTilBetaling(double tilBetaling) {
         this.tilBetaling = tilBetaling;
-    }
-
-    public LocalDate getStartDato() {
-        return startDato;
-    }
-
-    public void setStartDato(LocalDate startDato) {
-        this.startDato = startDato;
-    }
-
-    public LocalDate getSlutDato() {
-        return slutDato;
-    }
-
-    public void setSlutDato(LocalDate slutDato) {
-        this.slutDato = slutDato;
-    }
-
-    public int getKundeid() {
-        return kundeid;
-    }
-
-    public void setKundeid(int kundeid) {
-        this.kundeid = kundeid;
     }
 
     public Salg getSalg() {
