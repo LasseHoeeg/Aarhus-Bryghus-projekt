@@ -41,12 +41,8 @@ public class Salg {
         int sumKlip = 0;
 
         for (Ordrelinje o : ordrelinjer) {
-          //  if (o.getBetaling().getNavn().equals("KLIPPEKORTBETALING")) {
-                sumKlip += o.getOrdrelinjeKlip();
-           // }
-            //else {
-                sumBeloeb += o.getOrdrelinjeBeloeb();
-           // }
+                    sumKlip += o.getOrdrelinjeKlip();
+                    sumBeloeb += o.getOrdrelinjePris();
         }
         if (rabat != null) {
             sumBeloeb = sumBeloeb - rabat.getRabat(sumBeloeb);
@@ -66,7 +62,7 @@ public class Salg {
         Ordrelinje ordrelinje = null;
         if (contains != -1){
             this.getOrdrelinjer().get(contains).setAntal(this.getOrdrelinjer().get(contains).getAntal()+antal);
-            this.getOrdrelinjer().get(contains).beregnOrdrelinjeBeloebOgKlip();
+            this.getOrdrelinjer().get(contains).beregnOrdrelinjePrisOgKlip();
         }
         else{
             ordrelinjeAntal++;
