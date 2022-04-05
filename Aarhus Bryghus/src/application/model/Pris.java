@@ -68,7 +68,13 @@ public class Pris {
 
     @Override
     public String toString() {
-        return  produkt + ", " + beloeb;
-        //return  produkt + ", " + beloeb + ", " + antalKlip;       //til når klippekort oprettes
+        String result = "";
+        if (this.getAntalKlip()!=0){
+            result = produkt + ", " + beloeb + "kr, " + antalKlip+"klip";
+        }
+        else {
+            result = produkt + ", " + beloeb;
+        }
+        return result;
     }
 }
