@@ -1,8 +1,9 @@
 package application.model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Betaling {
+public class Betaling implements Serializable {
     private final ArrayList<Ordrelinje> ordrelinjer = new ArrayList<>();
     private final ArrayList<Beloeb> alleBeloeb = new ArrayList<>();
     private Betalingsformer betalingsform;

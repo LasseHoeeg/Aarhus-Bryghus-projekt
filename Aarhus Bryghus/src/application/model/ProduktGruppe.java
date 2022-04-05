@@ -1,10 +1,11 @@
 package application.model;
 
+import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.TreeSet;
 
-public class ProduktGruppe {
+public class ProduktGruppe implements Serializable {
     private String navn;
     private final HashSet<Produkt> produkter = new HashSet<>();
 
