@@ -7,6 +7,7 @@ public class Produkt {
     private String navn;
     private String beskrivelse;
     private ProduktGruppe produktGruppe;
+    private Pant pant;
     private ArrayList<Pris> priser = new ArrayList<>();
 
 
@@ -18,6 +19,16 @@ public class Produkt {
         this.navn = navn;
         this.beskrivelse = beskrivelse;
         this.produktGruppe = produktGruppe;
+    }
+
+    public Pant getPant() {
+        return pant;
+    }
+
+    public void setPant(Pant pant) {
+        if (this.pant!=pant){
+            this.pant = pant;
+        }
     }
 
     public ProduktGruppe getProduktGruppe() {

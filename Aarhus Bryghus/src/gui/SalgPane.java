@@ -192,5 +192,11 @@ public class SalgPane extends GridPane {
     private void betal() {
 
     }
+    private void leje() {
+
+        Controller.getInstance().createLeje().getOrdrelinjer()
+
+    }
+
 }
 

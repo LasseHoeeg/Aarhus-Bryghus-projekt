@@ -8,6 +8,7 @@ public class Salg {
     private double samletBeloeb;
     private int samletAntalKlip;
     private static int salgsID = 0;
+    private int salgsInt;
     private ArrayList<Ordrelinje> ordrelinjer = new ArrayList<>();
     private Rabat rabat;
     private Salgssituation salgssituation;
@@ -19,10 +20,13 @@ public class Salg {
      * og ordrelinejAntal = 0 så første oprettelse af en ordrelinje starter fra 1.
      */
     public Salg(Salgssituation salgssituation) {
-        tidspunktBetaling = LocalDateTime.now();
-        salgsID++;
+        this.tidspunktBetaling = LocalDateTime.now();
+        this.salgsInt = salgsID;
+//        this.salgsID = setSalgsID();
+//        salgsID=this.getSalgsID(;
         this.salgssituation = salgssituation;
         ordrelinjeAntal = 0;
+        salgsID++;
     }
 
     /**
@@ -65,6 +69,9 @@ public class Salg {
             ordrelinje = new Ordrelinje(ordrelinjeAntal, antal, produkt, this);
             ordrelinjer.add(ordrelinje);
             beregnSamletBeloebOgKlip();
+//            setSamletBeloeb(samletBeloeb+ordrelinje.getOrdrelinjePris());
+//            setSamletAntalKlip(samletAntalKlip+ordrelinje.getOrdrelinjeKlip());
+
         }
         return ordrelinje;
     }
@@ -151,6 +158,10 @@ public class Salg {
         return salgsID;
     }
 
+    public void setSalgsID(int salgsID) {
+        this.salgsID = salgsID;
+    }
+
     public ArrayList<Ordrelinje> getOrdrelinjer() {
         return new ArrayList<>(ordrelinjer);
     }
@@ -175,8 +186,8 @@ public class Salg {
 
     @Override
     public String toString() {
-        return tidspunktBetaling +
+        return tidspunktBetaling.toLocalDate() + " " + tidspunktBetaling.getHour() + ":" + tidspunktBetaling.getMinute() +
                 ", " + samletBeloeb +
-                "0, " + salgsID;
+                "0, " + this.salgsInt;
     }
  }
