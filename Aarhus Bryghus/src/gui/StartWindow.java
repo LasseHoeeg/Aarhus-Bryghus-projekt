@@ -19,7 +19,6 @@ public class StartWindow extends Application {
     @Override
     public void init() {
         Controller.getInstance().initStorage();
-        System.out.println(Controller.getInstance().getDagsKvitteringer(LocalDate.now()));
     }
 
     @Override
@@ -43,31 +42,17 @@ public class StartWindow extends Application {
     private void initTapPane(TabPane tabPane) {
         tabPane.setTabClosingPolicy(TabClosingPolicy.UNAVAILABLE);
 
-
         Tab tabSalg = new Tab("Salg");
         tabPane.getTabs().add(tabSalg);
 
         SalgPane salgPane = new SalgPane();
         tabSalg.setContent(salgPane);
 
-
         Tab tabSystemObjek = new Tab("System Objekter");
         tabPane.getTabs().add(tabSystemObjek);
 
         SystemObjektPane systemObjektPane = new SystemObjektPane();
         tabSystemObjek.setContent(systemObjektPane);
-
-//        ChangeListener listenerTSO = (ov, oldString, newString) -> this.sumChanged();
-//        tabPane.getSelectionModel().selectedItemProperty().addListener(listenerTSO);
-
-//
-//        sceneProperty().addListener
-//        tabSystemObjek.
-//
-//        sceneProperty().addListener
-//        systemObjektPane.addListener(listenerOl);
-
-
 
         Tab tabStatistik = new Tab("Statistik");
         tabPane.getTabs().add(tabStatistik);
@@ -76,7 +61,4 @@ public class StartWindow extends Application {
         tabStatistik.setContent(statistikPane);
 
     }
-//    public void sumChanged() {
-//        TabPane.class.
-//    }
 }
