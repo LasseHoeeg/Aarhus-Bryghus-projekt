@@ -45,7 +45,7 @@ public class Salg {
                 sumKlip += o.getOrdrelinjeKlip();
            // }
             //else {
-                sumBeloeb += o.getOrdrelinjePris();
+                sumBeloeb += o.getOrdrelinjeBeloeb();
            // }
         }
         if (rabat != null) {
@@ -66,7 +66,7 @@ public class Salg {
         Ordrelinje ordrelinje = null;
         if (contains != -1){
             this.getOrdrelinjer().get(contains).setAntal(this.getOrdrelinjer().get(contains).getAntal()+antal);
-            this.getOrdrelinjer().get(contains).beregnOrdrelinjePrisOgKlip();
+            this.getOrdrelinjer().get(contains).beregnOrdrelinjeBeloebOgKlip();
         }
         else{
             ordrelinjeAntal++;

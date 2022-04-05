@@ -75,7 +75,7 @@ public class _ControllerTest {
 
 
 
-        System.out.println("Ordrelinjepris i beløb linje 2: "+ordrelinje.getOrdrelinjePris() +" kr");
+        System.out.println("Ordrelinjepris i beløb linje 2: "+ordrelinje.getOrdrelinjeBeloeb() +" kr");
         System.out.println("Ordrelinjepris i Klip linje 2: "+ordrelinje.getOrdrelinjeKlip()+" klip");
         //System.out.println("Ordrelinjepris i beløb linje 2: "+ordrelinje2.getOrdrelinjePris() +" kr");
         //System.out.println("Ordrelinjepris i Klip linje 2: "+ordrelinje2.getOrdrelinjeKlip()+" klip");

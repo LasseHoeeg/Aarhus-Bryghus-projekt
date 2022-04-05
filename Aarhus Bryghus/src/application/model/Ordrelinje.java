@@ -3,7 +3,7 @@ package application.model;
 public class Ordrelinje {
     private int nr;
     private int antal;
-    private double ordrelinjePris;
+    private double ordrelinjeBeloeb;
     private int ordrelinjeKlip;
     private Produkt produkt;
     private Rabat rabat;
@@ -20,7 +20,7 @@ public class Ordrelinje {
     this.antal = antal;
     this.produkt = produkt;
     this.salg = salg;
-    beregnOrdrelinjePrisOgKlip();
+    beregnOrdrelinjeBeloebOgKlip();
 }
 
     public Salg getSalg() {
@@ -42,7 +42,7 @@ public class Ordrelinje {
         }
             Rabat rabat = new RabatBeloeb(beloeb);
             this.rabat = rabat;
-            beregnOrdrelinjePrisOgKlip();
+            beregnOrdrelinjeBeloebOgKlip();
             return rabat;
         }
 
@@ -56,7 +56,7 @@ public class Ordrelinje {
         }
         Rabat rabat = new RabatProcent(procent);
         this.rabat = rabat;
-        beregnOrdrelinjePrisOgKlip();
+        beregnOrdrelinjeBeloebOgKlip();
         return rabat;
     }
 
@@ -88,28 +88,28 @@ public class Ordrelinje {
         return ordrelinjeKlip;
     }
 
-    public void setOrdrelinjePris(double ordrelinjePris) {
-        this.ordrelinjePris = ordrelinjePris;
+    public void setOrdrelinjeBeloeb(double ordrelinjeBeloeb) {
+        this.ordrelinjeBeloeb = ordrelinjeBeloeb;
     }
 
-    public double getOrdrelinjePris() {
-        return ordrelinjePris;
+    public double getOrdrelinjeBeloeb() {
+        return ordrelinjeBeloeb;
     }
 
     /**
      * Beregner den samlede pris pr. ordrelinje i et salg i hhv. beløb og klip
      */
-    public void beregnOrdrelinjePrisOgKlip() {
+    public void beregnOrdrelinjeBeloebOgKlip() {
         int i = 0;
         boolean found = false;
         while (i < salg.getSalgssituation().getPriser().size()&&!found) {
             if (this.produkt == salg.getSalgssituation().getPriser().get(i).getProdukt()) {
                 if (getRabat()!=null){
-                    setOrdrelinjePris((salg.getSalgssituation().getPriser().get(i).getBeloeb() * antal)
-                            - getRabat().getRabat(getOrdrelinjePris()));
+                    setOrdrelinjeBeloeb((salg.getSalgssituation().getPriser().get(i).getBeloeb() * antal)
+                            - getRabat().getRabat(getOrdrelinjeBeloeb()));
                 }
                 else {
-                    setOrdrelinjePris(salg.getSalgssituation().getPriser().get(i).getBeloeb() * antal);
+                    setOrdrelinjeBeloeb(salg.getSalgssituation().getPriser().get(i).getBeloeb() * antal);
                 }
                 setOrdrelinjeKlip(salg.getSalgssituation().getPriser().get(i).getAntalKlip() * antal);
                 found = true;
@@ -140,12 +140,12 @@ public class Ordrelinje {
         if (this.getOrdrelinjeKlip()!=0){
             result=produkt.getNavn() + ", " +
                 +antal +
-                "stk, " + getOrdrelinjePris() +
+                "stk, " + getOrdrelinjeBeloeb() +
                 "0 kr. " + getOrdrelinjeKlip() + " klip";}
         else {
             result=produkt.getNavn() + ", " +
                     +antal +
-                    "stk, " + getOrdrelinjePris() +
+                    "stk, " + getOrdrelinjeBeloeb() +
                     "0 kr.";
         }
         return result;

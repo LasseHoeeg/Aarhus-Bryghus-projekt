@@ -187,6 +187,9 @@ public class Controller {
         return lejeListe;
     }
 
+    /**
+     * samlet antal klip brugt på produkter for en givet periode
+     */
     public int getAntalBrugteKlip(LocalDateTime start, LocalDateTime slut) {
         int sum = 0;
         for (int i = 0; i < Storage.getInstance().getSalgsliste().size(); i++) {
@@ -199,6 +202,20 @@ public class Controller {
         return sum;
     }
 
+    /**
+     * samlet antal klip brugt på produkter for en givet periode - her fordelt på de enkelte produkter
+     */
+    public ArrayList<Ordrelinje> getPrProduktAntalKlipIPeriode(){
+        ArrayList<Ordrelinje> sumKlip = new ArrayList<>();
+        for (Salg s : Storage.getInstance().getSalgsliste()){
+                for (int i = 0; i < s.getOrdrelinjer().size(); i++) {
+                    if (s.getOrdrelinjer().get(i).getBetaling().getBetalingsform() == Betalingsformer.KLIPPEKORTBETALING) {
+                        sumKlip.add(s.getOrdrelinjer().get(i));
+                    }
+            }
+        }
+        return sumKlip;
+    }
 
     // ------------------------------------------------------------------------------------------------------------
 
