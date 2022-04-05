@@ -91,6 +91,32 @@ public class Controller {
         Salg salg = new Salg(salgssituation);
         Storage.getInstance().addSalg(salg);
         return salg;
+
+    }
+
+    public Leje tivngSalgTilLeje(Salg salg){
+        Salg leje = ;
+        int samletPantbeloeb=pantBeloebIndbetalt((Leje) leje);
+        leje = new Leje(salgssituation,false,pantBeloebIndbetalt((Leje)leje),LocalDate.now());
+        leje.
+        Storage.getInstance().addSalg(leje);
+        return (Leje) leje;
+    }
+
+    public void ordrelinjeSalgTilLeje(Salg salg, Leje leje){
+        for (Ordrelinje o : salg.getOrdrelinjer()){
+            o.
+        }
+
+    }
+
+    public int pantBeloebIndbetalt(Leje leje){
+        int samletPantbeloeb=0;
+        for (Ordrelinje o : leje.getOrdrelinjer()){
+            if (o.getProdukt().getPant()!=null)
+                samletPantbeloeb+=o.getProdukt().getPant().getBeloeb();
+        }
+        return samletPantbeloeb;
     }
 
     public void updateSalg(Salg salg, LocalDateTime tidspunktBetaling, double samletBeloeb, int samletAntalKlip){
@@ -108,20 +134,21 @@ public class Controller {
 
     public double getDagsopgoer(LocalDate date){
         double DagsSum = 0;
-        for(Salg s : getSalgsliste())
-            if (s.getTidspunktBetaling().toLocalDate() == date){
-                DagsSum=+s.getSamletBeloeb();
+        for(Salg s : Controller.getInstance().getSalgsliste())
+            if (s.getTidspunktBetaling().getDayOfYear()== date.getDayOfYear()){
+                DagsSum+=s.getSamletBeloeb();
             }
         return DagsSum;
     }
 
     //Kan bruges en smartere ift Collections/Maps
-    public ArrayList<Salg> getDagsKvitteringer(LocalDate date){
+    public ArrayList<Salg> getDagsKvitteringer(LocalDate date) {
         ArrayList<Salg> kvitteringer = new ArrayList();
-        for(Salg s : Controller.getInstance().getSalgsliste()){
-//            if (s.getTidspunktBetaling().toLocalDate() == date){
+        for (Salg s : Controller.getInstance().getSalgsliste()) {
+            if (s.getTidspunktBetaling().getDayOfYear() == date.getDayOfYear()) {
                 kvitteringer.add(s);
             }
+        }
         return kvitteringer;
     }
 

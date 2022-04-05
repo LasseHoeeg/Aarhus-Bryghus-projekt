@@ -103,7 +103,6 @@ public class StatistikWindow extends Stage {
         dpDagsOpgoer.setEditable(false);
 
         // Textfields
-
         pane.add(txfSumKlip, 0, 5, 2, 1);
         txfSumKlip.setPromptText("sum:");
         txfSumKlip.setPrefWidth(20);

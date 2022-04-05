@@ -2,7 +2,9 @@ package gui;
 
 import application.controller.Controller;
 import application.model.Leje;
+import application.model.Ordrelinje;
 import application.model.Salg;
+import javafx.beans.value.ChangeListener;
 import javafx.geometry.Insets;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.ListView;
@@ -10,11 +12,13 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 import javafx.scene.text.Text;
 
+import java.time.LocalDate;
+
 public class StatistikPane extends GridPane {
 
     // datepicker
-    private final DatePicker dpdateStart = new DatePicker();
-    private final DatePicker dpdateSlut = new DatePicker();
+    private final DatePicker dpDateStart = new DatePicker();
+    private final DatePicker dpDateSlut = new DatePicker();
     private final DatePicker dpDagsOpgoer = new DatePicker();
 
     // listviews
@@ -64,22 +68,24 @@ public class StatistikPane extends GridPane {
 
         // DatePicker
 
-        this.add(dpdateSlut, 1, 1);
-        dpdateSlut.setPromptText("Slut dato");
-        dpdateSlut.setEditable(false);
-        dpDagsOpgoer.setOnMouseExited(e -> eventChangedKlip());
+        this.add(dpDateSlut, 1, 1);
+        dpDateSlut.setPromptText("Slut dato");
+        dpDateSlut.setEditable(false);
+        ChangeListener<LocalDate> listenerDSl = (ov, oldString, newString) -> this.selectionChangedKlip();
+        dpDateSlut.valueProperty().addListener(listenerDSl);
 
-        this.add(dpdateStart, 0, 1);
-        dpdateStart.setPromptText("Start dato");
-        dpdateStart.setEditable(false);
-        dpDagsOpgoer.setOnMouseExited(e -> eventChangedKlip());
+        this.add(dpDateStart, 0, 1);
+        dpDateStart.setPromptText("Start dato");
+        dpDateStart.setEditable(false);
+        ChangeListener<LocalDate> listenerDSt = (ov, oldString, newString) -> this.selectionChangedKlip();
+        dpDateStart.valueProperty().addListener(listenerDSt);
 
 
         this.add(dpDagsOpgoer, 3, 1);
         dpDagsOpgoer.setPromptText("Dato Dagsopgør");
         dpDagsOpgoer.setEditable(false);
-        dpDagsOpgoer.setOnMouseExited(e -> eventDagsOpgoer());
-
+        ChangeListener<LocalDate> listenerDO = (ov, oldString, newString) -> this.selectionChangedDagsOpgoer();
+        dpDagsOpgoer.valueProperty().addListener(listenerDO);
 
         // Textfields
 
@@ -97,7 +103,7 @@ public class StatistikPane extends GridPane {
 
 // funktioner
 
-    private void eventDagsOpgoer() {
+    private void selectionChangedDagsOpgoer() {
         if (dpDagsOpgoer.getValue()!=null){
             lwDagsOpgoer.getItems().setAll(Controller.getInstance().getDagsKvitteringer(dpDagsOpgoer.getValue()));
             txfSumDagsOpgoer.setText("sum: " + Controller.getInstance().getDagsopgoer(dpDagsOpgoer.getValue()));
@@ -105,8 +111,8 @@ public class StatistikPane extends GridPane {
     }
 
     //TODO
-    private void eventChangedKlip() {
-        if (dpdateStart!=null&&dpdateSlut!=null)
+    private void selectionChangedKlip() {
+        if (dpDateStart!=null&&dpDateSlut!=null)
             lwAntalKlipPrProduktPeriode.getItems().setAll(Controller.getInstance().getDagsKvitteringer(dpDagsOpgoer.getValue()));
         txfSumKlip.setText("sum: " + Controller.getInstance().getDagsopgoer(dpDagsOpgoer.getValue()));
 
