@@ -24,6 +24,14 @@ public class ProduktGruppe {
         produkter.add(produkt);
         return produkt;
     }
+    /**
+     * Opretter et klippekort-objekt og tilføjer det til sin ProduktGruppes HashSet af produkter
+     */
+    public Produkt createProduktKlippekort(String navn, String beskrivelse) {
+        Produkt produkt = new Klippekort(navn, beskrivelse, this);
+        produkter.add(produkt);
+        return produkt;
+    }
 
     public void removeProdukt(Produkt produkt) {
         if (produkter.contains(produkt)) {
