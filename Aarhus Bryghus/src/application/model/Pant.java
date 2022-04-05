@@ -1,6 +1,8 @@
 package application.model;
 
-public class Pant {
+import java.io.Serializable;
+
+public class Pant implements Serializable {
     double beloeb;
 
     public Pant(double beloeb) {

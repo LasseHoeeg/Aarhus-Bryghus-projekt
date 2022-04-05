@@ -1,9 +1,10 @@
 package application.model;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 
-public class Salg {
+public class Salg implements Serializable {
     private LocalDateTime tidspunktBetaling;
     private double samletBeloeb;
     private int samletAntalKlip;
