@@ -135,6 +135,13 @@ public class Ordrelinje {
     public Betaling getBetaling() {
         return betaling;
     }
+    public int getAntalBetaltMedKlip() {
+        return antalBetaltMedKlip;
+    }
+
+    public void setAntalBetaltMedKlip(int antalBetaltMedKlip) {
+        this.antalBetaltMedKlip = antalBetaltMedKlip;
+    }
 
     public void setBetaling(Betaling betaling, int antalProdukter) {
         if (betaling.getBetalingsform() != Betalingsformer.KLIPPEKORTBETALING
