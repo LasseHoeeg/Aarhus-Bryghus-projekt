@@ -45,8 +45,6 @@ public class SalgPane extends GridPane {
 
     // atributter
     private Salg salg;
-    private int antal;
-
 
     public SalgPane() {
         this.setPadding(new Insets(20));
@@ -99,7 +97,7 @@ public class SalgPane extends GridPane {
         this.add(btnLeje, 4, 1);
         btnLeje.setText("Leje");
         btnLeje.setPrefWidth(60);
-        btnLeje.setOnAction(e -> rabat());
+        btnLeje.setOnAction(e -> leje());
 
         // TextFields
 
@@ -128,10 +126,10 @@ public class SalgPane extends GridPane {
         this.add(cbBetaling,2,4);
         cbBetaling.setPromptText("Betaling");
         cbBetaling.setPrefWidth(90);
-//        cbBetaling.getItems().setAll(Controller.getInstance().getSalgssituationer());
-//        ChangeListener listenerSS = (ov, oldString, newString) -> this.selectionChangedSalgssituation();
-        cbBetaling.getSelectionModel().selectedItemProperty().addListener(listenerSS);
-        cbBetaling.setOnMouseClicked(e -> UpdateSalgssituation());
+//        cbBetaling.getItems().setAll(Controller.getInstance().get);
+        ChangeListener listenerBe = (ov, oldString, newString) -> this.selectionChangedSalgssituation();
+        cbBetaling.getSelectionModel().selectedItemProperty().addListener(listenerBe);
+        cbBetaling.setOnMouseClicked(e -> selectionChangedBetalling());
 
 
 
@@ -153,6 +151,13 @@ public class SalgPane extends GridPane {
 
     }
 
+    private void selectionChangedBetalling() {
+        Betaling selected = cbBetaling.getSelectionModel().getSelectedItem();
+//        lwSalgsSituationProdukter.getItems().setAll(selected.getPriser());
+//        salg = new Salg(selected);
+
+    }
+
     private void selectionChangedSalgsSituationProdukter() {
         Pris selected = lwSalgsSituationProdukter.getSelectionModel().getSelectedItem();
     }
@@ -169,7 +174,7 @@ public class SalgPane extends GridPane {
 
     private void tilføjOrdrelinje() {
         Pris selected = lwSalgsSituationProdukter.getSelectionModel().getSelectedItem();
-        if (selected != null && Integer.parseInt(txfAntalProdukter.getText()) > 0) {
+        if (selected != null && Integer.parseInt(txfAntalProdukter.getText()) > 0 ) {
             salg.createOrdrelinje(Integer.parseInt(txfAntalProdukter.getText()), selected.getProdukt());
             lwOrdrelinje.getItems().setAll(salg.getOrdrelinjer());
             sumChanged();
@@ -190,12 +195,11 @@ public class SalgPane extends GridPane {
     }
 
     private void betal() {
+//        Controller.getInstance().
 
     }
     private void leje() {
-
-        Controller.getInstance().createLeje().getOrdrelinjer()
-
+        Controller.getInstance().tivngSalgTilLeje(this.salg);
     }
 
 }

@@ -37,4 +37,13 @@ public class Leje extends Salg{
     public void setTidspunktUdlejeStart(LocalDate tidspunktUdlejeStart) {
         TidspunktUdlejeStart = tidspunktUdlejeStart;
     }
+
+    public int pantBeloebIndbetalt(){
+        int samletPantbeloeb=0;
+        for (Ordrelinje o : this.getOrdrelinjer()){
+            if (o.getProdukt().getPant()!=null)
+                samletPantbeloeb+=o.getProdukt().getPant().getBeloeb();
+        }
+        return samletPantbeloeb;
+    }
 }

@@ -56,7 +56,7 @@ public class StatistikPane extends GridPane {
         lwLejedeUafleveredeProdukter.setPrefWidth(100);
         lwLejedeUafleveredeProdukter.setPrefHeight(200);
         lwLejedeUafleveredeProdukter.getItems().setAll(Controller.getInstance().getIkkeAfleveredeUdlejedeProdukter());
-        lwLejedeUafleveredeProdukter.setOnMouseExited(e -> eventLeje());
+        lwLejedeUafleveredeProdukter.setOnMouseClicked(e -> eventLeje());
 
         // Texts
 
@@ -119,7 +119,7 @@ public class StatistikPane extends GridPane {
     }
 
     private void eventLeje(){
-
+        lwLejedeUafleveredeProdukter.getItems().setAll(Controller.getInstance().getIkkeAfleveredeUdlejedeProdukter());
     }
 
 }

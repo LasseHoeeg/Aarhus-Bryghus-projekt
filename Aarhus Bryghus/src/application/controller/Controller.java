@@ -93,30 +93,21 @@ public class Controller {
         return salg;
 
     }
+    public Leje createLeje(Salgssituation salgssituation){
+        Leje leje = null;
+        leje = new Leje(salgssituation,false,leje.pantBeloebIndbetalt(),LocalDate.now());
+        Storage.getInstance().addSalg(leje);
+        return leje;
+    }
 
     public Leje tivngSalgTilLeje(Salg salg){
-        Salg leje = ;
-        int samletPantbeloeb=pantBeloebIndbetalt((Leje) leje);
-        leje = new Leje(salgssituation,false,pantBeloebIndbetalt((Leje)leje),LocalDate.now());
-        leje.
+        Leje leje = new Leje(salg.getSalgssituation(),false,0,salg.getTidspunktBetaling().toLocalDate());
+        leje.setPantBeloebInbetalt(leje.pantBeloebIndbetalt());
+        for (Ordrelinje o : salg.getOrdrelinjer()) {
+            leje.getOrdrelinjer().add(o);
+        }
         Storage.getInstance().addSalg(leje);
-        return (Leje) leje;
-    }
-
-    public void ordrelinjeSalgTilLeje(Salg salg, Leje leje){
-        for (Ordrelinje o : salg.getOrdrelinjer()){
-            o.
-        }
-
-    }
-
-    public int pantBeloebIndbetalt(Leje leje){
-        int samletPantbeloeb=0;
-        for (Ordrelinje o : leje.getOrdrelinjer()){
-            if (o.getProdukt().getPant()!=null)
-                samletPantbeloeb+=o.getProdukt().getPant().getBeloeb();
-        }
-        return samletPantbeloeb;
+        return leje;
     }
 
     public void updateSalg(Salg salg, LocalDateTime tidspunktBetaling, double samletBeloeb, int samletAntalKlip){
