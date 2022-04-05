@@ -42,7 +42,7 @@ public class Salg {
 
         for (Ordrelinje o : ordrelinjer) {
                     sumKlip += o.getOrdrelinjeKlip();
-                    sumBeloeb += o.getOrdrelinjePris();
+                    sumBeloeb += o.getOrdrelinjeBeloeb();
         }
         if (rabat != null) {
             sumBeloeb = sumBeloeb - rabat.getRabat(sumBeloeb);
@@ -62,7 +62,7 @@ public class Salg {
         Ordrelinje ordrelinje = null;
         if (contains != -1){
             this.getOrdrelinjer().get(contains).setAntal(this.getOrdrelinjer().get(contains).getAntal()+antal);
-            this.getOrdrelinjer().get(contains).beregnOrdrelinjePrisOgKlip();
+            this.getOrdrelinjer().get(contains).beregnOrdrelinjeBeloebOgKlip();
         }
         else{
             ordrelinjeAntal++;
@@ -128,6 +128,12 @@ public class Salg {
         Beloeb b = new Beloeb(tilBetaling, betalingsform, this);
         alleBeloeb.add(b);
         return b;
+    }
+
+    public void setSalgssituation(Salgssituation salgssituation) {
+        if (this.salgssituation != salgssituation) {
+            this.salgssituation = salgssituation;
+        }
     }
 
     public LocalDateTime getTidspunktBetaling() {
