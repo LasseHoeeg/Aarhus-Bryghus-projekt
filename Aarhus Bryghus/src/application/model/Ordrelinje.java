@@ -1,8 +1,13 @@
 package application.model;
 
+import application.controller.Controller;
+
+import java.util.Arrays;
+
 public class Ordrelinje {
     private int nr;
     private int antal;
+    private int antalBetaltMedKlip;
     private double ordrelinjeBeloeb;
     private int ordrelinjeKlip;
     private Produkt produkt;
@@ -20,6 +25,7 @@ public class Ordrelinje {
     this.antal = antal;
     this.produkt = produkt;
     this.salg = salg;
+    this.antalBetaltMedKlip = 0;
     beregnOrdrelinjeBeloebOgKlip();
 }
 
@@ -104,15 +110,24 @@ public class Ordrelinje {
         boolean found = false;
         while (i < salg.getSalgssituation().getPriser().size()&&!found) {
             if (this.produkt == salg.getSalgssituation().getPriser().get(i).getProdukt()) {
-                if (getRabat()!=null){
-                    setOrdrelinjeBeloeb((salg.getSalgssituation().getPriser().get(i).getBeloeb() * antal)
-                            - getRabat().getRabat(getOrdrelinjeBeloeb()));
+                double ordrelinjeBeloeb = salg.getSalgssituation().getPriser().get(i).getBeloeb() * antal;
+                int ordrelinjeKlip = salg.getSalgssituation().getPriser().get(i).getAntalKlip() * antalBetaltMedKlip;
+
+                if (betaling != null) {
+                    setOrdrelinjeBeloeb(ordrelinjeBeloeb);
+                    setOrdrelinjeKlip(ordrelinjeKlip);
+
+                    if (rabat != null){
+                        setOrdrelinjeBeloeb(ordrelinjeBeloeb - rabat.getRabat(getOrdrelinjeBeloeb()));
+                    }
+                } else {
+                    if (getRabat() != null) {
+                        setOrdrelinjeBeloeb(ordrelinjeBeloeb - rabat.getRabat(getOrdrelinjeBeloeb()));
+                    } else {
+                        setOrdrelinjeBeloeb(ordrelinjeBeloeb);
+                    }
+                    found = true;
                 }
-                else {
-                    setOrdrelinjeBeloeb(salg.getSalgssituation().getPriser().get(i).getBeloeb() * antal);
-                }
-                setOrdrelinjeKlip(salg.getSalgssituation().getPriser().get(i).getAntalKlip() * antal);
-                found = true;
             } else i++;
         }
     }
@@ -121,16 +136,24 @@ public class Ordrelinje {
         return betaling;
     }
 
-    public void setBetaling(Betaling betaling) {
+    public void setBetaling(Betaling betaling, int antalProdukter) {
+        if (betaling.getBetalingsform() != Betalingsformer.KLIPPEKORTBETALING
+                || betaling.getBetalingsform() != null){
+            throw new RuntimeException("Betalingsformen skal være KLIPPEKORTBETALING.");
+        }
+        if (antalProdukter <= antal) {
+            throw new RuntimeException("Du skal angive et antal der er mindre" +
+                    " eller lig med antal produkter produkter på ordrelinjen.");
+        }
         if (this.betaling != betaling){
             Betaling oldBetalingsform = this.betaling;
             if (oldBetalingsform != null){
                 oldBetalingsform.removeOrdrelinje(this);
             }
             this.betaling = betaling;
-            if (betaling != null){
-                betaling.addOrdrelinje(this);
-            }
+            this.antalBetaltMedKlip = antalProdukter;
+            setAntal(antal-antalProdukter);
+                betaling.addOrdrelinje(this, antalProdukter);
         }
     }
 
@@ -138,10 +161,16 @@ public class Ordrelinje {
     public String toString() {
         String result = "";
         if (this.getOrdrelinjeKlip()!=0){
-            result=produkt.getNavn() + ", " +
+            result = produkt.getNavn() + ", " +
                 +antal +
                 "stk, " + getOrdrelinjeBeloeb() +
                 "0 kr. " + getOrdrelinjeKlip() + " klip";}
+        else if (this.betaling != null) {
+            result = produkt.getNavn() +
+                            ", " + antalBetaltMedKlip
+                            + ", " + ordrelinjeKlip
+                            + "'\n";
+        }
         else {
             result=produkt.getNavn() + ", " +
                     +antal +
@@ -149,7 +178,6 @@ public class Ordrelinje {
                     "0 kr.";
         }
         return result;
-
     }
 }
 

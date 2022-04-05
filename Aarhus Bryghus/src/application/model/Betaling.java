@@ -17,17 +17,17 @@ public class Betaling {
     }
 
     //(betalingsform) 0..1-0..* (ordrelinje)
-    public void addOrdrelinje(Ordrelinje ordrelinje){
+    public void addOrdrelinje(Ordrelinje ordrelinje, int antalProdukter){
         if (!ordrelinjer.contains(ordrelinje)){
             ordrelinjer.add(ordrelinje);
-            ordrelinje.setBetaling(this);
+            ordrelinje.setBetaling(this, antalProdukter);
         }
     }
     //(betalingsform) 0..1-0..* (ordrelinje)
     public void removeOrdrelinje(Ordrelinje ordrelinje){
         if (ordrelinjer.contains(ordrelinje)){
             ordrelinjer.remove(ordrelinje);
-            ordrelinje.setBetaling(null);
+            ordrelinje.setBetaling(null, 0);
         }
     }
     public Betalingsformer getBetalingsform() {
