@@ -2,15 +2,16 @@ package application.model;
 
 import java.util.ArrayList;
 
-public class Betalingsform {    //fixme abstract ?
+public class Betaling {
     private String navn;
     private final ArrayList<Ordrelinje> ordrelinjer = new ArrayList<>();
     private final ArrayList<Beloeb> alleBeloeb = new ArrayList<>();
-    private static Betalingsform uniqueInstance;
+    private Betalingsformer betalingsform;
 
 
-    public Betalingsform(String navn){
-        this.navn=navn;
+    public Betaling(String navn, Betalingsformer betalingsform){
+        this.navn = navn;
+        this.betalingsform = betalingsform;
     }
 
     public String getNavn() {
@@ -25,14 +26,14 @@ public class Betalingsform {    //fixme abstract ?
     public void addOrdrelinje(Ordrelinje ordrelinje){
         if (!ordrelinjer.contains(ordrelinje)){
             ordrelinjer.add(ordrelinje);
-            ordrelinje.setBetalingsform(this);
+            ordrelinje.setBetaling(this);
         }
     }
     //(betalingsform) 0..1-0..* (ordrelinje)
     public void removeOrdrelinje(Ordrelinje ordrelinje){
         if (ordrelinjer.contains(ordrelinje)){
             ordrelinjer.remove(ordrelinje);
-            ordrelinje.setBetalingsform(null);
+            ordrelinje.setBetaling(null);
         }
     }
 
@@ -43,14 +44,14 @@ public class Betalingsform {    //fixme abstract ?
     public void addBeloeb(Beloeb beloeb){
         if (!alleBeloeb.contains(beloeb)){
             alleBeloeb.add(beloeb);
-            beloeb.setBetalingsform(this);
+            beloeb.setBetaling(this);
         }
     }
 
     public void removeBeloeb(Beloeb beloeb){
         if (alleBeloeb.contains(beloeb)){
             alleBeloeb.remove(beloeb);
-            beloeb.setBetalingsform(null);
+            beloeb.setBetaling(null);
         }
     }
 

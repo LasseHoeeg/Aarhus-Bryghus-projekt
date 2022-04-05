@@ -8,7 +8,7 @@ public class Ordrelinje {
     private Produkt produkt;
     private Rabat rabat;
     private Salg salg;
-    private Betalingsform betalingsform;
+    private Betaling betaling;
 
 /**
  * Da constructoren ikke er public oprettes ordrelinje-objekter kun igennem Salg-klassen
@@ -117,19 +117,19 @@ public class Ordrelinje {
         }
     }
 
-    public Betalingsform getBetalingsform() {
-        return betalingsform;
+    public Betaling getBetaling() {
+        return betaling;
     }
 
-    public void setBetalingsform(Betalingsform betalingsform) {
-        if (this.betalingsform != betalingsform){
-            Betalingsform oldBetalingsform = this.betalingsform;
+    public void setBetaling(Betaling betaling) {
+        if (this.betaling != betaling){
+            Betaling oldBetalingsform = this.betaling;
             if (oldBetalingsform != null){
                 oldBetalingsform.removeOrdrelinje(this);
             }
-            this.betalingsform = betalingsform;
-            if (betalingsform != null){
-                betalingsform.addOrdrelinje(this);
+            this.betaling = betaling;
+            if (betaling != null){
+                betaling.addOrdrelinje(this);
             }
         }
     }
