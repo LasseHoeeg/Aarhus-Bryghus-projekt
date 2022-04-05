@@ -118,8 +118,8 @@ public class Controller {
     //Kan bruges en smartere ift Collections/Maps
     public ArrayList<Salg> getDagsKvitteringer(LocalDate date){
         ArrayList<Salg> kvitteringer = new ArrayList();
-        for(Salg s : Controller.getInstance().getSalgsliste())
-            if (s.getTidspunktBetaling().toLocalDate() == date){
+        for(Salg s : Controller.getInstance().getSalgsliste()){
+//            if (s.getTidspunktBetaling().toLocalDate() == date){
                 kvitteringer.add(s);
             }
         return kvitteringer;
