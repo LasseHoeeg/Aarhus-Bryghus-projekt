@@ -80,6 +80,41 @@ public class Controller {
     }
 
     // ------------------------------------------------------------------------------------------------------------
+    public Betaling createBetaling(Betalingsformer betalingsform){
+        for (int i = 0; i < Storage.getInstance().getAlleBetalinger().size(); i++) {
+            if (Storage.getInstance().getAlleBetalinger().get(i).getBetalingsform().equals(betalingsform)) {
+                throw new IllegalArgumentException("Betalingsformen findes allerede");
+            }
+        }
+        Betaling betaling = new Betaling(betalingsform);
+        Storage.getInstance().addBetaling(betaling);
+        return betaling;
+    }
+
+    public ArrayList<Betaling> getAlleBetalinger() {
+        return Storage.getInstance().getAlleBetalinger();
+    }
+
+    public void removeBetaling(Betaling betaling){
+        Storage.getInstance().removeBetaling(betaling);
+    }
+
+    // ------------------------------------------------------------------------------------------------------------
+    public Pant createPant(double beloeb) {
+        Pant pant = new Pant(beloeb);
+        Storage.getInstance().addPant(pant);
+        return pant;
+    }
+
+    public ArrayList<Pant> getAltPant() {
+        return Storage.getInstance().getAltPant();
+    }
+
+    public void removePant(Pant pant){
+        Storage.getInstance().removePant(pant);
+    }
+
+    // ------------------------------------------------------------------------------------------------------------
     public ArrayList<Salg> getSalgsliste(){
         return Storage.getInstance().getSalgsliste();
     }
@@ -160,6 +195,23 @@ public class Controller {
             }
         return lejeListe;
     }
+
+    public int getAntalBrugteKlip(LocalDateTime start, LocalDateTime slut) {
+        int sum = 0;
+        for (int i = 0; i < Storage.getInstance().getSalgsliste().size(); i++) {
+            Salg salg = Storage.getInstance().getSalgsliste().get(i);
+            if (!salg.getTidspunktBetaling().isBefore(start) &&
+                    !salg.getTidspunktBetaling().isAfter(slut)) {
+               sum += salg.getSamletAntalKlip();
+            }
+        }
+        return sum;
+    }
+
+
+    // ------------------------------------------------------------------------------------------------------------
+
+
 
     public void initStorage() {
         Controller controller = Controller.getInstance();
