@@ -118,10 +118,20 @@ public class Ordrelinje {
 
     @Override
     public String toString() {
-        return produkt.getNavn() + ", " +
+        String result = "";
+        if (this.getOrdrelinjeKlip()!=0){
+            result=produkt.getNavn() + ", " +
                 +antal +
-                ", " + getOrdrelinjePris() +
-                "0 kr."+ "\t";
+                "stk, " + getOrdrelinjePris() +
+                "0 kr. " + getOrdrelinjeKlip() + " klip";}
+        else {
+            result=produkt.getNavn() + ", " +
+                    +antal +
+                    "stk, " + getOrdrelinjePris() +
+                    "0 kr.";
+        }
+        return result;
+
     }
 }
 
