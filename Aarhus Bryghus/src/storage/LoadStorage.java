@@ -18,7 +18,6 @@ public class LoadStorage {
             }
             obj_in.close();
             f_in.close();
-
         }
         catch (ClassNotFoundException e) {
             // TODO Auto-generated catch block
@@ -29,8 +28,5 @@ public class LoadStorage {
             e.printStackTrace();
         }
 
-    }
-}
-        }
     }
 }

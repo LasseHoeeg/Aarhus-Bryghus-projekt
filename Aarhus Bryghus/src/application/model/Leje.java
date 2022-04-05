@@ -1,8 +1,9 @@
 package application.model;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 
-public class Leje extends Salg{
+public class Leje extends Salg implements Serializable {
     private boolean betalt;
     private double pantBeloebInbetalt;
     private LocalDate TidspunktUdlejeStart;

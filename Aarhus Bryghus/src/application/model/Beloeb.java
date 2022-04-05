@@ -1,6 +1,8 @@
 package application.model;
 
-public class Beloeb {
+import java.io.Serializable;
+
+public class Beloeb implements Serializable {
     private double tilBetaling;
     private Salg salg;
     private Betaling betaling;

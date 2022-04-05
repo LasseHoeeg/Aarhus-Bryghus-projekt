@@ -1,5 +1,7 @@
 package application.model;
 
-public abstract class Rabat {
+import java.io.Serializable;
+
+public abstract class Rabat implements Serializable {
     public abstract double getRabat(double pris);
 }

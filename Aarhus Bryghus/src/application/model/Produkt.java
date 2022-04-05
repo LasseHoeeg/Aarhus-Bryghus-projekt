@@ -1,9 +1,10 @@
 package application.model;
 
+import java.io.Serializable;
 import java.sql.SQLOutput;
 import java.util.ArrayList;
 
-public class Produkt {
+public class Produkt implements Serializable {
     private String navn;
     private String beskrivelse;
     private ProduktGruppe produktGruppe;

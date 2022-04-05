@@ -3,9 +3,10 @@ package storage;
 import application.model.*;
 import javafx.scene.layout.Pane;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Storage {
+public class Storage implements Serializable {
     private static Storage uniqueInstance;
     private final ArrayList<Salgssituation> salgssituationer = new ArrayList<>();
     private final ArrayList<ProduktGruppe> produktGrupper = new ArrayList<>();

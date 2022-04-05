@@ -1,6 +1,8 @@
 package application.model;
 
-public class RabatBeloeb extends Rabat {
+import java.io.Serializable;
+
+public class RabatBeloeb extends Rabat implements Serializable {
     private double beloeb;
 
      /**

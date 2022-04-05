@@ -1,6 +1,8 @@
 package application.model;
 
-public enum Betalingsformer {DANKORT, KLIPPEKORTBETALING, KONTANT, MOBILEPAY{
+import java.io.Serializable;
+
+public enum Betalingsformer implements Serializable {DANKORT, KLIPPEKORTBETALING, KONTANT, MOBILEPAY{
     @Override
     public String toString() {
         return super.toString();

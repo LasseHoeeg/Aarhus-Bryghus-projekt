@@ -2,9 +2,10 @@ package application.model;
 
 import application.controller.Controller;
 
+import java.io.Serializable;
 import java.util.Arrays;
 
-public class Ordrelinje {
+public class Ordrelinje implements Serializable {
     private int nr;
     private int antal;
     private int antalBetaltMedKlip;

@@ -1,6 +1,8 @@
 package application.model;
 
-public class Pris {
+import java.io.Serializable;
+
+public class Pris implements Serializable {
     private double beloeb;
     private int antalKlip;
     private Produkt produkt;

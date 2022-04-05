@@ -1,6 +1,8 @@
 package application.model;
 
-public class RabatProcent extends Rabat {
+import java.io.Serializable;
+
+public class RabatProcent extends Rabat implements Serializable {
     private double procent;
 
     /**
