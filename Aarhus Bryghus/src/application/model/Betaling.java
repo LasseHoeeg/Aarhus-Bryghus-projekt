@@ -3,19 +3,13 @@ package application.model;
 import java.util.ArrayList;
 
 public class Betaling {
-    private String navn;
     private final ArrayList<Ordrelinje> ordrelinjer = new ArrayList<>();
     private final ArrayList<Beloeb> alleBeloeb = new ArrayList<>();
     private Betalingsformer betalingsform;
 
 
-    public Betaling(String navn, Betalingsformer betalingsform){
-        this.navn = navn;
+    public Betaling(Betalingsformer betalingsform){
         this.betalingsform = betalingsform;
-    }
-
-    public String getNavn() {
-        return navn;
     }
 
     public ArrayList<Ordrelinje> getOrdrelinjer() {
@@ -35,6 +29,9 @@ public class Betaling {
             ordrelinjer.remove(ordrelinje);
             ordrelinje.setBetaling(null);
         }
+    }
+    public Betalingsformer getBetalingsform() {
+        return betalingsform;
     }
 
     public ArrayList<Beloeb> getAlleBeloeb(){
@@ -57,6 +54,6 @@ public class Betaling {
 
     @Override
     public String toString() {
-        return navn;
+        return betalingsform + "";
     }
 }
