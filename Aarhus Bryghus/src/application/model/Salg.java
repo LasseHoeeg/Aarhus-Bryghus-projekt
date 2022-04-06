@@ -108,7 +108,6 @@ public class Salg implements Serializable {
     public void removeOrdrelinje(Ordrelinje ordrelinje) {
         if (ordrelinjer.contains(ordrelinje)) {
             ordrelinjer.remove(ordrelinje);
-            beregnSamletBeloebOgKlip();
         }
     }
 
@@ -200,9 +199,9 @@ public class Salg implements Serializable {
         return new ArrayList<>(alleBeloeb);
     }
 
-    public void setSalgssituation(Salgssituation salgssituation) {
-        this.salgssituation = salgssituation;
-    }
+//    public void setSalgssituation(Salgssituation salgssituation) {
+//        this.salgssituation = salgssituation;
+//    }
 
     public static int getOrdrelinjeAntal() {
         return ordrelinjeAntal;

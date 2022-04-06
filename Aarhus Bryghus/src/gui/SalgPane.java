@@ -191,9 +191,17 @@ public class SalgPane extends GridPane {
     private void fjernOrdrelinje() {
         Ordrelinje selected = lwOrdrelinje.getSelectionModel().getSelectedItem();
         if (selected != null) {
+            if (lwOrdrelinje.getSelectionModel().getSelectedItems().size()==1){
+                salg.removeOrdrelinje(selected);
+                lwOrdrelinje.getItems().setAll(salg.getOrdrelinjer());
+                txfSumOrdrelinje.setText(0.0+"");
+            }
+            else{
             salg.removeOrdrelinje(selected);
+            salg.beregnSamletBeloebOgKlip();
             lwOrdrelinje.getItems().setAll(salg.getOrdrelinjer());
             sumChanged();
+            }
         }
     }
 
@@ -211,7 +219,7 @@ public class SalgPane extends GridPane {
         if (lwOrdrelinje.getSelectionModel().isEmpty()==false) {
             if (cbBetaling.getSelectionModel().getSelectedItem().getBetalingsform() == Betalingsformer.KLIPPEKORTBETALING) {
                 if (lwOrdrelinje.getSelectionModel().getSelectedItem() != null && txfBeloeb.getText() != null) {
-                    lwOrdrelinje.getSelectionModel().getSelectedItem().setBetaling(cbBetaling.getSelectionModel().getSelectedItem());
+                    lwOrdrelinje.getSelectionModel().getSelectedItem().setBetaling((cbBetaling.getSelectionModel().getSelectedItem()),Integer.parseInt(txfBeloeb.getText()));
                     if (salg.getSamletBeloeb() <= 0) {
                         Controller.getInstance().addSalg(salg);
                         salg = new Salg(cbSalgssituation.getValue());
@@ -231,11 +239,11 @@ public class SalgPane extends GridPane {
     }
 
     private void leje() {
-        if (lwOrdrelinje.getSelectionModel().isEmpty() == false) {
+        if (salg.getOrdrelinjer().size()>0) {
             Controller.getInstance().tvingSalgTilLeje(this.salg);
             lwOrdrelinje.getItems().clear();
             sumChanged();
-//        salg = new Salg(cbSalgssituation.getValue());
+            salg = new Salg(cbSalgssituation.getValue());
         }
     }
 

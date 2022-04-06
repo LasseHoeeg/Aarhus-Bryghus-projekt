@@ -118,11 +118,15 @@ public class Ordrelinje implements Serializable {
                     setOrdrelinjeKlip(ordrelinjeKlip);
 
                     if (rabat != null){
-                        setOrdrelinjeBeloeb(ordrelinjeBeloeb - rabat.getRabat(getOrdrelinjeBeloeb()));
+//                        setOrdrelinjeBeloeb(ordrelinjeBeloeb - rabat.getRabat(getOrdrelinjeBeloeb()));
+                        setOrdrelinjeBeloeb(antal*((salg.getSalgssituation().getPriser().get(i).getBeloeb()+ getRabat().getRabat(getOrdrelinjeBeloeb())
+                                - (salg.getSalgssituation().getPriser().get(i).getBeloeb()))));
                     }
                 } else {
                     if (getRabat() != null) {
-                        setOrdrelinjeBeloeb(ordrelinjeBeloeb - rabat.getRabat(getOrdrelinjeBeloeb()));
+//                        setOrdrelinjeBeloeb(ordrelinjeBeloeb - rabat.getRabat(getOrdrelinjeBeloeb()));
+                        setOrdrelinjeBeloeb(antal*((salg.getSalgssituation().getPriser().get(i).getBeloeb()+ getRabat().getRabat(getOrdrelinjeBeloeb())
+                                - (salg.getSalgssituation().getPriser().get(i).getBeloeb()))));
                     } else {
                         setOrdrelinjeBeloeb(ordrelinjeBeloeb);
                     }
