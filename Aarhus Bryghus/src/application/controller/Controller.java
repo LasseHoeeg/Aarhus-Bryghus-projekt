@@ -119,6 +119,22 @@ public class Controller {
         return Storage.getInstance().getSalgsliste();
     }
 
+    public ArrayList<Salg> getSalgsObejkter(){
+        ArrayList salgsObejkter = new ArrayList();
+        for (Salg s : Storage.getInstance().getSalgsliste()){
+            if (s instanceof Salg) {salgsObejkter.add(s);}
+        }
+        return salgsObejkter;
+    }
+
+    public ArrayList<Leje> getLejeObejkter(){
+        ArrayList lejeObejkter = new ArrayList();
+        for (Salg s : Storage.getInstance().getSalgsliste()){
+            if (s instanceof Leje) {lejeObejkter.add(s);}
+        }
+        return lejeObejkter;
+    }
+
     /**
      * Opretter et nyt objekt / et nyt salg og tilføjer det til Storage
      */
@@ -160,7 +176,7 @@ public class Controller {
 
     public double getDagsopgoer(LocalDate date){
         double DagsSum = 0;
-        for(Salg s : Controller.getInstance().getSalgsliste())
+        for(Salg s : Controller.getInstance().getSalgsObejkter())
             if (s.getTidspunktBetaling().getDayOfYear()== date.getDayOfYear()){
                 DagsSum+=s.getSamletBeloeb();
             }
@@ -170,7 +186,7 @@ public class Controller {
     //Kan bruges en smartere ift Collections/Maps
     public ArrayList<Salg> getDagsKvitteringer(LocalDate date) {
         ArrayList<Salg> kvitteringer = new ArrayList();
-        for (Salg s : Controller.getInstance().getSalgsliste()) {
+        for (Salg s : Controller.getInstance().getSalgsObejkter()) {
             if (s.getTidspunktBetaling().getDayOfYear() == date.getDayOfYear()) {
                 kvitteringer.add(s);
             }
@@ -180,19 +196,19 @@ public class Controller {
 
     public ArrayList<Leje> getIkkeAfleveredeUdlejedeProdukter(){
         ArrayList<Leje> lejeListe = new ArrayList();
-        for(Salg s : getSalgsliste())
-            if (s instanceof Leje && ((Leje) s).isBetalt()==false){
-                lejeListe.add((Leje) s);
+        for(Leje l : getLejeObejkter())
+            if (l.isBetalt()==false){
+                lejeListe.add(l);
             }
         return lejeListe;
     }
 
-    public int getAntalBrugteKlip(LocalDateTime start, LocalDateTime slut) {
+    public int getAntalBrugteKlip(LocalDate start, LocalDate slut) {
         int sum = 0;
         for (int i = 0; i < Storage.getInstance().getSalgsliste().size(); i++) {
             Salg salg = Storage.getInstance().getSalgsliste().get(i);
-            if (!salg.getTidspunktBetaling().isBefore(start) &&
-                    !salg.getTidspunktBetaling().isAfter(slut)) {
+            if (!salg.getTidspunktBetaling().toLocalDate().isBefore(start) &&
+                    !salg.getTidspunktBetaling().toLocalDate().isAfter(slut)) {
                sum += salg.getSamletAntalKlip();
             }
         }
@@ -264,6 +280,10 @@ public class Controller {
         Salg sa3 = createSalg(s1);
         Salg sa4 = createSalg(s1);
 
+        Betaling b1 = createBetaling(Betalingsformer.DANKORT);
+        Betaling b2 = createBetaling(Betalingsformer.KLIPPEKORTBETALING);
+        Betaling b3 = createBetaling(Betalingsformer.KONTANT);
+        Betaling b4 = createBetaling(Betalingsformer.MOBILEPAY);
     }
 }
 

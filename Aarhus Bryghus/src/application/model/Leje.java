@@ -5,13 +5,14 @@ import java.time.LocalDate;
 public class Leje extends Salg{
     private boolean betalt;
     private double pantBeloebInbetalt;
-    private LocalDate TidspunktUdlejeStart;
+    private LocalDate tidspunktUdlejeStart;
 
     public Leje(Salgssituation salgssituation, boolean betalt, double pantBeloebInbetalt, LocalDate tidspunktUdlejeStart) {
         super(salgssituation);
         this.betalt = betalt;
         this.pantBeloebInbetalt = pantBeloebInbetalt;
-        TidspunktUdlejeStart = tidspunktUdlejeStart;
+        this.tidspunktUdlejeStart = tidspunktUdlejeStart;
+
     }
 
     public boolean isBetalt() {
@@ -31,11 +32,11 @@ public class Leje extends Salg{
     }
 
     public LocalDate getTidspunktUdlejeStart() {
-        return TidspunktUdlejeStart;
+        return tidspunktUdlejeStart;
     }
 
     public void setTidspunktUdlejeStart(LocalDate tidspunktUdlejeStart) {
-        TidspunktUdlejeStart = tidspunktUdlejeStart;
+        tidspunktUdlejeStart = tidspunktUdlejeStart;
     }
 
     public int pantBeloebIndbetalt(){

@@ -44,7 +44,7 @@ public class SalgPane extends GridPane {
     private final ComboBox<Betaling> cbBetaling = new ComboBox();
 
     // atributter
-    private Salg salg;
+    private Salg salg = new Salg(null);
 
     public SalgPane() {
         this.setPadding(new Insets(20));
@@ -126,7 +126,7 @@ public class SalgPane extends GridPane {
         this.add(cbBetaling,2,4);
         cbBetaling.setPromptText("Betaling");
         cbBetaling.setPrefWidth(90);
-//        cbBetaling.getItems().setAll(Controller.getInstance().get);
+        cbBetaling.getItems().setAll(Controller.getInstance().getAlleBetalinger());
         ChangeListener listenerBe = (ov, oldString, newString) -> this.selectionChangedSalgssituation();
         cbBetaling.getSelectionModel().selectedItemProperty().addListener(listenerBe);
         cbBetaling.setOnMouseClicked(e -> selectionChangedBetalling());
@@ -145,14 +145,21 @@ public class SalgPane extends GridPane {
     }
 
     private void selectionChangedSalgssituation() {
-            Salgssituation selected = cbSalgssituation.getSelectionModel().getSelectedItem();
-            lwSalgsSituationProdukter.getItems().setAll(selected.getPriser());
-            salg = new Salg(selected);
+        Salgssituation selected = cbSalgssituation.getSelectionModel().getSelectedItem();
+        lwSalgsSituationProdukter.getItems().setAll(selected.getPriser());
+        salg.setSalgssituation(selected);
+        //FY FY Kode:
+        if (selected!= salg.getSalgssituation()){
+            salg.setSalgssituation(selected);
+            salg.getOrdrelinjer().clear();
+        }
+
 
     }
 
     private void selectionChangedBetalling() {
         Betaling selected = cbBetaling.getSelectionModel().getSelectedItem();
+        cbBetaling.getItems().setAll(Controller.getInstance().getAlleBetalinger());
 //        lwSalgsSituationProdukter.getItems().setAll(selected.getPriser());
 //        salg = new Salg(selected);
 
@@ -170,7 +177,6 @@ public class SalgPane extends GridPane {
     private void sumChanged() {
         txfSumOrdrelinje.setText(salg.getSamletBeloeb()+"");
     }
-
 
     private void tilføjOrdrelinje() {
         Pris selected = lwSalgsSituationProdukter.getSelectionModel().getSelectedItem();
@@ -191,15 +197,38 @@ public class SalgPane extends GridPane {
     }
 
     private void rabat() {
+        if (lwOrdrelinje.getSelectionModel().getSelectedItem()!=null && txfBeloeb.getText()!=null) {
+            lwOrdrelinje.getSelectionModel().getSelectedItem().setOrdrelinjePris(Integer.parseInt(txfBeloeb.getText()));
+            sumChanged();
+            selectionChangedOrdrelinje();
+
+        }
+
 //        sumChanged();
     }
 
     private void betal() {
+        if (cbBetaling.getSelectionModel().getSelectedItem().getBetalingsform()==Betalingsformer.KLIPPEKORTBETALING){
+            if (lwOrdrelinje.getSelectionModel().getSelectedItem()!=null && txfBeloeb.getText()!=null) {
+                lwOrdrelinje.getSelectionModel().getSelectedItem().setBetaling(cbBetaling.getSelectionModel().getSelectedItem());
+                if (salg.getSamletBeloeb() <= 0) {
+                    lwOrdrelinje.getItems().clear();
+                    salg = new Salg(cbSalgssituation.getValue());
+                }
+            }
+        }
+        else{
+            lwOrdrelinje.getItems().clear();
+            salg = new Salg(cbSalgssituation.getValue());
+        }
+        ;
 //        Controller.getInstance().
 
     }
     private void leje() {
         Controller.getInstance().tivngSalgTilLeje(this.salg);
+        lwOrdrelinje.getItems().clear();
+//        salg = new Salg(cbSalgssituation.getValue());
     }
 
 }
