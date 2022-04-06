@@ -1,7 +1,6 @@
 package application.model;
 
 import application.controller.Controller;
-
 import java.io.Serializable;
 import java.util.Arrays;
 
