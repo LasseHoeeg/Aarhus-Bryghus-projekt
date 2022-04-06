@@ -212,7 +212,7 @@ public class Controller {
     /**
      * samlet antal klip brugt på produkter for en givet periode
      */
-    public int getAntalBrugteKlip(LocalDateTime start, LocalDateTime slut) {
+    public int getAntalBrugteKlip(LocalDate start, LocalDate slut) {
         int sum = 0;
         for (int i = 0; i < Storage.getInstance().getSalgsliste().size(); i++) {
             Salg salg = Storage.getInstance().getSalgsliste().get(i);
