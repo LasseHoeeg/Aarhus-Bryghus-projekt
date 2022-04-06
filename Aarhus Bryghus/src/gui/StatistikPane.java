@@ -53,7 +53,7 @@ public class StatistikPane extends GridPane {
         lwDagsOpgoer.setPrefHeight(200);
 
         this.add(lwLejedeUafleveredeProdukter, 5, 3, 1, 3);
-        lwLejedeUafleveredeProdukter.setPrefWidth(100);
+        lwLejedeUafleveredeProdukter.setPrefWidth(300);
         lwLejedeUafleveredeProdukter.setPrefHeight(200);
         lwLejedeUafleveredeProdukter.getItems().setAll(Controller.getInstance().getIkkeAfleveredeUdlejedeProdukter());
         lwLejedeUafleveredeProdukter.setOnMouseClicked(e -> eventLeje());
@@ -112,10 +112,10 @@ public class StatistikPane extends GridPane {
 
     //TODO
     private void selectionChangedKlip() {
-        if (dpDateStart!=null&&dpDateSlut!=null)
-            lwAntalKlipPrProduktPeriode.getItems().setAll(Controller.getInstance().getDagsKvitteringer(dpDagsOpgoer.getValue()));
-        txfSumKlip.setText("sum: " + Controller.getInstance().getDagsopgoer(dpDagsOpgoer.getValue()));
-
+        if (dpDateStart.getValue()!=null&&dpDateSlut.getValue()!=null) {
+//            lwAntalKlipPrProduktPeriode.getItems().setAll(Controller.getInstance().getAntalBrugteKlip(dpDateStart.getValue()., dpDateSlut.getValue()));
+            txfSumKlip.setText("Antal: " + Controller.getInstance().getAntalBrugteKlip(dpDateStart.getValue(), dpDateSlut.getValue()));
+        }
     }
 
     private void eventLeje(){
