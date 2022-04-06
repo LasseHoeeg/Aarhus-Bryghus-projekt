@@ -276,27 +276,7 @@ public class Controller {
             System.out.println("Error saving storage object");
             throw new RuntimeException(ex);
         }
-        Pris pr13 = s2.createPris(599, p7);
-        Pris pr14 = s2.createPris(175, p8);
-        Pris pr15 = s2.createPris(350, p9);
 
-        Pris pr16 = s2.createPris(775, p10);
-        Pris pr17 = s2.createPris(775, p11);
-        Pris pr18 = s2.createPris(775, p12);
-
-        Salg sa1 = controller.createSalg(s1);
-        sa1.createOrdrelinje(3, p4);
-        sa1.createOrdrelinje(2, p5);
-        sa1.createOrdrelinje(4, p1);
-
-        Salg sa2 = createSalg(s1);
-        Salg sa3 = createSalg(s1);
-        Salg sa4 = createSalg(s1);
-
-        Betaling b1 = createBetaling(Betalingsformer.DANKORT);
-        Betaling b2 = createBetaling(Betalingsformer.KLIPPEKORTBETALING);
-        Betaling b3 = createBetaling(Betalingsformer.KONTANT);
-        Betaling b4 = createBetaling(Betalingsformer.MOBILEPAY);
     }
 }
 

@@ -72,6 +72,10 @@ public class StorageInitializer {
             Salg sa3 = Controller.getInstance().createSalg(s1);
             Salg sa4 = Controller.getInstance().createSalg(s1);
 
+            Betaling b1 = Controller.getInstance().createBetaling(Betalingsformer.DANKORT);
+            Betaling b2 = Controller.getInstance().createBetaling(Betalingsformer.KLIPPEKORTBETALING);
+            Betaling b3 = Controller.getInstance().createBetaling(Betalingsformer.KONTANT);
+            Betaling b4 = Controller.getInstance().createBetaling(Betalingsformer.MOBILEPAY);
 
             controller.saveStorage();
         }
