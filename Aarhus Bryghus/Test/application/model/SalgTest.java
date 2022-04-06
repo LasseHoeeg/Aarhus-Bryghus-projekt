@@ -5,6 +5,8 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import storage.Storage;
 
+import java.awt.image.renderable.ContextualRenderedImageFactory;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 class SalgTest {
@@ -23,6 +25,7 @@ class SalgTest {
     private Ordrelinje ordrelinje4;
     private Salg salg3;
     private Salg salg4;
+    private Salg salg5;
     private Betaling betaling;
 
     @BeforeEach
@@ -47,6 +50,9 @@ class SalgTest {
         salg4 = Controller.getInstance().createSalg(ss);
         ordrelinje4 = salg4.createOrdrelinje(3, p1);
         ordrelinje4.setBetaling(betaling, 2);
+
+        salg5 = Controller.getInstance().createSalg(ss);
+
     }
 
         @Test
@@ -95,7 +101,11 @@ class SalgTest {
 
 
     @Test
-    void createOrdrelinje() {
+    void createOrdrelinje1() {
+        //TC1
+        salg5.createOrdrelinje(2, p1);
+        assertEquals(1, salg5.getOrdrelinjer().size(), "Ordrelinjen er ikke blevet tilføjet");
+
 
     }
 
