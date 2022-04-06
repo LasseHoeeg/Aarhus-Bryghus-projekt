@@ -73,24 +73,18 @@ class SalgTest {
         @Test
         void beregnSamletBeloebOgKlip4() {
         //TC4
-        assertThrows(IllegalArgumentException.class, () -> salg3.beregnSamletBeloebOgKlip());
+        assertEquals(140, salg2.getSamletBeloeb(), "samlet beløb afviger fra 140");
     }
 
         @Test
         void beregnSamletBeloebOgKlip5() {
         //TC5
-        assertEquals(140, salg2.getSamletBeloeb(), "samlet beløb afviger fra 140");
-    }
-
-        @Test
-        void beregnSamletBeloebOgKlip6() {
-        //TC6
         assertEquals(210, salg1.getSamletBeloeb(), "samlet beløb afviger fra 210");
     }
 
     @Test
-    void beregnSamletBeloebOgKlip7() {
-        //TC7
+    void beregnSamletBeloebOgKlip6() {
+        //TC6
         salg4.beregnSamletBeloebOgKlip();
         assertEquals(70, salg4.getSamletBeloeb(), "samlet beløb afviger fra 210");
         assertEquals(4, salg4.getSamletAntalKlip(), "samlet antal klip afviger fra 4");
