@@ -22,11 +22,9 @@ public class Salg implements Serializable {
      */
     public Salg(Salgssituation salgssituation) {
         this.tidspunktBetaling = LocalDateTime.now();
-        this.salgsInt = salgsID;
-//        this.salgsID = setSalgsID();
-//        salgsID=this.getSalgsID(;
         this.salgssituation = salgssituation;
         ordrelinjeAntal = 0;
+        this.salgsInt = salgsID;
         salgsID++;
     }
 
@@ -42,6 +40,7 @@ public class Salg implements Serializable {
         int sumKlip = 0;
 
         for (Ordrelinje o : ordrelinjer) {
+            o.beregnOrdrelinjeBeloebOgKlip();
                     sumKlip += o.getOrdrelinjeKlip();
                     sumBeloeb += o.getOrdrelinjeBeloeb();
         }
@@ -51,6 +50,7 @@ public class Salg implements Serializable {
         samletBeloeb = sumBeloeb;
         samletAntalKlip = sumKlip;
     }
+
     /**
      * Opretter en ordrelinje og tilføjer det til salgets arraylist af ordrelinjer.
      * Beregner den opdaterede samlede pris for salget.
@@ -61,10 +61,16 @@ public class Salg implements Serializable {
         }
         int contains = this.containsProduct(produkt);
         Ordrelinje ordrelinje = null;
-        if (contains != -1){
+        if (contains != -1 && tjekOmRabat(contains)==false){
             this.getOrdrelinjer().get(contains).setAntal(this.getOrdrelinjer().get(contains).getAntal()+antal);
             this.getOrdrelinjer().get(contains).beregnOrdrelinjeBeloebOgKlip();
         }
+//        else if (tjekOmRabat(contains,antal,produkt,this)==true&&contains!=-1){
+//            ordrelinjeAntal++;
+//            ordrelinje = new Ordrelinje(ordrelinjeAntal, antal, produkt, this);
+//            ordrelinjer.add(ordrelinje);
+//            beregnSamletBeloebOgKlip();
+//        }
         else{
             ordrelinjeAntal++;
             ordrelinje = new Ordrelinje(ordrelinjeAntal, antal, produkt, this);
@@ -75,6 +81,15 @@ public class Salg implements Serializable {
 
         }
         return ordrelinje;
+    }
+
+    //
+    public boolean tjekOmRabat(int containsProductInt){
+        boolean rabat = false;
+        if (this.getOrdrelinjer().get(containsProductInt).getRabat() != null)
+        { rabat = true;
+        }
+        return rabat;
     }
 
     public int containsProduct(Produkt produkt) {
@@ -93,7 +108,6 @@ public class Salg implements Serializable {
     public void removeOrdrelinje(Ordrelinje ordrelinje) {
         if (ordrelinjer.contains(ordrelinje)) {
             ordrelinjer.remove(ordrelinje);
-            beregnSamletBeloebOgKlip();
         }
     }
 
@@ -185,7 +199,9 @@ public class Salg implements Serializable {
         return new ArrayList<>(alleBeloeb);
     }
 
-
+//    public void setSalgssituation(Salgssituation salgssituation) {
+//        this.salgssituation = salgssituation;
+//    }
 
     public static int getOrdrelinjeAntal() {
         return ordrelinjeAntal;

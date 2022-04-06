@@ -1,7 +1,6 @@
 package application.model;
 
 import application.controller.Controller;
-
 import java.io.Serializable;
 import java.util.Arrays;
 
@@ -119,16 +118,21 @@ public class Ordrelinje implements Serializable {
                     setOrdrelinjeKlip(ordrelinjeKlip);
 
                     if (rabat != null){
-                        setOrdrelinjeBeloeb(ordrelinjeBeloeb - rabat.getRabat(getOrdrelinjeBeloeb()));
+//                        setOrdrelinjeBeloeb(ordrelinjeBeloeb - rabat.getRabat(getOrdrelinjeBeloeb()));
+                        setOrdrelinjeBeloeb(antal*((salg.getSalgssituation().getPriser().get(i).getBeloeb()+ getRabat().getRabat(getOrdrelinjeBeloeb())
+                                - (salg.getSalgssituation().getPriser().get(i).getBeloeb()))));
                     }
                 } else {
                     if (getRabat() != null) {
-                        setOrdrelinjeBeloeb(ordrelinjeBeloeb - rabat.getRabat(getOrdrelinjeBeloeb()));
+//                        setOrdrelinjeBeloeb(ordrelinjeBeloeb - rabat.getRabat(getOrdrelinjeBeloeb()));
+                        setOrdrelinjeBeloeb(antal*((salg.getSalgssituation().getPriser().get(i).getBeloeb()+ getRabat().getRabat(getOrdrelinjeBeloeb())
+                                - (salg.getSalgssituation().getPriser().get(i).getBeloeb()))));
                     } else {
                         setOrdrelinjeBeloeb(ordrelinjeBeloeb);
                     }
-                    found = true;
+
                 }
+                found = true;
             } else i++;
         }
     }
@@ -145,22 +149,23 @@ public class Ordrelinje implements Serializable {
     }
 
     public void setBetaling(Betaling betaling, int antalProdukter) {
-        if (betaling.getBetalingsform() != Betalingsformer.KLIPPEKORTBETALING
-                || betaling.getBetalingsform() != null){
-            throw new RuntimeException("Betalingsformen skal være KLIPPEKORTBETALING.");
-        }
-        if (antalProdukter <= antal) {
-            throw new RuntimeException("Du skal angive et antal der er mindre" +
-                    " eller lig med antal produkter produkter på ordrelinjen.");
+        if (betaling.getBetalingsform() != null) {
+            if (betaling.getBetalingsform() != Betalingsformer.KLIPPEKORTBETALING) {
+                throw new RuntimeException("Betalingsformen skal være KLIPPEKORTBETALING.");
+            }
         }
         if (this.betaling != betaling){
             Betaling oldBetalingsform = this.betaling;
             if (oldBetalingsform != null){
                 oldBetalingsform.removeOrdrelinje(this);
             }
+            if (antalProdukter > antal ) {
+                throw new RuntimeException("Du skal angive et antal der er mindre" +
+                        " eller lig med antal produkter produkter på ordrelinjen.");
+            }
             this.betaling = betaling;
-            this.antalBetaltMedKlip = antalProdukter;
-            setAntal(antal-antalProdukter);
+                setAntalBetaltMedKlip(antalProdukter);
+                setAntal(antal - antalProdukter); //Se her
                 betaling.addOrdrelinje(this, antalProdukter);
         }
     }
