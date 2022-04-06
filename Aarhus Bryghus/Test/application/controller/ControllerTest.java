@@ -19,8 +19,10 @@ class ControllerTest {
     private ProduktGruppe pg2;
     private Produkt p1;
     private Produkt p2;
+    private Produkt p3;
     private Pris pris1;
     private Pris pris2;
+    private Pris pris3;
     private Betaling b_klip;
 
 
@@ -40,9 +42,11 @@ class ControllerTest {
 
          p1 = pg1.createProdukt("Klosterbryg", "Flaskeøl");
         p2 = pg2.createProdukt("Forårsbryg", "Fadøl");
+        p3 = pg1.createProdukt("Tuborg", "Flaskeøl");
 
          pris1 = ss1.createPris(70, p1);
         pris2 = ss1.createPris(70, 2, p2);
+        pris3 = ss1.createPris(70,3, p3);
 
          b_klip = controller.createBetaling(Betalingsformer.KLIPPEKORTBETALING);
 
@@ -59,14 +63,59 @@ class ControllerTest {
     }
 
     @Test
-    void getAntalBrugteKlip() {
+    void getAntalBrugteKlip1() {
         //TC1
+        Ordrelinje ordrelinje1 = salg1.createOrdrelinje(2, p2);
+        Ordrelinje ordrelinje2 = salg1.createOrdrelinje(2, p3);
+        ordrelinje1.setBetaling(b_klip, 2);
+        ordrelinje2.setBetaling(b_klip, 2);
+        salg1.beregnSamletBeloebOgKlip();
+        assertEquals(10, controller.getAntalBrugteKlip(
+                LocalDate.now().minusDays(1), LocalDate.now().plusDays(1)), "Afviger fra klip");
 
     }
 
     @Test
-    void getPrProduktAntalKlipIPeriode() {
-    //TC1
+    void getAntalBrugteKlip2() {
+        //TC2
+       assertThrows(IllegalArgumentException.class,
+               () -> controller.getAntalBrugteKlip(LocalDate.now(), LocalDate.now().minusDays(1)));
 
     }
+
+    @Test
+    void getAntalBrugteKlip3() {
+        //TC3
+        assertEquals(0, controller.getAntalBrugteKlip(
+                LocalDate.now().minusDays(1), LocalDate.now().plusDays(1)), "Afviger fra klip");
+
+    }
+
+    @Test
+    void getPrProduktAntalKlipIPeriode1() {
+        //TC1
+        Ordrelinje ordrelinje1 = salg1.createOrdrelinje(2, p2);
+        Ordrelinje ordrelinje2 = salg1.createOrdrelinje(2, p3);
+        ordrelinje1.setBetaling(b_klip, 2);
+        ordrelinje2.setBetaling(b_klip, 2);
+        salg1.beregnSamletBeloebOgKlip();
+        assertEquals(2, controller.getPrProduktAntalKlipIPeriode(
+                LocalDate.now().minusDays(1), LocalDate.now().plusDays(1)).size(), "Afviger fra klip");
+
+    }
+
+    @Test
+    void getPrProduktAntalKlipIPeriode2() {
+        //TC2
+        assertThrows(IllegalArgumentException.class,
+                () -> controller.getPrProduktAntalKlipIPeriode(LocalDate.now(), LocalDate.now().minusDays(1)));
+
+    }
+    @Test
+    void getPrProduktAntalKlipIPeriode3() {
+        //TC3
+        assertEquals(0, controller.getPrProduktAntalKlipIPeriode(
+                LocalDate.now().minusDays(1), LocalDate.now().plusDays(1)).size(), "Afviger fra klip");
+    }
+
 }
