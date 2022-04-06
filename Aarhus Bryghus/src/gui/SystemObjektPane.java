@@ -13,8 +13,11 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 import javafx.scene.text.Text;
 
-public class SystemObjektPane extends GridPane {
+import java.io.Serializable;
+
+public class SystemObjektPane extends GridPane implements Serializable {
     private final ListView<Salgssituation> lwSalgsSituation = new ListView();
+    private Controller controller;
 
     // buttons
     private final Button btnSalgsSituationCreate = new Button();
@@ -87,6 +90,10 @@ public class SystemObjektPane extends GridPane {
     private final TextField txfProduktBeskrivelse = new TextField();
 
     public SystemObjektPane() {
+        //Serializable - load from storage
+        controller = Controller.getInstance();
+        controller.loadStorage();
+
         this.setPadding(new Insets(20));
         this.setHgap(20);
         this.setVgap(10);

@@ -3,6 +3,7 @@ package application.controller;
 import application.model.*;
 import storage.Storage;
 
+import java.io.*;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -25,7 +26,7 @@ public class Controller {
     }
 
     /**
-     * Opretter et nyt objekt / en ny produktgruppe og tilføjer det til Storage
+     * Opretter en ny produktgruppe og tilføjer det til Storage
      * Hvis produktgruppens navn allerede findes kastes IllegalArgumentException og produktgruppen oprettes ikke
      */
     public ProduktGruppe createProduktGruppe(String navn) {
@@ -53,7 +54,7 @@ public class Controller {
     // -------------------------------------------------------------------------------------------------------------
 
     /**
-     * Opretter et nyt objekt / en ny salgssituation og tilføjer det til Storage
+     * Opretter en ny salgssituation og tilføjer det til Storage
      * Hvis salgssituationens navn allerede er oprettet afbrydes oprettelsen og en IllegalArgumentException kastes
      */
     public Salgssituation createSalgssituation(String navn, String beskrivelse) {
@@ -120,14 +121,17 @@ public class Controller {
     }
 
     /**
-     * Opretter et nyt objekt / et nyt salg og tilføjer det til Storage
+     * Opretter et nyt salgsobjekt og tilføjer det til Storage
      */
     public Salg createSalg(Salgssituation salgssituation){
         Salg salg = new Salg(salgssituation);
         Storage.getInstance().addSalg(salg);
         return salg;
-
     }
+
+    /**
+     * Opretter et nyt lejeobjekt og tilføjer det til Storage
+     */
     public Leje createLeje(Salgssituation salgssituation){
         Leje leje = null;
         leje = new Leje(salgssituation,false,leje.pantBeloebIndbetalt(),LocalDate.now());
@@ -155,8 +159,6 @@ public class Controller {
         Storage.getInstance().removeSalg(salg);
     }
     // -------------------------------------------------------------------------------------------------------------
-
-    //TODO metoede returner map/collection af leje salg
 
     public double getDagsopgoer(LocalDate date){
         double DagsSum = 0;
@@ -217,70 +219,37 @@ public class Controller {
         return sumKlip;
     }
 
+
     // ------------------------------------------------------------------------------------------------------------
 
+    //Serializable
 
+    public void loadStorage() {
+        try (FileInputStream fileIn = new FileInputStream("storage.ser")) {
+            try (ObjectInputStream in = new ObjectInputStream(fileIn);) {
+                storage = (Storage) in.readObject();
 
-    public void initStorage() {
-        Controller controller = Controller.getInstance();
+                System.out.println("Storage loaded from file storage.ser");
+            } catch (ClassNotFoundException ex) {
+                System.out.println("Error loading storage object");
+                throw new RuntimeException(ex);
+            }
+        } catch (IOException ex) {
+            System.out.println("Error loading storage object");
+            throw new RuntimeException(ex);
+        }
+    }
 
-        ProduktGruppe pg1 = controller.createProduktGruppe("Flaske");
-        ProduktGruppe pg2 = controller.createProduktGruppe("Fadøl, 40 cl");
-        ProduktGruppe pg3 = controller.createProduktGruppe("Spiritus");
-        ProduktGruppe pg4 = controller.createProduktGruppe("Fustage");
-
-        Produkt p1 = pg1.createProdukt("Klosterbryg", "Flaskeøl");
-        Produkt p2 = pg1.createProdukt("Sweet Geogia Brown", "Flaskeøl");
-        Produkt p3 = pg1.createProdukt("Extra Pilsner", "Flaskeøl");
-
-        Produkt p4 = pg2.createProdukt("Jazz Classic", "Fadøl");
-        Produkt p5 = pg2.createProdukt("Celebration", "Fadøl");
-        Produkt p6 = pg2.createProdukt("Blondie", "Fadøl");
-
-        Produkt p7 = pg3.createProdukt("Whisky", "45%");
-        Produkt p8 = pg3.createProdukt("Liquor of Aarhus", "Spiritus");
-        Produkt p9 = pg3.createProdukt("Lyng Gin", "50 cl");
-
-        Produkt p10 = pg4.createProdukt("Forårsbryg", "20 liter");
-        Produkt p11 = pg4.createProdukt("India Pale Ale", "20 liter");
-        Produkt p12 = pg4.createProdukt("Julebryg", "20 liter");
-
-        Salgssituation s1 = Controller.getInstance().createSalgssituation("Fredagsbar", "Flaskeøl og fadøl");
-        Salgssituation s2 = Controller.getInstance().createSalgssituation("Butik", "Salg af alle produkter");
-
-        Pris pr1 = s1.createPris(70, 2, p1);
-        Pris pr2 = s1.createPris(70, 2, p2);
-        Pris pr3 = s1.createPris(70, 2, p3);
-
-        Pris pr4 = s2.createPris(36, p1);
-        Pris pr5 = s2.createPris(36, p2);
-        Pris pr6 = s2.createPris(36, p3);
-
-        Pris pr7 = s1.createPris(38, 1, p4);
-        Pris pr8 = s1.createPris(38, 1, p5);
-        Pris pr9 = s1.createPris(38, 1, p6);
-
-        Pris pr10 = s1.createPris(599, p7);
-        Pris pr11 = s1.createPris(175, p8);
-        Pris pr12 = s1.createPris(350, p9);
-
-        Pris pr13 = s2.createPris(599, p7);
-        Pris pr14 = s2.createPris(175, p8);
-        Pris pr15 = s2.createPris(350, p9);
-
-        Pris pr16 = s2.createPris(775, p10);
-        Pris pr17 = s2.createPris(775, p11);
-        Pris pr18 = s2.createPris(775, p12);
-
-        Salg sa1 = controller.createSalg(s1);
-        sa1.createOrdrelinje(3, p4);
-        sa1.createOrdrelinje(2, p5);
-        sa1.createOrdrelinje(4, p1);
-
-        Salg sa2 = createSalg(s1);
-        Salg sa3 = createSalg(s1);
-        Salg sa4 = createSalg(s1);
-
+    public void saveStorage() {
+        try (FileOutputStream fileOut = new FileOutputStream("storage.ser")) {
+            try (ObjectOutputStream out = new ObjectOutputStream(fileOut)) {
+                out.writeObject(storage);
+                System.out.println("Storage saved in file storage.ser");
+            }
+        } catch (IOException ex) {
+            System.out.println("Error saving storage object");
+            throw new RuntimeException(ex);
+        }
     }
 }
 

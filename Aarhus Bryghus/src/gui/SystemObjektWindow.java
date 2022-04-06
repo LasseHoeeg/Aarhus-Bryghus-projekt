@@ -17,9 +17,12 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
-public class SystemObjektWindow extends Stage {
+import java.io.Serializable;
+
+public class SystemObjektWindow extends Stage implements Serializable {
 
     private Object o;
+    private Controller controller;
 
     public SystemObjektWindow(String title, Object o) {
         this.initStyle(StageStyle.UTILITY);
@@ -114,6 +117,10 @@ public class SystemObjektWindow extends Stage {
 
 
     private void initContent(GridPane pane) {
+        //Serializable - load from storage
+        controller = Controller.getInstance();
+        controller.loadStorage();
+
         // show or hide grid lines
         pane.setGridLinesVisible(false);
 
