@@ -219,6 +219,9 @@ public class Controller {
      * samlet antal klip brugt på produkter for en givet periode
      */
     public int getAntalBrugteKlip(LocalDate start, LocalDate slut) {
+        if (start.isAfter(slut)){
+            throw new IllegalArgumentException("Startdato skal være før slutdato");
+        }
         int sum = 0;
         for (int i = 0; i < Storage.getInstance().getSalgsliste().size(); i++) {
             Salg salg = Storage.getInstance().getSalgsliste().get(i);
@@ -233,13 +236,20 @@ public class Controller {
     /**
      * samlet antal klip brugt på produkter for en givet periode - her fordelt på de enkelte produkter
      */
-    public ArrayList<Ordrelinje> getPrProduktAntalKlipIPeriode(){
-        ArrayList<Ordrelinje> sumKlip = new ArrayList<>();
+    public ArrayList<Ordrelinje> getPrProduktAntalKlipIPeriode(LocalDate start, LocalDate slut){
+        if (start.isAfter(slut)){
+            throw new IllegalArgumentException("Startdato skal være før slutdato");
+        }
+
+            ArrayList<Ordrelinje> sumKlip = new ArrayList<>();
         for (Salg s : Storage.getInstance().getSalgsliste()){
+            if (!s.getTidspunktBetaling().toLocalDate().isBefore(start) &&
+                    !s.getTidspunktBetaling().toLocalDate().isAfter(slut)) {
                 for (int i = 0; i < s.getOrdrelinjer().size(); i++) {
                     if (s.getOrdrelinjer().get(i).getBetaling().getBetalingsform() == Betalingsformer.KLIPPEKORTBETALING) {
                         sumKlip.add(s.getOrdrelinjer().get(i));
                     }
+                }
             }
         }
         return sumKlip;

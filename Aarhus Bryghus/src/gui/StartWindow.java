@@ -18,7 +18,7 @@ public class StartWindow extends Application {
 
     @Override
     public void init() {
-        Controller.getInstance().initStorage();
+        Controller.getInstance().loadStorage();
     }
 
     @Override
