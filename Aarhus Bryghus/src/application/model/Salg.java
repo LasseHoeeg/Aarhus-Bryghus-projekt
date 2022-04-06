@@ -127,6 +127,13 @@ public class Salg implements Serializable {
         }
     }
 
+    public void removeOrdrelinjeAll() {
+        for (Ordrelinje o : this.getOrdrelinjer())
+        if (ordrelinjer.contains(o)) {
+            ordrelinjer.remove(o);
+        }
+    }
+
     /**
      * Opretter rabatProcent og opdaterer ordrelinjePris
      * Rabatten sættes til ordrelinjen
@@ -215,9 +222,6 @@ public class Salg implements Serializable {
         return new ArrayList<>(alleBeloeb);
     }
 
-//    public void setSalgssituation(Salgssituation salgssituation) {
-//        this.salgssituation = salgssituation;
-//    }
 
     public static int getOrdrelinjeAntal() {
         return ordrelinjeAntal;

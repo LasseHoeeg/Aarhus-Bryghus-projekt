@@ -24,7 +24,6 @@ public class SalgPane extends GridPane {
     private final Button btnFjernOrdrelinje = new Button();
     private final Button btnRabat = new Button();
     private final Button btnBetal = new Button();
-    //TODO
     private final Button btnLeje = new Button();
 
     // texts
@@ -34,13 +33,10 @@ public class SalgPane extends GridPane {
     // textfields
     private final TextField txfAntalProdukter = new TextField();
     private final TextField txfSumOrdrelinje = new TextField();
-    //TODO
     private final TextField txfBeloeb = new TextField();
-
 
     // combobox
     private final ComboBox<Salgssituation> cbSalgssituation = new ComboBox();
-    //TODO
     private final ComboBox<Betaling> cbBetaling = new ComboBox();
 
     // atributter
@@ -121,7 +117,7 @@ public class SalgPane extends GridPane {
         cbSalgssituation.getItems().setAll(Controller.getInstance().getSalgssituationer());
         ChangeListener listenerSS = (ov, oldString, newString) -> this.selectionChangedSalgssituation();
         cbSalgssituation.getSelectionModel().selectedItemProperty().addListener(listenerSS);
-//        cbSalgssituation.setOnMouseClicked(e -> UpdateSalgssituation());
+        cbSalgssituation.setOnMouseClicked(e -> UpdateSalgssituation());
 
         this.add(cbBetaling, 2, 4);
         cbBetaling.setPromptText("Betaling");
@@ -134,36 +130,37 @@ public class SalgPane extends GridPane {
 
     }
 
-//    public void UpdateSalgssituation() {
-//        cbSalgssituation.getItems().setAll(Controller.getInstance().getSalgssituationer());
-//    }
+    public void UpdateSalgssituation() {
+        cbSalgssituation.getItems().setAll(Controller.getInstance().getSalgssituationer());
+    }
 
     private void selectionChangedSalgssituation() {
         Salgssituation selected = cbSalgssituation.getSelectionModel().getSelectedItem();
-        if (selected != null && salg.getSalgssituation()==null) {
-            salg.setSalgssituation(selected);
-            salg.getOrdrelinjer().clear();
-            lwOrdrelinje.getSelectionModel().clearSelection();
+        if (selected != null) {
             lwSalgsSituationProdukter.getItems().setAll(selected.getPriser());
-//            salg.getOrdrelinjer().removeAll(salg.getOrdrelinjer());
+//            this.salg.getOrdrelinjer().removeAll(this.salg.getOrdrelinjer());
+//            System.out.println(salg.getOrdrelinjer());
+//            lwOrdrelinje.getItems().setAll(this.salg.getOrdrelinjer());
+//            this.salg.setSalgssituation(selected);
 //            lwOrdrelinje.getSelectionModel().getSelectedItems().clear();
 //            lwOrdrelinje.getItems().setAll(salg.getOrdrelinjer());
-        }
 
             //FY FY Kode:
-        if (salg.getSalgssituation() != null && selected != salg.getSalgssituation() && selected != null) {
-            salg.setSalgssituation(selected);
-            salg.getOrdrelinjer().clear();
-            lwOrdrelinje.getSelectionModel().clearSelection();
-            lwSalgsSituationProdukter.getItems().setAll(selected.getPriser());
-//            salg.getOrdrelinjer().removeAll(salg.getOrdrelinjer());
-//            lwOrdrelinje.getSelectionModel().getSelectedItems().clear();
-//            lwOrdrelinje.getItems().setAll(salg.getOrdrelinjer());
+            if(salg.getSalgssituation() != selected) {
+                salg.removeOrdrelinjeAll();
+//                this.salg.getOrdrelinjer().clear();
+                salg.setSalgssituation(selected);
+                lwOrdrelinje.getItems().setAll(salg.getOrdrelinjer());
+                txfSumOrdrelinje.setText(0.0 + "");
+//                lwOrdrelinje.getSelectionModel().clearSelection();
+//                lwSalgsSituationProdukter.getItems().setAll(selected.getPriser());
+////            salg.getOrdrelinjer().removeAll(salg.getOrdrelinjer());
+////            lwOrdrelinje.getSelectionModel().getSelectedItems().clear();
 
+
+            }
         }
     }
-
-
 
 
     private void selectionChangedBetalling() {
@@ -200,14 +197,14 @@ public class SalgPane extends GridPane {
     private void fjernOrdrelinje() {
         Ordrelinje selected = lwOrdrelinje.getSelectionModel().getSelectedItem();
         if (selected != null) {
-            salg.removeOrdrelinje(selected);
+//            salg.removeOrdrelinje(selected);
             if (salg.getOrdrelinjer().size() == 0) {
-//                salg.removeOrdrelinje(selected);
+                salg.removeOrdrelinje(selected);
                 lwOrdrelinje.getItems().setAll(salg.getOrdrelinjer());
 //                txfSumOrdrelinje.clear();
                 txfSumOrdrelinje.setText(0.0 + "");
             } else {
-//            salg.removeOrdrelinje(selected);
+            salg.removeOrdrelinje(selected);
                 salg.beregnSamletBeloebOgKlip();
                 lwOrdrelinje.getItems().setAll(salg.getOrdrelinjer());
                 sumChanged();

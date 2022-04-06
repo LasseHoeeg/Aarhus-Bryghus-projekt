@@ -48,6 +48,7 @@ public class SalgWindow extends Stage {
     private final Button btnFjernOrdrelinje = new Button();
     private final Button btnRabat = new Button();
     private final Button btnBetal = new Button();
+    private final Button btnLeje = new Button();
 
     // texts
     private final Text txtAarhusBryghus = new Text("Aarhus Bryghus Produkter:");
@@ -56,22 +57,20 @@ public class SalgWindow extends Stage {
     // textfields
     private final TextField txfAntalProdukter = new TextField();
     private final TextField txfSumOrdrelinje = new TextField();
+    private final TextField txfBeloeb = new TextField();
 
     // combobox
     private final ComboBox<Salgssituation> cbSalgssituation = new ComboBox();
-    //TODO
     private final ComboBox<Betaling> cbBetaling = new ComboBox();
 
-
-    // atributter
-//    private Salg salg;
-    private int antal;
 
     private void initContent(GridPane pane) {
         pane.setPadding(new Insets(10));
         pane.setHgap(10);
         pane.setVgap(10);
         pane.setGridLinesVisible(false);
+
+        // Listviews
 
         pane.add(lwSalgsSituationProdukter, 0, 2, 2, 2);
         lwSalgsSituationProdukter.setPrefWidth(50);
@@ -105,11 +104,19 @@ public class SalgWindow extends Stage {
         btnBetal.setText("Betal");
         btnBetal.setPrefWidth(60);
 
+        pane.add(btnLeje, 4, 1);
+        btnLeje.setText("Leje");
+        btnLeje.setPrefWidth(60);
+
         // TextFields
 
         pane.add(txfAntalProdukter,0,4);
         txfAntalProdukter.setPromptText("Antal:");
         txfAntalProdukter.setPrefWidth(100);
+
+        pane.add(txfBeloeb, 3, 4);
+        txfBeloeb.setPromptText("Klip / Beløb");
+        txfBeloeb.setPrefWidth(60);
 
         pane.add(txfSumOrdrelinje,3,3);
         txfSumOrdrelinje.setPromptText("sum:");
@@ -120,8 +127,9 @@ public class SalgWindow extends Stage {
         pane.add(cbSalgssituation,0,0);
         cbSalgssituation.setPromptText("Prislister");
 
-        //TODO
-        pane.add(cbSalgssituation,7,7);
-        cbSalgssituation.setPromptText("Betalingsform");
+        pane.add(cbBetaling,7,7);
+        cbBetaling.setPromptText("Betalingsform");
+        cbBetaling.setPrefWidth(90);
+
     }
 }
