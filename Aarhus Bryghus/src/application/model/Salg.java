@@ -62,7 +62,7 @@ public class Salg {
         }
         int contains = this.containsProduct(produkt);
         Ordrelinje ordrelinje = null;
-        if (contains != -1){
+        if (contains != -1 && tjekOmRabat(contains)==false){
             this.getOrdrelinjer().get(contains).setAntal(this.getOrdrelinjer().get(contains).getAntal()+antal);
             this.getOrdrelinjer().get(contains).beregnOrdrelinjePrisOgKlip();
         }
@@ -83,14 +83,14 @@ public class Salg {
         }
         return ordrelinje;
     }
-    public boolean tjekOmRabat(int containsProductInt, int antal, Produkt produkt, Salg salg){
+
+    //
+    public boolean tjekOmRabat(int containsProductInt){
         boolean rabat = false;
-        if (this.getOrdrelinjer().get(containsProductInt).getOrdrelinjePris() != produkt.getPriser().get(containsProductInt).getBeloeb() * antal);
+        if (this.getOrdrelinjer().get(containsProductInt).getRabat() != null)
         { rabat = true;
         }
         return rabat;
-
-
     }
 
     public int containsProduct(Produkt produkt) {

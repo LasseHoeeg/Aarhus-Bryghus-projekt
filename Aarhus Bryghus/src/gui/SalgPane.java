@@ -175,6 +175,7 @@ public class SalgPane extends GridPane {
     }
 
     private void sumChanged() {
+        salg.beregnSamletBeloebOgKlip();
         txfSumOrdrelinje.setText(salg.getSamletBeloeb()+"");
     }
 
@@ -198,37 +199,44 @@ public class SalgPane extends GridPane {
 
     private void rabat() {
         if (lwOrdrelinje.getSelectionModel().getSelectedItem()!=null && txfBeloeb.getText()!=null) {
-            lwOrdrelinje.getSelectionModel().getSelectedItem().setOrdrelinjePris(Integer.parseInt(txfBeloeb.getText()));
+            lwOrdrelinje.getSelectionModel().getSelectedItem().createRabatBeloeb(Integer.parseInt(txfBeloeb.getText()));
+            lwOrdrelinje.getItems().setAll(salg.getOrdrelinjer());
             sumChanged();
-            selectionChangedOrdrelinje();
 
         }
 
-//        sumChanged();
     }
 
     private void betal() {
-        if (cbBetaling.getSelectionModel().getSelectedItem().getBetalingsform()==Betalingsformer.KLIPPEKORTBETALING){
-            if (lwOrdrelinje.getSelectionModel().getSelectedItem()!=null && txfBeloeb.getText()!=null) {
-                lwOrdrelinje.getSelectionModel().getSelectedItem().setBetaling(cbBetaling.getSelectionModel().getSelectedItem());
+        if (lwOrdrelinje.getSelectionModel().isEmpty()==false) {
+            if (cbBetaling.getSelectionModel().getSelectedItem().getBetalingsform() == Betalingsformer.KLIPPEKORTBETALING) {
+                if (lwOrdrelinje.getSelectionModel().getSelectedItem() != null && txfBeloeb.getText() != null) {
+                    lwOrdrelinje.getSelectionModel().getSelectedItem().setBetaling(cbBetaling.getSelectionModel().getSelectedItem());
+                    if (salg.getSamletBeloeb() <= 0) {
+                        Controller.getInstance().addSalg(salg);
+                        salg = new Salg(cbSalgssituation.getValue());
+                        lwOrdrelinje.getItems().clear();
+                    }
+                }
+            } else if (cbBetaling.getSelectionModel().getSelectedItem() != null && txfBeloeb.getText() != null) {
+                salg.createBeloeb(Double.parseDouble(txfBeloeb.getText()), cbBetaling.getSelectionModel().getSelectedItem());
                 if (salg.getSamletBeloeb() <= 0) {
-                    lwOrdrelinje.getItems().clear();
+                    Controller.getInstance().addSalg(salg);
                     salg = new Salg(cbSalgssituation.getValue());
+                    lwOrdrelinje.getItems().clear();
                 }
             }
+            sumChanged();
         }
-        else{
-            lwOrdrelinje.getItems().clear();
-            salg = new Salg(cbSalgssituation.getValue());
-        }
-        ;
-//        Controller.getInstance().
-
     }
+
     private void leje() {
-        Controller.getInstance().tivngSalgTilLeje(this.salg);
-        lwOrdrelinje.getItems().clear();
+        if (lwOrdrelinje.getSelectionModel().isEmpty() == false) {
+            Controller.getInstance().tvingSalgTilLeje(this.salg);
+            lwOrdrelinje.getItems().clear();
+            sumChanged();
 //        salg = new Salg(cbSalgssituation.getValue());
+        }
     }
 
 }

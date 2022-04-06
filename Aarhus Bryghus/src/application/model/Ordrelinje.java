@@ -105,8 +105,8 @@ public class Ordrelinje {
         while (i < salg.getSalgssituation().getPriser().size()&&!found) {
             if (this.produkt == salg.getSalgssituation().getPriser().get(i).getProdukt()) {
                 if (getRabat()!=null){
-                    setOrdrelinjePris((salg.getSalgssituation().getPriser().get(i).getBeloeb() * antal)
-                            - getRabat().getRabat(getOrdrelinjePris()));
+                    setOrdrelinjePris(antal*((salg.getSalgssituation().getPriser().get(i).getBeloeb()+ getRabat().getRabat(getOrdrelinjePris())
+                            - (salg.getSalgssituation().getPriser().get(i).getBeloeb()))));
                 }
                 else {
                     setOrdrelinjePris(salg.getSalgssituation().getPriser().get(i).getBeloeb() * antal);

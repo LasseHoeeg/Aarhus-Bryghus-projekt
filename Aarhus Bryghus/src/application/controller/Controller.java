@@ -144,6 +144,11 @@ public class Controller {
         return salg;
 
     }
+
+    public Salg addSalg(Salg salg){
+        Storage.getInstance().addSalg(salg);
+        return salg;
+    }
     public Leje createLeje(Salgssituation salgssituation){
         Leje leje = null;
         leje = new Leje(salgssituation,false,leje.pantBeloebIndbetalt(),LocalDate.now());
@@ -151,12 +156,13 @@ public class Controller {
         return leje;
     }
 
-    public Leje tivngSalgTilLeje(Salg salg){
+    public Leje tvingSalgTilLeje(Salg salg){
         Leje leje = new Leje(salg.getSalgssituation(),false,0,salg.getTidspunktBetaling().toLocalDate());
         leje.setPantBeloebInbetalt(leje.pantBeloebIndbetalt());
         for (Ordrelinje o : salg.getOrdrelinjer()) {
-            leje.getOrdrelinjer().add(o);
+            leje.createOrdrelinje(o.getAntal(), o.getProdukt());
         }
+        leje.beregnSamletBeloebOgKlip();
         Storage.getInstance().addSalg(leje);
         return leje;
     }
