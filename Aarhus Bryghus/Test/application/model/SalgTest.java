@@ -88,12 +88,9 @@ class SalgTest {
     @Test
     void beregnSamletBeloebOgKlip7() {
         //TC7
-        //ordrelinje4.beregnOrdrelinjeBeloebOgKlip();
         salg4.beregnSamletBeloebOgKlip();
         assertEquals(70, salg4.getSamletBeloeb(), "samlet beløb afviger fra 210");
         assertEquals(4, salg4.getSamletAntalKlip(), "samlet antal klip afviger fra 4");
-      //  assertEquals(70, ordrelinje4.getOrdrelinjeBeloeb(), "gg");
-        //assertEquals(4, ordrelinje4.getOrdrelinjeKlip(), "bg");
     }
 
 
