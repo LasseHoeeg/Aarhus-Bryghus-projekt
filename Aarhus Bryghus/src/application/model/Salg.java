@@ -9,6 +9,7 @@ public class Salg implements Serializable {
     private double samletBeloeb;
     private int samletAntalKlip;
     private static int salgsID = 0;
+    private double betaltAfsamletBeloeb;
     private int salgsInt;
     private ArrayList<Ordrelinje> ordrelinjer = new ArrayList<>();
     private Rabat rabat;
@@ -33,22 +34,37 @@ public class Salg implements Serializable {
      * Tager forbehold for evt. rabat.
      */
     public void beregnSamletBeloebOgKlip() {
-      if (ordrelinjer.size() == 0){
-          throw new IllegalArgumentException("Salget skal minimum have en ordrelinje");
-      }
-        double sumBeloeb = 0.0;
-        int sumKlip = 0;
+        if (ordrelinjer.size() > 0) {
+//          throw new IllegalArgumentException("Salget skal minimum have en ordrelinje");
+//      }
+            double sumBeloeb = 0.0;
+            int sumKlip = 0;
 
-        for (Ordrelinje o : ordrelinjer) {
-            o.beregnOrdrelinjeBeloebOgKlip();
-                    sumKlip += o.getOrdrelinjeKlip();
-                    sumBeloeb += o.getOrdrelinjeBeloeb();
+            for (Ordrelinje o : ordrelinjer) {
+                o.beregnOrdrelinjeBeloebOgKlip();
+                sumKlip += o.getOrdrelinjeKlip();
+                sumBeloeb += o.getOrdrelinjeBeloeb();
+            }
+            if (rabat != null) {
+                sumBeloeb = sumBeloeb - rabat.getRabat(sumBeloeb);
+            }
+            samletBeloeb = sumBeloeb;
+            samletAntalKlip = sumKlip;
         }
-        if (rabat != null) {
-            sumBeloeb = sumBeloeb - rabat.getRabat(sumBeloeb);
+    }
+
+    public double getBetaltAfsamletBeloeb() {
+        return betaltAfsamletBeloeb;
+    }
+
+    public void setBetaltAfsamletBeloeb() {
+        if (getAlleBeloeb().size()>0) {
+            double sum = 0;
+            for (Beloeb b : this.getAlleBeloeb()) {
+                sum += b.getTilBetaling();
+            }
+            this.betaltAfsamletBeloeb = sum;
         }
-        samletBeloeb = sumBeloeb;
-        samletAntalKlip = sumKlip;
     }
 
     /**

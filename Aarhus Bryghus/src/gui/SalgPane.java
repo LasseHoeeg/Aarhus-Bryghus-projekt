@@ -68,8 +68,8 @@ public class SalgPane extends GridPane {
 
         // Texts
 
-        this.add(txtAarhusBryghus,0,1);
-        this.add(txtIndKurvOrdrelinje,2,1);
+        this.add(txtAarhusBryghus, 0, 1);
+        this.add(txtIndKurvOrdrelinje, 2, 1);
 
 
         // Buttons
@@ -101,29 +101,29 @@ public class SalgPane extends GridPane {
 
         // TextFields
 
-        this.add(txfAntalProdukter,0,4);
+        this.add(txfAntalProdukter, 0, 4);
         txfAntalProdukter.setPromptText("Antal:");
         txfAntalProdukter.setPrefWidth(100);
 
-        this.add(txfBeloeb,3,4);
+        this.add(txfBeloeb, 3, 4);
         txfBeloeb.setPromptText("Klip / Beløb");
         txfBeloeb.setPrefWidth(60);
 
-        this.add(txfSumOrdrelinje,4,3);
+        this.add(txfSumOrdrelinje, 4, 3);
         txfSumOrdrelinje.setPromptText("sum:");
         txfSumOrdrelinje.setPrefWidth(60);
         txfSumOrdrelinje.setDisable(true);
 
         // ComboBoxs
 
-        this.add(cbSalgssituation,0,0);
+        this.add(cbSalgssituation, 0, 0);
         cbSalgssituation.setPromptText("Prislister");
         cbSalgssituation.getItems().setAll(Controller.getInstance().getSalgssituationer());
         ChangeListener listenerSS = (ov, oldString, newString) -> this.selectionChangedSalgssituation();
         cbSalgssituation.getSelectionModel().selectedItemProperty().addListener(listenerSS);
-        cbSalgssituation.setOnMouseClicked(e -> UpdateSalgssituation());
+//        cbSalgssituation.setOnMouseClicked(e -> UpdateSalgssituation());
 
-        this.add(cbBetaling,2,4);
+        this.add(cbBetaling, 2, 4);
         cbBetaling.setPromptText("Betaling");
         cbBetaling.setPrefWidth(90);
         cbBetaling.getItems().setAll(Controller.getInstance().getAlleBetalinger());
@@ -132,30 +132,39 @@ public class SalgPane extends GridPane {
         cbBetaling.setOnMouseClicked(e -> selectionChangedBetalling());
 
 
-
-
-
-
-
-
     }
 
-    public void UpdateSalgssituation() {
-        cbSalgssituation.getItems().setAll(Controller.getInstance().getSalgssituationer());
-    }
+//    public void UpdateSalgssituation() {
+//        cbSalgssituation.getItems().setAll(Controller.getInstance().getSalgssituationer());
+//    }
 
     private void selectionChangedSalgssituation() {
         Salgssituation selected = cbSalgssituation.getSelectionModel().getSelectedItem();
-        lwSalgsSituationProdukter.getItems().setAll(selected.getPriser());
-        salg.setSalgssituation(selected);
-        //FY FY Kode:
-        if (selected!= salg.getSalgssituation()){
+        if (selected != null && salg.getSalgssituation()==null) {
             salg.setSalgssituation(selected);
             salg.getOrdrelinjer().clear();
+            lwOrdrelinje.getSelectionModel().clearSelection();
+            lwSalgsSituationProdukter.getItems().setAll(selected.getPriser());
+//            salg.getOrdrelinjer().removeAll(salg.getOrdrelinjer());
+//            lwOrdrelinje.getSelectionModel().getSelectedItems().clear();
+//            lwOrdrelinje.getItems().setAll(salg.getOrdrelinjer());
         }
 
+            //FY FY Kode:
+        if (salg.getSalgssituation() != null && selected != salg.getSalgssituation() && selected != null) {
+            salg.setSalgssituation(selected);
+            salg.getOrdrelinjer().clear();
+            lwOrdrelinje.getSelectionModel().clearSelection();
+            lwSalgsSituationProdukter.getItems().setAll(selected.getPriser());
+//            salg.getOrdrelinjer().removeAll(salg.getOrdrelinjer());
+//            lwOrdrelinje.getSelectionModel().getSelectedItems().clear();
+//            lwOrdrelinje.getItems().setAll(salg.getOrdrelinjer());
 
+        }
     }
+
+
+
 
     private void selectionChangedBetalling() {
         Betaling selected = cbBetaling.getSelectionModel().getSelectedItem();
@@ -176,12 +185,12 @@ public class SalgPane extends GridPane {
 
     private void sumChanged() {
         salg.beregnSamletBeloebOgKlip();
-        txfSumOrdrelinje.setText(salg.getSamletBeloeb()+"");
+        txfSumOrdrelinje.setText(salg.getSamletBeloeb() - salg.getBetaltAfsamletBeloeb() + "");
     }
 
     private void tilføjOrdrelinje() {
         Pris selected = lwSalgsSituationProdukter.getSelectionModel().getSelectedItem();
-        if (selected != null && Integer.parseInt(txfAntalProdukter.getText()) > 0 ) {
+        if (selected != null && Integer.parseInt(txfAntalProdukter.getText()) > 0) {
             salg.createOrdrelinje(Integer.parseInt(txfAntalProdukter.getText()), selected.getProdukt());
             lwOrdrelinje.getItems().setAll(salg.getOrdrelinjer());
             sumChanged();
@@ -191,22 +200,23 @@ public class SalgPane extends GridPane {
     private void fjernOrdrelinje() {
         Ordrelinje selected = lwOrdrelinje.getSelectionModel().getSelectedItem();
         if (selected != null) {
-            if (lwOrdrelinje.getSelectionModel().getSelectedItems().size()==1){
-                salg.removeOrdrelinje(selected);
-                lwOrdrelinje.getItems().setAll(salg.getOrdrelinjer());
-                txfSumOrdrelinje.setText(0.0+"");
-            }
-            else{
             salg.removeOrdrelinje(selected);
-            salg.beregnSamletBeloebOgKlip();
-            lwOrdrelinje.getItems().setAll(salg.getOrdrelinjer());
-            sumChanged();
+            if (salg.getOrdrelinjer().size() == 0) {
+//                salg.removeOrdrelinje(selected);
+                lwOrdrelinje.getItems().setAll(salg.getOrdrelinjer());
+//                txfSumOrdrelinje.clear();
+                txfSumOrdrelinje.setText(0.0 + "");
+            } else {
+//            salg.removeOrdrelinje(selected);
+                salg.beregnSamletBeloebOgKlip();
+                lwOrdrelinje.getItems().setAll(salg.getOrdrelinjer());
+                sumChanged();
             }
         }
     }
 
     private void rabat() {
-        if (lwOrdrelinje.getSelectionModel().getSelectedItem()!=null && txfBeloeb.getText()!=null) {
+        if (lwOrdrelinje.getSelectionModel().getSelectedItem() != null && txfBeloeb.getText() != null) {
             lwOrdrelinje.getSelectionModel().getSelectedItem().createRabatBeloeb(Integer.parseInt(txfBeloeb.getText()));
             lwOrdrelinje.getItems().setAll(salg.getOrdrelinjer());
             sumChanged();
@@ -216,19 +226,21 @@ public class SalgPane extends GridPane {
     }
 
     private void betal() {
-        if (lwOrdrelinje.getSelectionModel().isEmpty()==false) {
+        if (salg.getOrdrelinjer().size() > 0 && cbBetaling.getSelectionModel().getSelectedItem() != null) {
             if (cbBetaling.getSelectionModel().getSelectedItem().getBetalingsform() == Betalingsformer.KLIPPEKORTBETALING) {
                 if (lwOrdrelinje.getSelectionModel().getSelectedItem() != null && txfBeloeb.getText() != null) {
-                    lwOrdrelinje.getSelectionModel().getSelectedItem().setBetaling((cbBetaling.getSelectionModel().getSelectedItem()),Integer.parseInt(txfBeloeb.getText()));
-                    if (salg.getSamletBeloeb() <= 0) {
+                    lwOrdrelinje.getSelectionModel().getSelectedItem().setBetaling((cbBetaling.getSelectionModel().getSelectedItem()), Integer.parseInt(txfBeloeb.getText()));
+                    salg.setBetaltAfsamletBeloeb();
+                    if (salg.getSamletBeloeb() <= salg.getBetaltAfsamletBeloeb()) {
                         Controller.getInstance().addSalg(salg);
                         salg = new Salg(cbSalgssituation.getValue());
                         lwOrdrelinje.getItems().clear();
                     }
                 }
-            } else if (cbBetaling.getSelectionModel().getSelectedItem() != null && txfBeloeb.getText() != null) {
+            } else if (txfBeloeb.getText() != null) {
                 salg.createBeloeb(Double.parseDouble(txfBeloeb.getText()), cbBetaling.getSelectionModel().getSelectedItem());
-                if (salg.getSamletBeloeb() <= 0) {
+                salg.setBetaltAfsamletBeloeb();
+                if (salg.getSamletBeloeb() <= salg.getBetaltAfsamletBeloeb()) {
                     Controller.getInstance().addSalg(salg);
                     salg = new Salg(cbSalgssituation.getValue());
                     lwOrdrelinje.getItems().clear();
@@ -239,13 +251,12 @@ public class SalgPane extends GridPane {
     }
 
     private void leje() {
-        if (salg.getOrdrelinjer().size()>0) {
+        if (salg.getOrdrelinjer().size() > 0) {
             Controller.getInstance().tvingSalgTilLeje(this.salg);
             lwOrdrelinje.getItems().clear();
             sumChanged();
             salg = new Salg(cbSalgssituation.getValue());
         }
     }
-
 }
 
