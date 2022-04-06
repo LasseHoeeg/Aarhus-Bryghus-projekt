@@ -24,8 +24,6 @@ public class Salg implements Serializable {
         this.tidspunktBetaling = LocalDateTime.now();
         salgsID++;
         this.salgsInt = salgsID;
-//        this.salgsID = setSalgsID();
-//        salgsID=this.getSalgsID(;
         this.salgssituation = salgssituation;
         ordrelinjeAntal = 0;
     }
