@@ -127,6 +127,13 @@ public class Salg implements Serializable {
         }
     }
 
+    public void removeOrdrelinjeAll() {
+        for (Ordrelinje o : this.getOrdrelinjer())
+        if (ordrelinjer.contains(o)) {
+            ordrelinjer.remove(o);
+        }
+    }
+
     /**
      * Opretter rabatProcent og opdaterer ordrelinjePris
      * Rabatten sættes til ordrelinjen

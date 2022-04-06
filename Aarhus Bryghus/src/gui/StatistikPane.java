@@ -113,7 +113,7 @@ public class StatistikPane extends GridPane {
     //TODO
     private void selectionChangedKlip() {
         if (dpDateStart.getValue()!=null&&dpDateSlut.getValue()!=null) {
-//            lwAntalKlipPrProduktPeriode.getItems().setAll(Controller.getInstance().getAntalBrugteKlip(dpDateStart.getValue()., dpDateSlut.getValue()));
+//            lwAntalKlipPrProduktPeriode.getItems().setAll(Controller.getInstance().getPrProduktAntalKlipIPeriode(dpDateStart.getValue(), dpDateSlut.getValue()));
             txfSumKlip.setText("Antal: " + Controller.getInstance().getAntalBrugteKlip(dpDateStart.getValue(), dpDateSlut.getValue()));
         }
     }
