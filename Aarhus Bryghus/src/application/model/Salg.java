@@ -22,10 +22,12 @@ public class Salg implements Serializable {
      */
     public Salg(Salgssituation salgssituation) {
         this.tidspunktBetaling = LocalDateTime.now();
+        salgsID++;
+        this.salgsInt = salgsID;
+//        this.salgsID = setSalgsID();
+//        salgsID=this.getSalgsID(;
         this.salgssituation = salgssituation;
         ordrelinjeAntal = 0;
-        this.salgsInt = salgsID;
-        salgsID++;
     }
 
     /**
@@ -199,9 +201,7 @@ public class Salg implements Serializable {
         return new ArrayList<>(alleBeloeb);
     }
 
-//    public void setSalgssituation(Salgssituation salgssituation) {
-//        this.salgssituation = salgssituation;
-//    }
+
 
     public static int getOrdrelinjeAntal() {
         return ordrelinjeAntal;
