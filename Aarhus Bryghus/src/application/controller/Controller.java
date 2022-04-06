@@ -123,7 +123,7 @@ public class Controller {
     public ArrayList<Salg> getSalgsObejkter(){
         ArrayList salgsObejkter = new ArrayList();
         for (Salg s : Storage.getInstance().getSalgsliste()){
-            if (s instanceof Salg) {salgsObejkter.add(s);}
+            if (s instanceof Leje == false) {salgsObejkter.add(s);}
         }
         return salgsObejkter;
     }
@@ -166,6 +166,9 @@ public class Controller {
         leje.setPantBeloebInbetalt(leje.pantBeloebIndbetalt());
         for (Ordrelinje o : salg.getOrdrelinjer()) {
             leje.createOrdrelinje(o.getAntal(), o.getProdukt());
+            if(o.getRabat()!=null){
+                leje.getOrdrelinjer().get(leje.getOrdrelinjer().size()-1).createRabatBeloeb(o.getOrdrelinjeBeloeb()/o.getAntal());
+            }
         }
         leje.beregnSamletBeloebOgKlip();
         Storage.getInstance().addSalg(leje);

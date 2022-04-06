@@ -3,9 +3,6 @@ package application.model;
 import application.controller.Controller;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import storage.Storage;
-
-import java.awt.image.renderable.ContextualRenderedImageFactory;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -98,22 +95,62 @@ class SalgTest {
         assertEquals(70, salg4.getSamletBeloeb(), "samlet beløb afviger fra 210");
         assertEquals(4, salg4.getSamletAntalKlip(), "samlet antal klip afviger fra 4");
     }
-
+    // ----------------------------------------------------------------------------------------------------------
 
     @Test
     void createOrdrelinje1() {
         //TC1
-        salg5.createOrdrelinje(2, p1);
+      Ordrelinje ordrelinje1 = salg5.createOrdrelinje(2, p1);
         assertEquals(1, salg5.getOrdrelinjer().size(), "Ordrelinjen er ikke blevet tilføjet");
-
-
     }
 
     @Test
-    void createRabatPct() {
+    void createOrdrelinje2() {
+        //TC2
+    Ordrelinje ordrelinje1 = salg5.createOrdrelinje(2, p1);
+    Ordrelinje ordrelinje2 = salg5.createOrdrelinje(3, p1);
+        assertEquals(1, salg5.getOrdrelinjer().size(), "Ordrelinjerne er ikke blevet slået sammen");
+        assertEquals(5, ordrelinje1.getAntal(), "Antal afviger fra 5");
     }
 
     @Test
-    void createRabatBeloeb() {
+    void createOrdrelinje3() {
+        //TC3
+      Ordrelinje ordrelinje = salg5.createOrdrelinje(2, p1);
+      assertEquals(p1, ordrelinje.getProdukt(),"Produktet er ikke det samme" );
     }
+
+    @Test
+    void createOrdrelinje4() {
+        //TC4
+        Ordrelinje ordrelinje1 = salg5.createOrdrelinje(2, p1);
+        Ordrelinje ordrelinje2 = salg5.createOrdrelinje(3, p2);
+        assertEquals(2, salg5.getOrdrelinjer().size(), "Ordrelinjerne er ikke blevet tilføjet");
+    }
+    // ----------------------------------------------------------------------------------------------------------
+
+    @Test
+    void createRabatBeloeb1() {
+        //TC1
+        Ordrelinje ordrelinje = salg5.createOrdrelinje(2,p1); //Skal oprettes, ellers giver opret rabat en fejl.
+        Rabat rabat = salg5.createRabatBeloeb(20);
+        assertEquals(rabat, salg5.getRabat(), "Rabat er ikke blevet sat til salget");
+    }
+
+    @Test
+    void createRabatBeloeb2() {
+        //TC2
+        Ordrelinje ordrelinje = salg5.createOrdrelinje(2,p1); //Skal oprettes, ellers giver opret rabat en fejl.
+        assertThrows(IllegalArgumentException.class, () ->salg5.createRabatBeloeb(-20));
+    }
+    // ----------------------------------------------------------------------------------------------------------
+
+    @Test
+    void removeOrdrelinje(){
+        //TC1
+        salg2.removeOrdrelinje(ordrelinje3);
+        assertEquals(0, salg2.getOrdrelinjer().size(), "Ordrelinjen er ikke blevet fjernet");
+    }
+
+
 }
