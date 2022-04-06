@@ -40,6 +40,7 @@ public class Salg implements Serializable {
         int sumKlip = 0;
 
         for (Ordrelinje o : ordrelinjer) {
+            o.beregnOrdrelinjeBeloebOgKlip();
                     sumKlip += o.getOrdrelinjeKlip();
                     sumBeloeb += o.getOrdrelinjeBeloeb();
         }
@@ -49,6 +50,7 @@ public class Salg implements Serializable {
         samletBeloeb = sumBeloeb;
         samletAntalKlip = sumKlip;
     }
+
     /**
      * Opretter en ordrelinje og tilføjer det til salgets arraylist af ordrelinjer.
      * Beregner den opdaterede samlede pris for salget.
