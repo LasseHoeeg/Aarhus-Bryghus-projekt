@@ -154,12 +154,14 @@ public class Ordrelinje implements Serializable {
                 throw new RuntimeException("Betalingsformen skal være KLIPPEKORTBETALING.");
             }
         }
-        if (this.betaling != betaling){
+        if (this.betaling != betaling
+//                && this.produkt.getPriser().get(tjekOmGyldigKlipBetaling()).isMedKlip()==true)
+        ){
             Betaling oldBetalingsform = this.betaling;
             if (oldBetalingsform != null){
                 oldBetalingsform.removeOrdrelinje(this);
             }
-            if (antalProdukter > antal ) {
+            if (antalProdukter > antal) {
                 throw new RuntimeException("Du skal angive et antal der er mindre" +
                         " eller lig med antal produkter produkter på ordrelinjen.");
             }
@@ -169,6 +171,18 @@ public class Ordrelinje implements Serializable {
                 betaling.addOrdrelinje(this, antalProdukter);
         }
     }
+
+//    public int tjekOmGyldigKlipBetaling (){
+//        int foundIndex = -1;
+//        int i = 0;
+//        while (i < this.salg.getSalgssituation().getPriser().size() && foundIndex == -1) {
+//            if (this.produkt == this.salg.getSalgssituation().getPriser().get(i).getProdukt()) {
+//                if (this.salg.getSalgssituation().getPriser().get(i).isMedKlip() == true)
+//                    foundIndex = i;
+//            } else i++;
+//        }
+//        return i;
+//    }
 
     @Override
     public String toString() {

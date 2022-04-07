@@ -337,10 +337,12 @@ public class SystemObjektPane extends GridPane{
 
     private void selectionChangedProdukt() {
         Produkt selected = lwProdukt.getSelectionModel().getSelectedItem();
-        txfProduktNavn.setText(selected.getNavn());
-        txfProduktBeskrivelse.setText(selected.getBeskrivelse());
-        //TODO (Tjek om given produkt har pris til salgsituation)
+        if (selected !=null) {
+            txfProduktNavn.setText(selected.getNavn());
+            txfProduktBeskrivelse.setText(selected.getBeskrivelse());
+            //TODO (Tjek om given produkt har pris til salgsituation)
 //        lwProdukt.getItems().setAll(selected.getProdukter());
+        }
     }
 
     private void createProdukt() {
@@ -381,16 +383,15 @@ public class SystemObjektPane extends GridPane{
         Salgssituation selectedSS = lwSalgsSituation.getSelectionModel().getSelectedItem();
         Produkt selectedPro = lwProdukt.getSelectionModel().getSelectedItem();
         if (selectedSS != null && selectedPro != null) {
-            if (txfPrisBeløb.getText() != null && txfPrisKlip.getText() != null) {
+            if (txfPrisBeløb.getText() != null && txfPrisKlip.getText().isEmpty()) {
+                selectedSS.createPris(Double.parseDouble(txfPrisBeløb.getText()), selectedPro);
+                lwPris.getItems().setAll(selectedSS.getPriser());}
+            else if (txfPrisBeløb.getText() != null && txfPrisKlip.getText() != null) {
                 selectedSS.createPris(Double.parseDouble(txfPrisBeløb.getText()), Integer.parseInt(txfPrisKlip.getText()), selectedPro);
                 lwPris.getItems().setAll(selectedSS.getPriser());}
-            else if (txfPrisBeløb.getText() != null && txfPrisKlip.getText() == null) {
-                Salgssituation selected = lwSalgsSituation.getSelectionModel().getSelectedItem();
-                selectedSS.createPris(Double.parseDouble(txfPrisBeløb.getText()), selectedPro);
-                lwPris.getItems().setAll(selectedSS.getPriser());
             }
         }
-    }
+    
 
     private void updatePris() {
         Pris selected = lwPris.getSelectionModel().getSelectedItem();

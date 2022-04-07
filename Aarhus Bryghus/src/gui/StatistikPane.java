@@ -3,6 +3,7 @@ package gui;
 import application.controller.Controller;
 import application.model.Leje;
 import application.model.Ordrelinje;
+import application.model.Pris;
 import application.model.Salg;
 import javafx.beans.value.ChangeListener;
 import javafx.geometry.Insets;
@@ -22,9 +23,12 @@ public class StatistikPane extends GridPane {
     private final DatePicker dpDagsOpgoer = new DatePicker();
 
     // listviews
-    private final ListView<Ordrelinje> lwAntalKlipPrProduktPeriode = new ListView();
+    private final ListView<String> lwAntalKlipPrProduktPeriode = new ListView();
     private final ListView<Salg> lwDagsOpgoer = new ListView();
     private final ListView<Leje> lwLejedeUafleveredeProdukter = new ListView();
+    //TODO
+    private final ListView<Ordrelinje> lwBestemtKvittering = new ListView();
+
 
     // texts
     private final Text txtPeriodeForKlip = new Text("Klip");
@@ -51,20 +55,27 @@ public class StatistikPane extends GridPane {
         this.add(lwDagsOpgoer, 3, 3, 1, 2);
         lwDagsOpgoer.setPrefWidth(25);
         lwDagsOpgoer.setPrefHeight(200);
+        ChangeListener<Salg> listenerBK = (ov, oldString, newString) -> this.selectionChangedKvittering();
+        lwDagsOpgoer.getSelectionModel().selectedItemProperty().addListener(listenerBK);
+
 
         this.add(lwLejedeUafleveredeProdukter, 5, 3, 1, 3);
-        lwLejedeUafleveredeProdukter.setPrefWidth(300);
+        lwLejedeUafleveredeProdukter.setPrefWidth(200);
         lwLejedeUafleveredeProdukter.setPrefHeight(200);
         lwLejedeUafleveredeProdukter.getItems().setAll(Controller.getInstance().getIkkeAfleveredeUdlejedeProdukter());
         lwLejedeUafleveredeProdukter.setOnMouseClicked(e -> eventLeje());
 
+        this.add(lwBestemtKvittering, 4, 3, 1, 3);
+        lwBestemtKvittering.setPrefWidth(200);
+        lwBestemtKvittering.setPrefHeight(200);
+
         // Texts
 
-        this.add(txtPeriodeForKlip,0,0);
-        this.add(txtPeriodeForKlipProdukt,0,2);
-        this.add(txtDagsOpgoer,3, 0);
-        this.add(txtKviteringer,3, 2);
-        this.add(txtLeje,5, 2);
+        this.add(txtPeriodeForKlip, 0, 0);
+        this.add(txtPeriodeForKlipProdukt, 0, 2);
+        this.add(txtDagsOpgoer, 3, 0);
+        this.add(txtKviteringer, 3, 2);
+        this.add(txtLeje, 5, 2);
 
         // DatePicker
 
@@ -90,12 +101,12 @@ public class StatistikPane extends GridPane {
         // Textfields
 
 
-        this.add(txfSumKlip,0,5, 2, 1);
+        this.add(txfSumKlip, 0, 5, 2, 1);
         txfSumKlip.setPromptText("sum:");
         txfSumKlip.setPrefWidth(20);
         txfSumKlip.setEditable(false);
 
-        this.add(txfSumDagsOpgoer,3,5, 1, 1);
+        this.add(txfSumDagsOpgoer, 3, 5, 1, 1);
         txfSumDagsOpgoer.setPromptText("sum:");
         txfSumDagsOpgoer.setPrefWidth(20);
         txfSumDagsOpgoer.setEditable(false);
@@ -103,8 +114,16 @@ public class StatistikPane extends GridPane {
 
 // funktioner
 
+    private void selectionChangedKvittering() {
+        Salg selected = lwDagsOpgoer.getSelectionModel().getSelectedItem();
+        if (selected != null)
+            lwBestemtKvittering.getItems().setAll(selected.getOrdrelinjer());
+        }
+
+
+
     private void selectionChangedDagsOpgoer() {
-        if (dpDagsOpgoer.getValue()!=null){
+        if (dpDagsOpgoer.getValue() != null) {
             lwDagsOpgoer.getItems().setAll(Controller.getInstance().getDagsKvitteringer(dpDagsOpgoer.getValue()));
             txfSumDagsOpgoer.setText("sum: " + Controller.getInstance().getDagsopgoer(dpDagsOpgoer.getValue()));
         }
@@ -112,16 +131,16 @@ public class StatistikPane extends GridPane {
 
     //TODO
     private void selectionChangedKlip() {
-        if (dpDateStart.getValue()!=null&&dpDateSlut.getValue()!=null) {
+        if (dpDateStart.getValue() != null && dpDateSlut.getValue() != null) {
             txfSumKlip.setText("Antal: " + Controller.getInstance().getAntalBrugteKlip(dpDateStart.getValue(), dpDateSlut.getValue()));
-            if (Controller.getInstance().getPrProduktAntalKlipIPeriode(dpDateStart.getValue(), dpDateSlut.getValue())!=null){
+            if (Controller.getInstance().getPrProduktAntalKlipIPeriode(dpDateStart.getValue(), dpDateSlut.getValue()) != null) {
                 lwAntalKlipPrProduktPeriode.getItems().setAll(Controller.getInstance().getPrProduktAntalKlipIPeriode(dpDateStart.getValue(), dpDateSlut.getValue()));
             }
 
         }
     }
 
-    private void eventLeje(){
+    private void eventLeje() {
         lwLejedeUafleveredeProdukter.getItems().setAll(Controller.getInstance().getIkkeAfleveredeUdlejedeProdukter());
     }
 
