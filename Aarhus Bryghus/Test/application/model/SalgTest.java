@@ -121,6 +121,14 @@ class SalgTest {
         Ordrelinje ordrelinje2 = salg5.createOrdrelinje(3, p2);
         assertEquals(2, salg5.getOrdrelinjer().size(), "Ordrelinjerne er ikke blevet tilføjet");
     }
+
+    @Test
+    void createOrdrelinje5() {
+        //TC5
+        assertThrows(IllegalArgumentException.class, () -> salg5.createOrdrelinje(-1, p1));
+    }
+
+
     // ----------------------------------------------------------------------------------------------------------
 
     @Test
