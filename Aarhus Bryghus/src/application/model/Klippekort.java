@@ -5,7 +5,7 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 
 public class Klippekort extends Produkt implements Serializable {
-    private static int staticNr = 0;
+    private transient static int staticNr = 0;
     private int nr;
     private int antalKlip;
 

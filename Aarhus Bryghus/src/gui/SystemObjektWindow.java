@@ -19,7 +19,7 @@ import javafx.stage.StageStyle;
 
 import java.io.Serializable;
 
-public class SystemObjektWindow extends Stage implements Serializable {
+public class SystemObjektWindow extends Stage{
 
     private Object o;
     private Controller controller;
@@ -117,10 +117,6 @@ public class SystemObjektWindow extends Stage implements Serializable {
 
 
     private void initContent(GridPane pane) {
-        //Serializable - load from storage
-        controller = Controller.getInstance();
-        controller.loadStorage();
-
         // show or hide grid lines
         pane.setGridLinesVisible(false);
 

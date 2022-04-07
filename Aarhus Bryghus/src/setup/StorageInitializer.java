@@ -77,7 +77,7 @@ public class StorageInitializer {
             Betaling b3 = Controller.getInstance().createBetaling(Betalingsformer.KONTANT);
             Betaling b4 = Controller.getInstance().createBetaling(Betalingsformer.MOBILEPAY);
 
-            controller.saveStorage();
+            Controller.getInstance().saveStorage();
         }
     }
 

@@ -8,14 +8,14 @@ public class Salg implements Serializable {
     private LocalDateTime tidspunktBetaling;
     private double samletBeloeb;
     private int samletAntalKlip;
-    private static int salgsID = 0;
+    private transient static int salgsID = 0;
     private double betaltAfsamletBeloeb;
     private int salgsInt;
     private ArrayList<Ordrelinje> ordrelinjer = new ArrayList<>();
     private Rabat rabat;
     private Salgssituation salgssituation;
     private final ArrayList<Beloeb> alleBeloeb = new ArrayList<>();
-    private static int ordrelinjeAntal;
+    private transient static int ordrelinjeAntal;
 
     /**
      * Opretter et salgs-objekt som pr. default er dato for salgsoprettelsen og har seneste salgsnr +1

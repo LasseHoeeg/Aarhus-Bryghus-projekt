@@ -22,7 +22,7 @@ public class StatistikPane extends GridPane {
     private final DatePicker dpDagsOpgoer = new DatePicker();
 
     // listviews
-    private final ListView<Salg> lwAntalKlipPrProduktPeriode = new ListView();
+    private final ListView<Ordrelinje> lwAntalKlipPrProduktPeriode = new ListView();
     private final ListView<Salg> lwDagsOpgoer = new ListView();
     private final ListView<Leje> lwLejedeUafleveredeProdukter = new ListView();
 
@@ -113,8 +113,11 @@ public class StatistikPane extends GridPane {
     //TODO
     private void selectionChangedKlip() {
         if (dpDateStart.getValue()!=null&&dpDateSlut.getValue()!=null) {
-//            lwAntalKlipPrProduktPeriode.getItems().setAll(Controller.getInstance().getPrProduktAntalKlipIPeriode(dpDateStart.getValue(), dpDateSlut.getValue()));
             txfSumKlip.setText("Antal: " + Controller.getInstance().getAntalBrugteKlip(dpDateStart.getValue(), dpDateSlut.getValue()));
+            if (Controller.getInstance().getPrProduktAntalKlipIPeriode(dpDateStart.getValue(), dpDateSlut.getValue())!=null){
+                lwAntalKlipPrProduktPeriode.getItems().setAll(Controller.getInstance().getPrProduktAntalKlipIPeriode(dpDateStart.getValue(), dpDateSlut.getValue()));
+            }
+
         }
     }
 
