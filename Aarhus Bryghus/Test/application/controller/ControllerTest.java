@@ -7,6 +7,7 @@ import setup.StorageInitializer;
 import storage.Storage;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -75,6 +76,18 @@ class ControllerTest {
     }
 
     @Test
+    void getDagsopgoer3() {
+        //TC3
+        Ordrelinje ordrelinje3 = salg1.createOrdrelinje(2, p1);
+        salg1.beregnSamletBeloebOgKlip();
+        Ordrelinje ordrelinje4 = salg2.createOrdrelinje(1, p1);
+        salg2.beregnSamletBeloebOgKlip();
+        salg2.setTidspunktBetaling(LocalDateTime.now().minusDays(1));
+        assertEquals(140, controller.getDagsopgoer(LocalDate.now()), "Afviger fra beløb");
+    }
+
+
+    @Test
     void getAntalBrugteKlip1() {
         //TC1
         Ordrelinje ordrelinje1 = salg1.createOrdrelinje(2, p2);
@@ -84,7 +97,6 @@ class ControllerTest {
         salg1.beregnSamletBeloebOgKlip();
         assertEquals(10, controller.getAntalBrugteKlip(
                 LocalDate.now().minusDays(1), LocalDate.now().plusDays(1)), "Afviger fra klip");
-
     }
 
     @Test
@@ -92,13 +104,23 @@ class ControllerTest {
         //TC2
        assertThrows(IllegalArgumentException.class,
                () -> controller.getAntalBrugteKlip(LocalDate.now(), LocalDate.now().minusDays(1)));
-
     }
 
     @Test
     void getAntalBrugteKlip3() {
         //TC3
         assertEquals(0, controller.getAntalBrugteKlip(
+                LocalDate.now().minusDays(1), LocalDate.now().plusDays(1)), "Afviger fra klip");
+
+    }
+    @Test
+    void getAntalBrugteKlip4() {
+        //TC4
+        Ordrelinje ordrelinje1 = salg1.createOrdrelinje(2, p2);
+        Ordrelinje ordrelinje2 = salg1.createOrdrelinje(2, p3);
+        ordrelinje1.setBetaling(b_klip, 2);
+        salg1.beregnSamletBeloebOgKlip();
+        assertEquals(4, controller.getAntalBrugteKlip(
                 LocalDate.now().minusDays(1), LocalDate.now().plusDays(1)), "Afviger fra klip");
 
     }
@@ -129,5 +151,18 @@ class ControllerTest {
         assertEquals(0, controller.getPrProduktAntalKlipIPeriode(
                 LocalDate.now().minusDays(1), LocalDate.now().plusDays(1)).size(), "Afviger fra klip");
     }
+
+    @Test
+    void getPrProduktAntalKlipIPeriode4() {
+        //TC4
+        Ordrelinje ordrelinje1 = salg1.createOrdrelinje(2, p2);
+        Ordrelinje ordrelinje2 = salg1.createOrdrelinje(2, p3);
+        ordrelinje1.setBetaling(b_klip, 2);
+        salg1.beregnSamletBeloebOgKlip();
+        assertEquals(1, controller.getPrProduktAntalKlipIPeriode(
+                LocalDate.now().minusDays(1), LocalDate.now().plusDays(1)).size(), "Afviger fra klip");
+
+    }
+
 
 }
