@@ -30,18 +30,18 @@ public class Controller {
      * Hvis produktgruppens navn allerede findes kastes IllegalArgumentException og produktgruppen oprettes ikke
      */
     public ProduktGruppe createProduktGruppe(String navn) {
-        for (int i = 0; i < Storage.getInstance().getProduktGrupper().size(); i++){
-        if (Storage.getInstance().getProduktGrupper().get(i).getNavn().equals(navn)) {
+        for (int i = 0; i < storage.getProduktGrupper().size(); i++){
+        if (storage.getProduktGrupper().get(i).getNavn().equals(navn)) {
         throw new IllegalArgumentException("Produktgruppen findes allerede");
         }
         }
             ProduktGruppe pg = new ProduktGruppe(navn);
-            Storage.getInstance().addProduktGruppe(pg);
+        storage.addProduktGruppe(pg);
             return pg;
         }
 
     public ArrayList<ProduktGruppe> getProduktGrupper(){
-        return Storage.getInstance().getProduktGrupper();
+        return storage.getProduktGrupper();
     }
 
     public void updateProduktGruppe(ProduktGruppe produktGruppe, String navn){
@@ -49,7 +49,7 @@ public class Controller {
     }
 
     public void removeProduktGruppe(ProduktGruppe produktGruppe){
-        Storage.getInstance().removeProduktGruppe(produktGruppe);
+        storage.removeProduktGruppe(produktGruppe);
     }
     // -------------------------------------------------------------------------------------------------------------
 
@@ -58,18 +58,18 @@ public class Controller {
      * Hvis salgssituationens navn allerede er oprettet afbrydes oprettelsen og en IllegalArgumentException kastes
      */
     public Salgssituation createSalgssituation(String navn, String beskrivelse) {
-        for (int i = 0; i < Storage.getInstance().getSalgssituationer().size(); i++) {
-            if (Storage.getInstance().getSalgssituationer().get(i).getNavn().equals(navn)) {
+        for (int i = 0; i < storage.getSalgssituationer().size(); i++) {
+            if (storage.getSalgssituationer().get(i).getNavn().equals(navn)) {
                 throw new IllegalArgumentException("Salgssituation findes allerede");
             }
         }
             Salgssituation ss = new Salgssituation(navn, beskrivelse);
-            Storage.getInstance().addSalgssituation(ss);
+        storage.addSalgssituation(ss);
             return ss;
         }
 
     public ArrayList<Salgssituation> getSalgssituationer(){
-        return Storage.getInstance().getSalgssituationer();
+        return storage.getSalgssituationer();
     }
 
     public void updateSalgssituation(Salgssituation salgssituation, String navn, String beskrivelse){
@@ -77,52 +77,52 @@ public class Controller {
         salgssituation.setBeskrivelse(beskrivelse);
     }
     public void removeSalgssituation(Salgssituation salgssituation) {
-        Storage.getInstance().removeSalgssituation(salgssituation);
+        storage.removeSalgssituation(salgssituation);
     }
 
     // ------------------------------------------------------------------------------------------------------------
     public Betaling createBetaling(Betalingsformer betalingsform){
-        for (int i = 0; i < Storage.getInstance().getAlleBetalinger().size(); i++) {
-            if (Storage.getInstance().getAlleBetalinger().get(i).getBetalingsform().equals(betalingsform)) {
+        for (int i = 0; i < storage.getAlleBetalinger().size(); i++) {
+            if (storage.getAlleBetalinger().get(i).getBetalingsform().equals(betalingsform)) {
                 throw new IllegalArgumentException("Betalingsformen findes allerede");
             }
         }
         Betaling betaling = new Betaling(betalingsform);
-        Storage.getInstance().addBetaling(betaling);
+        storage.addBetaling(betaling);
         return betaling;
     }
 
     public ArrayList<Betaling> getAlleBetalinger() {
-        return Storage.getInstance().getAlleBetalinger();
+        return storage.getAlleBetalinger();
     }
 
     public void removeBetaling(Betaling betaling){
-        Storage.getInstance().removeBetaling(betaling);
+        storage.removeBetaling(betaling);
     }
 
     // ------------------------------------------------------------------------------------------------------------
     public Pant createPant(double beloeb) {
         Pant pant = new Pant(beloeb);
-        Storage.getInstance().addPant(pant);
+        storage.addPant(pant);
         return pant;
     }
 
     public ArrayList<Pant> getAltPant() {
-        return Storage.getInstance().getAltPant();
+        return storage.getAltPant();
     }
 
     public void removePant(Pant pant){
-        Storage.getInstance().removePant(pant);
+        storage.removePant(pant);
     }
 
     // ------------------------------------------------------------------------------------------------------------
     public ArrayList<Salg> getSalgsliste(){
-        return Storage.getInstance().getSalgsliste();
+        return storage.getSalgsliste();
     }
 
     public ArrayList<Salg> getSalgsObejkter(){
         ArrayList salgsObejkter = new ArrayList();
-        for (Salg s : Storage.getInstance().getSalgsliste()){
+        for (Salg s : storage.getSalgsliste()){
             if (s instanceof Leje == false) {salgsObejkter.add(s);}
         }
         return salgsObejkter;
@@ -130,7 +130,7 @@ public class Controller {
 
     public ArrayList<Leje> getLejeObejkter(){
         ArrayList lejeObejkter = new ArrayList();
-        for (Salg s : Storage.getInstance().getSalgsliste()){
+        for (Salg s : storage.getSalgsliste()){
             if (s instanceof Leje) {lejeObejkter.add(s);}
         }
         return lejeObejkter;
@@ -141,13 +141,13 @@ public class Controller {
      */
     public Salg createSalg(Salgssituation salgssituation){
         Salg salg = new Salg(salgssituation);
-        Storage.getInstance().addSalg(salg);
+        storage.addSalg(salg);
         return salg;
 
     }
 
     public Salg addSalg(Salg salg){
-        Storage.getInstance().addSalg(salg);
+        storage.addSalg(salg);
         return salg;
     }
 
@@ -157,7 +157,7 @@ public class Controller {
     public Leje createLeje(Salgssituation salgssituation){
         Leje leje = null;
         leje = new Leje(salgssituation,false,leje.pantBeloebIndbetalt(),LocalDate.now());
-        Storage.getInstance().addSalg(leje);
+        storage.addSalg(leje);
         return leje;
     }
 
@@ -171,7 +171,7 @@ public class Controller {
             }
         }
         leje.beregnSamletBeloebOgKlip();
-        Storage.getInstance().addSalg(leje);
+        storage.addSalg(leje);
         return leje;
     }
 
@@ -182,7 +182,7 @@ public class Controller {
     }
 
     public void removeSalg(Salg salg){
-        Storage.getInstance().removeSalg(salg);
+        storage.removeSalg(salg);
     }
     // -------------------------------------------------------------------------------------------------------------
 
@@ -223,8 +223,8 @@ public class Controller {
             throw new IllegalArgumentException("Startdato skal være før slutdato");
         }
         int sum = 0;
-        for (int i = 0; i < Storage.getInstance().getSalgsliste().size(); i++) {
-            Salg salg = Storage.getInstance().getSalgsliste().get(i);
+        for (int i = 0; i < storage.getSalgsliste().size(); i++) {
+            Salg salg = storage.getSalgsliste().get(i);
             if (!salg.getTidspunktBetaling().toLocalDate().isBefore(start) &&
                     !salg.getTidspunktBetaling().toLocalDate().isAfter(slut)) {
                sum += salg.getSamletAntalKlip();
@@ -242,12 +242,14 @@ public class Controller {
         }
 
             ArrayList<Ordrelinje> sumKlip = new ArrayList<>();
-        for (Salg s : Storage.getInstance().getSalgsliste()){
+        for (Salg s : storage.getSalgsliste()){
             if (!s.getTidspunktBetaling().toLocalDate().isBefore(start) &&
                     !s.getTidspunktBetaling().toLocalDate().isAfter(slut)) {
                 for (int i = 0; i < s.getOrdrelinjer().size(); i++) {
-                    if (s.getOrdrelinjer().get(i).getBetaling().getBetalingsform() == Betalingsformer.KLIPPEKORTBETALING) {
-                        sumKlip.add(s.getOrdrelinjer().get(i));
+                    if (s.getOrdrelinjer().get(i).getBetaling()!=null){
+                        if (s.getOrdrelinjer().get(i).getBetaling().getBetalingsform() == Betalingsformer.KLIPPEKORTBETALING) {
+                            sumKlip.add(s.getOrdrelinjer().get(i));
+                        }
                     }
                 }
             }
@@ -261,6 +263,7 @@ public class Controller {
     //Serializable
 
     public void loadStorage() {
+        System.out.println("load");
         try (FileInputStream fileIn = new FileInputStream("storage.ser")) {
             try (ObjectInputStream in = new ObjectInputStream(fileIn);) {
                 storage = (Storage) in.readObject();
@@ -277,6 +280,7 @@ public class Controller {
     }
 
     public void saveStorage() {
+        System.out.println("save");
         try (FileOutputStream fileOut = new FileOutputStream("storage.ser")) {
             try (ObjectOutputStream out = new ObjectOutputStream(fileOut)) {
                 out.writeObject(storage);

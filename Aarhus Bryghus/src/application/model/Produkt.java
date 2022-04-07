@@ -62,14 +62,27 @@ public class Produkt implements Serializable {
      * Ellers kastes exception og objektet oprettes ikke.
      */
     public void addPris(Pris pris) {
-            for (Pris p : priser) {
-                if (pris.getSalgssituation() == p.getSalgssituation()) {
-                    throw new RuntimeException("Produktet har allerede en pris for den pågældende salgssituation");
+        //TODO Kan stadigvæk add flere priser af samme produkt
+            if (contiansProduktPris(pris)==true){
+                throw new RuntimeException("Produktet har allerede en pris for den pågældende salgssituation");
                     }
-                }
+            else {
             priser.add(pris);
-            pris.setProdukt(this);
+            pris.setProdukt(this);}
     }
+
+    public boolean contiansProduktPris(Pris pris) {
+        int i = 0;
+        boolean found = false;
+        while (i<this.getPriser().size()&&found==false){
+            if (pris.getSalgssituation() == this.getPriser().get(i).getSalgssituation()){
+                found = true;
+            }
+            else i++;
+        }
+        return found;
+    }
+
 
     public void removePris(Pris pris) {
         if (priser.contains(pris))

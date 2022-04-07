@@ -15,7 +15,7 @@ import javafx.scene.text.Text;
 
 import java.io.Serializable;
 
-public class SystemObjektPane extends GridPane implements Serializable {
+public class SystemObjektPane extends GridPane{
     private final ListView<Salgssituation> lwSalgsSituation = new ListView();
     private Controller controller;
 
@@ -91,9 +91,6 @@ public class SystemObjektPane extends GridPane implements Serializable {
 
     public SystemObjektPane() {
         //Serializable - load from storage
-        controller = Controller.getInstance();
-        controller.loadStorage();
-
         this.setPadding(new Insets(20));
         this.setHgap(20);
         this.setVgap(10);
@@ -386,10 +383,8 @@ public class SystemObjektPane extends GridPane implements Serializable {
         if (selectedSS != null && selectedPro != null) {
             if (txfPrisBeløb.getText() != null && txfPrisKlip.getText() != null) {
                 selectedSS.createPris(Double.parseDouble(txfPrisBeløb.getText()), Integer.parseInt(txfPrisKlip.getText()), selectedPro);
-                lwPris.getItems().setAll(selectedSS.getPriser());
-
-            }
-            if (txfPrisBeløb.getText() != null && txfPrisKlip.getText() == null) {
+                lwPris.getItems().setAll(selectedSS.getPriser());}
+            else if (txfPrisBeløb.getText() != null && txfPrisKlip.getText() == null) {
                 Salgssituation selected = lwSalgsSituation.getSelectionModel().getSelectedItem();
                 selectedSS.createPris(Double.parseDouble(txfPrisBeløb.getText()), selectedPro);
                 lwPris.getItems().setAll(selectedSS.getPriser());

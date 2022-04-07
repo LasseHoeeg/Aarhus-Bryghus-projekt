@@ -16,9 +16,11 @@ import java.time.LocalDate;
 
 public class StartWindow extends Application {
 
+    private Controller controller;
+
     @Override
     public void init() {
-        Controller.getInstance().loadStorage();
+
     }
 
     @Override
@@ -35,6 +37,8 @@ public class StartWindow extends Application {
     // -----------------------------------------------------------------------------------------------------------------
 
     private void initContent(BorderPane pane) {
+        controller = Controller.getInstance();
+        controller.loadStorage();
         TabPane tabPane = new TabPane();
         this.initTapPane(tabPane);
         pane.setCenter(tabPane);
@@ -59,6 +63,7 @@ public class StartWindow extends Application {
 
         StatistikPane statistikPane = new StatistikPane();
         tabStatistik.setContent(statistikPane);
-
     }
+    @Override
+    public void stop(){Controller.getInstance().saveStorage();}
 }
