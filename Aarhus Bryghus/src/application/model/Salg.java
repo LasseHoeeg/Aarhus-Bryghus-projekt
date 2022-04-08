@@ -11,11 +11,11 @@ public class Salg implements Serializable {
     private transient static int salgsID = 0;
     private double betaltAfsamletBeloeb;
     private int salgsInt;
+    private transient static int ordrelinjeAntal;
     private ArrayList<Ordrelinje> ordrelinjer = new ArrayList<>();
     private Rabat rabat;
     private Salgssituation salgssituation;
     private final ArrayList<Beloeb> alleBeloeb = new ArrayList<>();
-    private transient static int ordrelinjeAntal;
 
     /**
      * Opretter et salgs-objekt som pr. default er dato for salgsoprettelsen og har seneste salgsnr +1
@@ -81,25 +81,15 @@ public class Salg implements Serializable {
             this.getOrdrelinjer().get(contains).setAntal(this.getOrdrelinjer().get(contains).getAntal()+antal);
             this.getOrdrelinjer().get(contains).beregnOrdrelinjeBeloebOgKlip();
         }
-//        else if (tjekOmRabat(contains,antal,produkt,this)==true&&contains!=-1){
-//            ordrelinjeAntal++;
-//            ordrelinje = new Ordrelinje(ordrelinjeAntal, antal, produkt, this);
-//            ordrelinjer.add(ordrelinje);
-//            beregnSamletBeloebOgKlip();
-//        }
         else{
             ordrelinjeAntal++;
             ordrelinje = new Ordrelinje(ordrelinjeAntal, antal, produkt, this);
             ordrelinjer.add(ordrelinje);
             beregnSamletBeloebOgKlip();
-//            setSamletBeloeb(samletBeloeb+ordrelinje.getOrdrelinjePris());
-//            setSamletAntalKlip(samletAntalKlip+ordrelinje.getOrdrelinjeKlip());
-
         }
         return ordrelinje;
     }
 
-    //
     public boolean tjekOmRabat(int containsProductInt){
         boolean rabat = false;
         if (this.getOrdrelinjer().get(containsProductInt).getRabat() != null)

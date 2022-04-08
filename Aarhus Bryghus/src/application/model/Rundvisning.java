@@ -7,7 +7,6 @@ import java.time.LocalTime;
 
 public class Rundvisning extends Produkt implements Serializable {
     private LocalDateTime datoTidspunkt;
-    private boolean paabegyndt;
     private boolean betalt;
 
     Rundvisning(String navn, String beskrivelse, ProduktGruppe produktGruppe, LocalDateTime datoTidspunkt){
@@ -22,14 +21,6 @@ public class Rundvisning extends Produkt implements Serializable {
 
     public void setDatoTidspunkt(LocalDateTime datoTidspunkt) {
         this.datoTidspunkt = datoTidspunkt;
-    }
-
-    public boolean isPaabegyndt() {
-        return paabegyndt;
-    }
-
-    public void setPaabegyndt(boolean paabegyndt) {
-        this.paabegyndt = paabegyndt;
     }
 
     public boolean isBetalt() {
