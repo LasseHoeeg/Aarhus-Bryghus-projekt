@@ -187,12 +187,12 @@ public class Controller {
     // -------------------------------------------------------------------------------------------------------------
 
     public double getDagsopgoer(LocalDate date){
-        double DagsSum = 0;
+        double dagsSum = 0;
         for(Salg s : Controller.getInstance().getSalgsObejkter())
             if (s.getTidspunktBetaling().getDayOfYear()== date.getDayOfYear()){
-                DagsSum+=s.getSamletBeloeb();
+                dagsSum+=s.getSamletBeloeb();
             }
-        return DagsSum;
+        return dagsSum;
     }
 
     //Kan bruges en smartere ift Collections/Maps
@@ -236,19 +236,19 @@ public class Controller {
     /**
      * samlet antal klip brugt på produkter for en givet periode - her fordelt på de enkelte produkter
      */
-    public ArrayList<Ordrelinje> getPrProduktAntalKlipIPeriode(LocalDate start, LocalDate slut){
+    public ArrayList<String> getPrProduktAntalKlipIPeriode(LocalDate start, LocalDate slut){
         if (start.isAfter(slut)){
             throw new IllegalArgumentException("Startdato skal være før slutdato");
         }
 
-            ArrayList<Ordrelinje> sumKlip = new ArrayList<>();
+            ArrayList<String> sumKlip = new ArrayList<>();
         for (Salg s : storage.getSalgsliste()){
             if (!s.getTidspunktBetaling().toLocalDate().isBefore(start) &&
                     !s.getTidspunktBetaling().toLocalDate().isAfter(slut)) {
                 for (int i = 0; i < s.getOrdrelinjer().size(); i++) {
                     if (s.getOrdrelinjer().get(i).getBetaling()!=null){
                         if (s.getOrdrelinjer().get(i).getBetaling().getBetalingsform() == Betalingsformer.KLIPPEKORTBETALING) {
-                            sumKlip.add(s.getOrdrelinjer().get(i));
+                            sumKlip.add(s.getOrdrelinjer().get(i).getProdukt().getNavn() + ", "+ s.getOrdrelinjer().get(i).getOrdrelinjeKlip() + " klip");
                         }
                     }
                 }

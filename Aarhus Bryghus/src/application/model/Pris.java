@@ -5,6 +5,7 @@ import java.io.Serializable;
 public class Pris implements Serializable {
     private double beloeb;
     private int antalKlip;
+    private boolean medKlip;
     private Produkt produkt;
     private Salgssituation salgssituation;
 
@@ -18,6 +19,7 @@ public class Pris implements Serializable {
         this.antalKlip = antalKlip;
         this.produkt = produkt;
         this.salgssituation = salgssituation;
+        this.medKlip = true;
     }
 
     /**
@@ -29,6 +31,11 @@ public class Pris implements Serializable {
         this.beloeb = beloeb;
         this.produkt = produkt;
         this.salgssituation = salgssituation;
+        this.medKlip = false;
+    }
+
+    public boolean isMedKlip() {
+        return medKlip;
     }
 
     public double getBeloeb() {

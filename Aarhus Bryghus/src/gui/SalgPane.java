@@ -228,7 +228,9 @@ public class SalgPane extends GridPane {
                 if (lwOrdrelinje.getSelectionModel().getSelectedItem() != null && txfBeloeb.getText() != null) {
                     lwOrdrelinje.getSelectionModel().getSelectedItem().setBetaling((cbBetaling.getSelectionModel().getSelectedItem()), Integer.parseInt(txfBeloeb.getText()));
                     salg.setBetaltAfsamletBeloeb();
-                    if (salg.getSamletBeloeb() <= salg.getBetaltAfsamletBeloeb()) {
+                    sumChanged();
+                    if (Double.parseDouble(txfSumOrdrelinje.getText())<=0){
+//                    if (salg.getSamletBeloeb() <= salg.getBetaltAfsamletBeloeb()) {
                         Controller.getInstance().addSalg(salg);
                         salg = new Salg(cbSalgssituation.getValue());
                         lwOrdrelinje.getItems().clear();
@@ -244,6 +246,7 @@ public class SalgPane extends GridPane {
                 }
             }
             sumChanged();
+            lwOrdrelinje.getItems().setAll(salg.getOrdrelinjer());
         }
     }
 

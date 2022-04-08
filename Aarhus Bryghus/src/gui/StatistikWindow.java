@@ -40,7 +40,7 @@ public class StatistikWindow extends Stage {
     private final DatePicker dpDagsOpgoer = new DatePicker();
 
     // listviews
-    private final ListView<Salg> lwAntalKlipPrProduktPeriode = new ListView();
+    private final ListView<String> lwAntalKlipPrProduktPeriode = new ListView();
     private final ListView<Salg> lwDagsOpgoer = new ListView();
     private final ListView<Leje> lwLejedeUafleveredeProdukter = new ListView();
 
