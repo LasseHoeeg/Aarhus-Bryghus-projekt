@@ -1,12 +1,10 @@
 package gui;
 
 import application.controller.Controller;
-import application.model.Leje;
-import application.model.Ordrelinje;
-import application.model.Pris;
-import application.model.Salg;
+import application.model.*;
 import javafx.beans.value.ChangeListener;
 import javafx.geometry.Insets;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
@@ -22,12 +20,22 @@ public class StatistikPane extends GridPane {
     private final DatePicker dpDateSlut = new DatePicker();
     private final DatePicker dpDagsOpgoer = new DatePicker();
 
+    // combobox
+    //TODO
+    private final ComboBox<Salgssituation> cbSalgssituation = new ComboBox();
+    private final ComboBox<ProduktGruppe> cbProductGruppe = new ComboBox();
+
+
+
     // listviews
     private final ListView<String> lwAntalKlipPrProduktPeriode = new ListView();
     private final ListView<Salg> lwDagsOpgoer = new ListView();
     private final ListView<Leje> lwLejedeUafleveredeProdukter = new ListView();
     //TODO
     private final ListView<Ordrelinje> lwBestemtKvittering = new ListView();
+
+    //TODO
+    private final ListView<String> lwX = new ListView();
 
 
     // texts
@@ -37,16 +45,29 @@ public class StatistikPane extends GridPane {
     private final Text txtKviteringer = new Text("Kviteringer:");
     private final Text txtUdeje = new Text("Udlejede Produkter:");
     private final Text txtLeje = new Text("Leje");
+    //TODO
+    private final Text txtX = new Text("Leje");
+
+
 
     // textfields
     private final TextField txfSumDagsOpgoer = new TextField();
     private final TextField txfSumKlip = new TextField();
+
+    //TODO
+    private final TextField txfSumX = new TextField();
+
 
     public StatistikPane() {
         this.setPadding(new Insets(20));
         this.setHgap(20);
         this.setVgap(10);
         this.setGridLinesVisible(false);
+
+        this.add(lwX, 8,3,1,2);
+        lwX.setPrefWidth(25);
+        lwX.setPrefHeight(200);
+        lwX.setScaleX(1.1);
 
         this.add(lwAntalKlipPrProduktPeriode, 0, 3, 2, 2);
         lwAntalKlipPrProduktPeriode.setPrefWidth(25);
@@ -59,35 +80,38 @@ public class StatistikPane extends GridPane {
         lwDagsOpgoer.getSelectionModel().selectedItemProperty().addListener(listenerBK);
 
 
-        this.add(lwLejedeUafleveredeProdukter, 5, 3, 1, 3);
-        lwLejedeUafleveredeProdukter.setPrefWidth(200);
-        lwLejedeUafleveredeProdukter.setPrefHeight(200);
+        this.add(lwLejedeUafleveredeProdukter, 6, 3, 1, 3);
+        lwLejedeUafleveredeProdukter.setPrefWidth(175);
+        lwLejedeUafleveredeProdukter.setPrefHeight(100);
         lwLejedeUafleveredeProdukter.getItems().setAll(Controller.getInstance().getIkkeAfleveredeUdlejedeProdukter());
         lwLejedeUafleveredeProdukter.setOnMouseClicked(e -> eventLeje());
 
         this.add(lwBestemtKvittering, 4, 3, 1, 3);
         lwBestemtKvittering.setPrefWidth(200);
-        lwBestemtKvittering.setPrefHeight(200);
+        lwBestemtKvittering.setScaleX(1.1);
+        lwBestemtKvittering.setPrefHeight(100);
 
         // Texts
 
         this.add(txtPeriodeForKlip, 0, 0);
-        this.add(txtPeriodeForKlipProdukt, 0, 2);
+        this.add(txtPeriodeForKlipProdukt, 0, 2,2,1);
         this.add(txtDagsOpgoer, 3, 0);
         this.add(txtKviteringer, 3, 2);
-        this.add(txtLeje, 5, 2);
+        this.add(txtLeje, 6, 2);
 
         // DatePicker
 
         this.add(dpDateSlut, 1, 1);
         dpDateSlut.setPromptText("Slut dato");
         dpDateSlut.setEditable(false);
+        dpDateSlut.setPrefWidth(100);
         ChangeListener<LocalDate> listenerDSl = (ov, oldString, newString) -> this.selectionChangedKlip();
         dpDateSlut.valueProperty().addListener(listenerDSl);
 
         this.add(dpDateStart, 0, 1);
         dpDateStart.setPromptText("Start dato");
         dpDateStart.setEditable(false);
+        dpDateStart.setPrefWidth(100);
         ChangeListener<LocalDate> listenerDSt = (ov, oldString, newString) -> this.selectionChangedKlip();
         dpDateStart.valueProperty().addListener(listenerDSt);
 
@@ -110,6 +134,34 @@ public class StatistikPane extends GridPane {
         txfSumDagsOpgoer.setPromptText("sum:");
         txfSumDagsOpgoer.setPrefWidth(20);
         txfSumDagsOpgoer.setEditable(false);
+
+        this.add(txfSumX,8,5);
+        txfSumX.setPromptText("sum:");
+        txfSumX.setPrefWidth(20);
+        txfSumX.setEditable(false);
+        txfSumX.setScaleX(1.1);
+
+        // combobox
+
+        this.add(cbSalgssituation, 8,1);
+        cbSalgssituation.setPromptText("Salgssituation");
+        cbSalgssituation.setEditable(false);
+        cbSalgssituation.setPrefWidth(125);
+        ChangeListener<Salgssituation> listenerSS= (ov, oldString, newString) -> this.selectionChangedSSogPG();
+        cbSalgssituation.valueProperty().addListener(listenerSS);
+        cbSalgssituation.getItems().setAll(Controller.getInstance().getSalgssituationer());
+        cbSalgssituation.setScaleX(1.1);
+
+
+        this.add(cbProductGruppe, 8,2);
+        cbProductGruppe.setPromptText("Produktgruppe");
+        cbProductGruppe.setEditable(false);
+        cbProductGruppe.setPrefWidth(125);
+        ChangeListener<ProduktGruppe> listenerPG= (ov, oldString, newString) -> this.selectionChangedSSogPG();
+        cbProductGruppe.valueProperty().addListener(listenerPG);
+        cbProductGruppe.setScaleX(1.1);
+        cbProductGruppe.getItems().setAll(Controller.getInstance().getProduktGrupper());
+
     }
 
 // funktioner
@@ -119,6 +171,13 @@ public class StatistikPane extends GridPane {
         if (selected != null)
             lwBestemtKvittering.getItems().setAll(selected.getOrdrelinjer());
         }
+
+    private void selectionChangedSSogPG() {
+        Salgssituation selectedSS = cbSalgssituation.getSelectionModel().getSelectedItem();
+        ProduktGruppe selectedPG = cbProductGruppe.getSelectionModel().getSelectedItem();
+        if (selectedPG != null&&selectedSS != null)
+            lwX.getItems().setAll(Controller.getInstance().getProduktSolgtPrSalgssituationPrProduktGruppe(selectedSS,selectedPG));
+    }
 
 
 

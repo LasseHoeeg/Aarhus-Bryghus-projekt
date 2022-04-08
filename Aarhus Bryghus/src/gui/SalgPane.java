@@ -254,8 +254,8 @@ public class SalgPane extends GridPane {
         if (salg.getOrdrelinjer().size() > 0) {
             Controller.getInstance().tvingSalgTilLeje(this.salg);
             lwOrdrelinje.getItems().clear();
-            sumChanged();
             salg = new Salg(cbSalgssituation.getValue());
+            sumChanged();
         }
     }
 }

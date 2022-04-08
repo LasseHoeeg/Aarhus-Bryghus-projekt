@@ -16,13 +16,15 @@ public class Controller {
      * Sikrer at man kun kan oprette ét controller-objekt
      * Note: Singleton
      */
-    public static Controller getInstance(){
-        if (uniqueInstance==null){uniqueInstance = new Controller();}
+    public static Controller getInstance() {
+        if (uniqueInstance == null) {
+            uniqueInstance = new Controller();
+        }
         return uniqueInstance;
     }
 
-    private Controller(){
-        storage=Storage.getInstance();
+    private Controller() {
+        storage = Storage.getInstance();
     }
 
     /**
@@ -30,25 +32,25 @@ public class Controller {
      * Hvis produktgruppens navn allerede findes kastes IllegalArgumentException og produktgruppen oprettes ikke
      */
     public ProduktGruppe createProduktGruppe(String navn) {
-        for (int i = 0; i < storage.getProduktGrupper().size(); i++){
-        if (storage.getProduktGrupper().get(i).getNavn().equals(navn)) {
-        throw new IllegalArgumentException("Produktgruppen findes allerede");
+        for (int i = 0; i < storage.getProduktGrupper().size(); i++) {
+            if (storage.getProduktGrupper().get(i).getNavn().equals(navn)) {
+                throw new IllegalArgumentException("Produktgruppen findes allerede");
+            }
         }
-        }
-            ProduktGruppe pg = new ProduktGruppe(navn);
+        ProduktGruppe pg = new ProduktGruppe(navn);
         storage.addProduktGruppe(pg);
-            return pg;
-        }
+        return pg;
+    }
 
-    public ArrayList<ProduktGruppe> getProduktGrupper(){
+    public ArrayList<ProduktGruppe> getProduktGrupper() {
         return storage.getProduktGrupper();
     }
 
-    public void updateProduktGruppe(ProduktGruppe produktGruppe, String navn){
+    public void updateProduktGruppe(ProduktGruppe produktGruppe, String navn) {
         produktGruppe.setNavn(navn);
     }
 
-    public void removeProduktGruppe(ProduktGruppe produktGruppe){
+    public void removeProduktGruppe(ProduktGruppe produktGruppe) {
         storage.removeProduktGruppe(produktGruppe);
     }
     // -------------------------------------------------------------------------------------------------------------
@@ -63,25 +65,26 @@ public class Controller {
                 throw new IllegalArgumentException("Salgssituation findes allerede");
             }
         }
-            Salgssituation ss = new Salgssituation(navn, beskrivelse);
+        Salgssituation ss = new Salgssituation(navn, beskrivelse);
         storage.addSalgssituation(ss);
-            return ss;
-        }
+        return ss;
+    }
 
-    public ArrayList<Salgssituation> getSalgssituationer(){
+    public ArrayList<Salgssituation> getSalgssituationer() {
         return storage.getSalgssituationer();
     }
 
-    public void updateSalgssituation(Salgssituation salgssituation, String navn, String beskrivelse){
+    public void updateSalgssituation(Salgssituation salgssituation, String navn, String beskrivelse) {
         salgssituation.setNavn(navn);
         salgssituation.setBeskrivelse(beskrivelse);
     }
+
     public void removeSalgssituation(Salgssituation salgssituation) {
         storage.removeSalgssituation(salgssituation);
     }
 
     // ------------------------------------------------------------------------------------------------------------
-    public Betaling createBetaling(Betalingsformer betalingsform){
+    public Betaling createBetaling(Betalingsformer betalingsform) {
         for (int i = 0; i < storage.getAlleBetalinger().size(); i++) {
             if (storage.getAlleBetalinger().get(i).getBetalingsform().equals(betalingsform)) {
                 throw new IllegalArgumentException("Betalingsformen findes allerede");
@@ -96,7 +99,7 @@ public class Controller {
         return storage.getAlleBetalinger();
     }
 
-    public void removeBetaling(Betaling betaling){
+    public void removeBetaling(Betaling betaling) {
         storage.removeBetaling(betaling);
     }
 
@@ -111,27 +114,31 @@ public class Controller {
         return storage.getAltPant();
     }
 
-    public void removePant(Pant pant){
+    public void removePant(Pant pant) {
         storage.removePant(pant);
     }
 
     // ------------------------------------------------------------------------------------------------------------
-    public ArrayList<Salg> getSalgsliste(){
+    public ArrayList<Salg> getSalgsliste() {
         return storage.getSalgsliste();
     }
 
-    public ArrayList<Salg> getSalgsObejkter(){
+    public ArrayList<Salg> getSalgsObejkter() {
         ArrayList salgsObejkter = new ArrayList();
-        for (Salg s : storage.getSalgsliste()){
-            if (s instanceof Leje == false) {salgsObejkter.add(s);}
+        for (Salg s : storage.getSalgsliste()) {
+            if (s instanceof Leje == false) {
+                salgsObejkter.add(s);
+            }
         }
         return salgsObejkter;
     }
 
-    public ArrayList<Leje> getLejeObejkter(){
+    public ArrayList<Leje> getLejeObejkter() {
         ArrayList lejeObejkter = new ArrayList();
-        for (Salg s : storage.getSalgsliste()){
-            if (s instanceof Leje) {lejeObejkter.add(s);}
+        for (Salg s : storage.getSalgsliste()) {
+            if (s instanceof Leje) {
+                lejeObejkter.add(s);
+            }
         }
         return lejeObejkter;
     }
@@ -139,14 +146,14 @@ public class Controller {
     /**
      * Opretter et nyt salgsobjekt og tilføjer det til Storage
      */
-    public Salg createSalg(Salgssituation salgssituation){
+    public Salg createSalg(Salgssituation salgssituation) {
         Salg salg = new Salg(salgssituation);
         storage.addSalg(salg);
         return salg;
 
     }
 
-    public Salg addSalg(Salg salg){
+    public Salg addSalg(Salg salg) {
         storage.addSalg(salg);
         return salg;
     }
@@ -154,20 +161,20 @@ public class Controller {
     /**
      * Opretter et nyt lejeobjekt og tilføjer det til Storage
      */
-    public Leje createLeje(Salgssituation salgssituation){
+    public Leje createLeje(Salgssituation salgssituation) {
         Leje leje = null;
-        leje = new Leje(salgssituation,false,leje.pantBeloebIndbetalt(),LocalDate.now());
+        leje = new Leje(salgssituation, false, leje.pantBeloebIndbetalt(), LocalDate.now());
         storage.addSalg(leje);
         return leje;
     }
 
-    public Leje tvingSalgTilLeje(Salg salg){
-        Leje leje = new Leje(salg.getSalgssituation(),false,0,salg.getTidspunktBetaling().toLocalDate());
+    public Leje tvingSalgTilLeje(Salg salg) {
+        Leje leje = new Leje(salg.getSalgssituation(), false, 0, salg.getTidspunktBetaling().toLocalDate());
         leje.setPantBeloebInbetalt(leje.pantBeloebIndbetalt());
         for (Ordrelinje o : salg.getOrdrelinjer()) {
             leje.createOrdrelinje(o.getAntal(), o.getProdukt());
-            if(o.getRabat()!=null){
-                leje.getOrdrelinjer().get(leje.getOrdrelinjer().size()-1).createRabatBeloeb(o.getOrdrelinjeBeloeb()/o.getAntal());
+            if (o.getRabat() != null) {
+                leje.getOrdrelinjer().get(leje.getOrdrelinjer().size() - 1).createRabatBeloeb(o.getOrdrelinjeBeloeb() / o.getAntal());
             }
         }
         leje.beregnSamletBeloebOgKlip();
@@ -175,22 +182,22 @@ public class Controller {
         return leje;
     }
 
-    public void updateSalg(Salg salg, LocalDateTime tidspunktBetaling, double samletBeloeb, int samletAntalKlip){
+    public void updateSalg(Salg salg, LocalDateTime tidspunktBetaling, double samletBeloeb, int samletAntalKlip) {
         salg.setTidspunktBetaling(tidspunktBetaling);
         salg.setSamletBeloeb(samletBeloeb);
         salg.setSamletAntalKlip(samletAntalKlip);
     }
 
-    public void removeSalg(Salg salg){
+    public void removeSalg(Salg salg) {
         storage.removeSalg(salg);
     }
     // -------------------------------------------------------------------------------------------------------------
 
-    public double getDagsopgoer(LocalDate date){
+    public double getDagsopgoer(LocalDate date) {
         double dagsSum = 0;
-        for(Salg s : Controller.getInstance().getSalgsObejkter())
-            if (s.getTidspunktBetaling().getDayOfYear()== date.getDayOfYear()){
-                dagsSum+=s.getSamletBeloeb();
+        for (Salg s : Controller.getInstance().getSalgsObejkter())
+            if (s.getTidspunktBetaling().getDayOfYear() == date.getDayOfYear()) {
+                dagsSum += s.getSamletBeloeb();
             }
         return dagsSum;
     }
@@ -206,10 +213,25 @@ public class Controller {
         return kvitteringer;
     }
 
-    public ArrayList<Leje> getIkkeAfleveredeUdlejedeProdukter(){
+    public ArrayList<String> getProduktSolgtPrSalgssituationPrProduktGruppe
+            (Salgssituation salgssituation, ProduktGruppe produktGruppe) {
+        ArrayList<String> produkter = new ArrayList<>();
+        for (Salg s : Controller.getInstance().getSalgsliste()) {
+            if (s.getSalgssituation() == salgssituation) {
+                for (Ordrelinje o : s.getOrdrelinjer()) {
+                    if (o.getProdukt().getProduktGruppe() == produktGruppe) {
+                        produkter.add(o.getProdukt().getNavn() + ", " + o.getAntalIalt());
+                    }
+                }
+            }
+        }
+        return produkter;
+    }
+
+    public ArrayList<Leje> getIkkeAfleveredeUdlejedeProdukter() {
         ArrayList<Leje> lejeListe = new ArrayList();
-        for(Leje l : getLejeObejkter())
-            if (l.isBetalt()==false){
+        for (Leje l : getLejeObejkter())
+            if (l.isBetalt() == false) {
                 lejeListe.add(l);
             }
         return lejeListe;
@@ -219,7 +241,7 @@ public class Controller {
      * samlet antal klip brugt på produkter for en givet periode
      */
     public int getAntalBrugteKlip(LocalDate start, LocalDate slut) {
-        if (start.isAfter(slut)){
+        if (start.isAfter(slut)) {
             throw new IllegalArgumentException("Startdato skal være før slutdato");
         }
         int sum = 0;
@@ -227,7 +249,7 @@ public class Controller {
             Salg salg = storage.getSalgsliste().get(i);
             if (!salg.getTidspunktBetaling().toLocalDate().isBefore(start) &&
                     !salg.getTidspunktBetaling().toLocalDate().isAfter(slut)) {
-               sum += salg.getSamletAntalKlip();
+                sum += salg.getSamletAntalKlip();
             }
         }
         return sum;
@@ -236,19 +258,18 @@ public class Controller {
     /**
      * samlet antal klip brugt på produkter for en givet periode - her fordelt på de enkelte produkter
      */
-    public ArrayList<String> getPrProduktAntalKlipIPeriode(LocalDate start, LocalDate slut){
-        if (start.isAfter(slut)){
+    public ArrayList<String> getPrProduktAntalKlipIPeriode(LocalDate start, LocalDate slut) {
+        if (start.isAfter(slut)) {
             throw new IllegalArgumentException("Startdato skal være før slutdato");
         }
-
-            ArrayList<String> sumKlip = new ArrayList<>();
-        for (Salg s : storage.getSalgsliste()){
+        ArrayList<String> sumKlip = new ArrayList<>();
+        for (Salg s : storage.getSalgsliste()) {
             if (!s.getTidspunktBetaling().toLocalDate().isBefore(start) &&
                     !s.getTidspunktBetaling().toLocalDate().isAfter(slut)) {
                 for (int i = 0; i < s.getOrdrelinjer().size(); i++) {
-                    if (s.getOrdrelinjer().get(i).getBetaling()!=null){
+                    if (s.getOrdrelinjer().get(i).getBetaling() != null) {
                         if (s.getOrdrelinjer().get(i).getBetaling().getBetalingsform() == Betalingsformer.KLIPPEKORTBETALING) {
-                            sumKlip.add(s.getOrdrelinjer().get(i).getProdukt().getNavn() + ", "+ s.getOrdrelinjer().get(i).getOrdrelinjeKlip() + " klip");
+                            sumKlip.add(s.getOrdrelinjer().get(i).getProdukt().getNavn() + ", " + s.getOrdrelinjer().get(i).getOrdrelinjeKlip() + " klip");
                         }
                     }
                 }
