@@ -20,10 +20,6 @@ public class Klippekort extends Produkt implements Serializable {
         return staticNr;
     }
 
-//    public static void setStaticNr(int staticNr) {
-//        Klippekort.staticNr = staticNr;
-//    }
-
     public int getNr() {
         return nr;
     }

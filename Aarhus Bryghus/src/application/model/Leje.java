@@ -8,9 +8,9 @@ public class Leje extends Salg implements Serializable {
     private double pantBeloebInbetalt;
     private LocalDate tidspunktUdlejeStart;
 
-    public Leje(Salgssituation salgssituation, boolean betalt, double pantBeloebInbetalt, LocalDate tidspunktUdlejeStart) {
+    public Leje(Salgssituation salgssituation, double pantBeloebInbetalt, LocalDate tidspunktUdlejeStart) {
         super(salgssituation);
-        this.betalt = betalt;
+        this.betalt = false;
         this.pantBeloebInbetalt = pantBeloebInbetalt;
         this.tidspunktUdlejeStart = tidspunktUdlejeStart;
 

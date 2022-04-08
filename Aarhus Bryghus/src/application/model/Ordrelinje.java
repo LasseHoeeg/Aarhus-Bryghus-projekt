@@ -178,12 +178,6 @@ public class Ordrelinje implements Serializable {
                 +antal +
                 "stk, " + getOrdrelinjeBeloeb() +
                 "0 kr. " + getOrdrelinjeKlip() + " klip";}
-        else if (this.betaling != null) {
-            result = produkt.getNavn() +
-                            ", " + antalBetaltMedKlip
-                            + ", " + ordrelinjeKlip
-                            + "'\n";
-        }
         else {
             result=produkt.getNavn() + ", " +
                     +antal +
