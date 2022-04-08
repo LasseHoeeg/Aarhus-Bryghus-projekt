@@ -46,7 +46,7 @@ public class StatistikPane extends GridPane {
     private final Text txtUdeje = new Text("Udlejede Produkter:");
     private final Text txtLeje = new Text("Leje");
     //TODO
-    private final Text txtX = new Text("Leje");
+    private final Text txtX = new Text("Antal solgte produkter");
 
 
 
@@ -98,6 +98,7 @@ public class StatistikPane extends GridPane {
         this.add(txtDagsOpgoer, 3, 0);
         this.add(txtKviteringer, 3, 2);
         this.add(txtLeje, 6, 2);
+        this.add(txtX, 8,0);
 
         // DatePicker
 
