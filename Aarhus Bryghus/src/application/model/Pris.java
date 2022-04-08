@@ -20,6 +20,7 @@ public class Pris implements Serializable {
         this.produkt = produkt;
         this.salgssituation = salgssituation;
         this.medKlip = true;
+
     }
 
     /**

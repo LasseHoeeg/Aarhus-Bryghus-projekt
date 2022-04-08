@@ -1,12 +1,14 @@
 package application.model;
 
 import application.controller.Controller;
+
 import java.io.Serializable;
 import java.util.Arrays;
 
 public class Ordrelinje implements Serializable {
     private int nr;
     private int antal;
+    private int antalIalt;
     private int antalBetaltMedKlip;
     private double ordrelinjeBeloeb;
     private int ordrelinjeKlip;
@@ -15,19 +17,24 @@ public class Ordrelinje implements Serializable {
     private Salg salg;
     private Betaling betaling;
 
-/**
- * Da constructoren ikke er public oprettes ordrelinje-objekter kun igennem Salg-klassen
- * Ved oprettetlse af ny ordrelinje beregnes den samlede pris i hhv. ordrelinjePris og ordrelinjeKlip
- * Pre: antal <= 0
- */
-    Ordrelinje(int nr, int antal, Produkt produkt, Salg salg){
-    this.nr = nr;
-    this.antal = antal;
-    this.produkt = produkt;
-    this.salg = salg;
-    this.antalBetaltMedKlip = 0;
-    beregnOrdrelinjeBeloebOgKlip();
-}
+    /**
+     * Da constructoren ikke er public oprettes ordrelinje-objekter kun igennem Salg-klassen
+     * Ved oprettetlse af ny ordrelinje beregnes den samlede pris i hhv. ordrelinjePris og ordrelinjeKlip
+     * Pre: antal <= 0
+     */
+    Ordrelinje(int nr, int antal, Produkt produkt, Salg salg) {
+        this.nr = nr;
+        this.antal = antal;
+        this.produkt = produkt;
+        this.salg = salg;
+        this.antalBetaltMedKlip = 0;
+        this.antalIalt = antal;
+        beregnOrdrelinjeBeloebOgKlip();
+    }
+
+    public int getAntalIalt() {
+        return antalIalt;
+    }
 
     public Salg getSalg() {
         return salg;
@@ -38,26 +45,26 @@ public class Ordrelinje implements Serializable {
         return rabat;
     }
 
-     /**
+    /**
      * Opretter rabatBeløb og opdaterer ordrelinjePris og ordrelinjeKlip
      * Rabatten sættes til ordrelinjen
      */
     public Rabat createRabatBeloeb(double beloeb) {
-        if (beloeb <= 0){
+        if (beloeb <= 0) {
             throw new IllegalArgumentException("beløb skal være større end 0");
         }
-            Rabat rabat = new RabatBeloeb(beloeb);
-            this.rabat = rabat;
-            beregnOrdrelinjeBeloebOgKlip();
-            return rabat;
-        }
+        Rabat rabat = new RabatBeloeb(beloeb);
+        this.rabat = rabat;
+        beregnOrdrelinjeBeloebOgKlip();
+        return rabat;
+    }
 
     /**
      * Opretter rabatProcent og opdaterer ordrelinjePris og ordrelinjeKlip
      * Rabatten sættes til ordrelinjen
      */
     public Rabat createRabatProcent(double procent) {
-        if (procent <= 0){
+        if (procent <= 0) {
             throw new IllegalArgumentException("procent skal være større end 0");
         }
         Rabat rabat = new RabatProcent(procent);
@@ -108,7 +115,7 @@ public class Ordrelinje implements Serializable {
     public void beregnOrdrelinjeBeloebOgKlip() {
         int i = 0;
         boolean found = false;
-        while (i < salg.getSalgssituation().getPriser().size()&&!found) {
+        while (i < salg.getSalgssituation().getPriser().size() && !found) {
             if (this.produkt == salg.getSalgssituation().getPriser().get(i).getProdukt()) {
                 double ordrelinjeBeloeb = salg.getSalgssituation().getPriser().get(i).getBeloeb() * antal;
                 int ordrelinjeKlip = salg.getSalgssituation().getPriser().get(i).getAntalKlip() * antalBetaltMedKlip;
@@ -117,15 +124,15 @@ public class Ordrelinje implements Serializable {
                     setOrdrelinjeBeloeb(ordrelinjeBeloeb);
                     setOrdrelinjeKlip(ordrelinjeKlip);
 
-                    if (rabat != null){
+                    if (rabat != null) {
 //                        setOrdrelinjeBeloeb(ordrelinjeBeloeb - rabat.getRabat(getOrdrelinjeBeloeb()));
-                        setOrdrelinjeBeloeb(antal*((salg.getSalgssituation().getPriser().get(i).getBeloeb()+ getRabat().getRabat(getOrdrelinjeBeloeb())
+                        setOrdrelinjeBeloeb(antal * ((salg.getSalgssituation().getPriser().get(i).getBeloeb() + getRabat().getRabat(getOrdrelinjeBeloeb())
                                 - (salg.getSalgssituation().getPriser().get(i).getBeloeb()))));
                     }
                 } else {
                     if (getRabat() != null) {
 //                        setOrdrelinjeBeloeb(ordrelinjeBeloeb - rabat.getRabat(getOrdrelinjeBeloeb()));
-                        setOrdrelinjeBeloeb(antal*((salg.getSalgssituation().getPriser().get(i).getBeloeb()+ getRabat().getRabat(getOrdrelinjeBeloeb())
+                        setOrdrelinjeBeloeb(antal * ((salg.getSalgssituation().getPriser().get(i).getBeloeb() + getRabat().getRabat(getOrdrelinjeBeloeb())
                                 - (salg.getSalgssituation().getPriser().get(i).getBeloeb()))));
                     } else {
                         setOrdrelinjeBeloeb(ordrelinjeBeloeb);
@@ -140,6 +147,7 @@ public class Ordrelinje implements Serializable {
     public Betaling getBetaling() {
         return betaling;
     }
+
     public int getAntalBetaltMedKlip() {
         return antalBetaltMedKlip;
     }
@@ -156,9 +164,9 @@ public class Ordrelinje implements Serializable {
         }
         if (this.betaling != betaling
 //                && this.produkt.getPriser().get(tjekOmGyldigKlipBetaling()).isMedKlip()==true)
-        ){
+        ) {
             Betaling oldBetalingsform = this.betaling;
-            if (oldBetalingsform != null){
+            if (oldBetalingsform != null) {
                 oldBetalingsform.removeOrdrelinje(this);
             }
             if (antalProdukter > antal) {
@@ -166,9 +174,9 @@ public class Ordrelinje implements Serializable {
                         " eller lig med antal produkter produkter på ordrelinjen.");
             }
             this.betaling = betaling;
-                setAntalBetaltMedKlip(antalProdukter);
-                setAntal(antal - antalProdukter); //Se her
-                betaling.addOrdrelinje(this, antalProdukter);
+            setAntalBetaltMedKlip(antalProdukter);
+            setAntal(antal - antalProdukter); //Se her
+            betaling.addOrdrelinje(this, antalProdukter);
         }
     }
 
@@ -187,7 +195,7 @@ public class Ordrelinje implements Serializable {
     @Override
     public String toString() {
         String result = "";
-        if (this.getOrdrelinjeKlip()!=0){
+        if (this.getOrdrelinjeKlip() != 0) {
             result = produkt.getNavn() + ", " +
                 +antal +
                 "stk, " + getOrdrelinjeBeloeb() +

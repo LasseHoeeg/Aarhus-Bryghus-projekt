@@ -31,6 +31,7 @@ public class StartWindow extends Application {
 
         Scene scene = new Scene(pane);
         stage.setScene(scene);
+        stage.setFullScreen(true);
         stage.show();
     }
 
