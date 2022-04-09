@@ -5,9 +5,9 @@ import java.io.Serializable;
 public class RabatBeloeb extends Rabat implements Serializable {
     private double beloeb;
 
-     /**
-     Oprettes af enten Ordrelinje eller Salg
-     Pre: beloeb > 0
+    /**
+     * Oprettes af enten Ordrelinje eller Salg
+     * Pre: beloeb > 0
      */
     RabatBeloeb(double beloeb) {
         this.beloeb = beloeb;
@@ -27,11 +27,6 @@ public class RabatBeloeb extends Rabat implements Serializable {
     public void setBeloeb(double beloeb) {
         this.beloeb = beloeb;
     }
-
-
-
-
-
 
 
 }

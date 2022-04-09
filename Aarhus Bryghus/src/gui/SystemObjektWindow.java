@@ -19,7 +19,7 @@ import javafx.stage.StageStyle;
 
 import java.io.Serializable;
 
-public class SystemObjektWindow extends Stage{
+public class SystemObjektWindow extends Stage {
 
     private Object o;
     private Controller controller;
@@ -248,7 +248,6 @@ public class SystemObjektWindow extends Stage{
         btnProduktCreate.setText("Create");
 //            btnSalgsSituationCreate.setOnAction(e -> SalgsSituationCreate());
         btnProduktCreate.setPrefWidth(60);
-
 
 
         pane.add(btnProduktUpdate, 5, 8);

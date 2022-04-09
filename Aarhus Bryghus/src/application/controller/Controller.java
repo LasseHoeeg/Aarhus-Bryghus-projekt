@@ -163,13 +163,13 @@ public class Controller {
      */
     public Leje createLeje(Salgssituation salgssituation) {
         Leje leje = null;
-        leje = new Leje(salgssituation,leje.pantBeloebIndbetalt(),LocalDate.now());
+        leje = new Leje(salgssituation, leje.pantBeloebIndbetalt(), LocalDate.now());
         storage.addSalg(leje);
         return leje;
     }
 
-    public Leje tvingSalgTilLeje(Salg salg){
-        Leje leje = new Leje(salg.getSalgssituation(),0,salg.getTidspunktBetaling().toLocalDate());
+    public Leje tvingSalgTilLeje(Salg salg) {
+        Leje leje = new Leje(salg.getSalgssituation(), 0, salg.getTidspunktBetaling().toLocalDate());
         leje.setPantBeloebInbetalt(leje.pantBeloebIndbetalt());
         for (Ordrelinje o : salg.getOrdrelinjer()) {
             leje.createOrdrelinje(o.getAntal(), o.getProdukt());

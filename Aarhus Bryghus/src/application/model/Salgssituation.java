@@ -13,7 +13,7 @@ public class Salgssituation implements Serializable {
         this.beskrivelse = beskrivelse;
     }
 
-    public ArrayList<Pris> getPriser(){
+    public ArrayList<Pris> getPriser() {
         return new ArrayList<>(priser);
     }
 
@@ -21,7 +21,7 @@ public class Salgssituation implements Serializable {
      * Opretter et pris-objekt uden klip og tilføjer det til hhv. Salgssituationens arraylist af
      * priser og til det bestemte produkts arraylist af priser
      */
-    public Pris createPris(double beloeb, Produkt produkt){
+    public Pris createPris(double beloeb, Produkt produkt) {
         if (beloeb <= 0) {
             throw new IllegalArgumentException("Beløb skal være større end 0");
         }
@@ -35,7 +35,7 @@ public class Salgssituation implements Serializable {
      * Opretter et pris-objekt med klip og tilføjer det til hhv. Salgssituationens arraylist af
      * priser og til det bestemte produkts arraylist af priser
      */
-    public Pris createPris(double beloeb, int antalKlip, Produkt produkt){
+    public Pris createPris(double beloeb, int antalKlip, Produkt produkt) {
         if (beloeb <= 0) {
             throw new IllegalArgumentException("Beløb skal være større end 0");
         }
@@ -49,7 +49,7 @@ public class Salgssituation implements Serializable {
     }
 
     public void removePris(Pris pris) {
-        if (priser.contains(pris)){
+        if (priser.contains(pris)) {
             priser.remove(pris);
         }
     }

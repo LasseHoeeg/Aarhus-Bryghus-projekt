@@ -15,7 +15,7 @@ import javafx.scene.text.Text;
 
 import java.io.Serializable;
 
-public class SystemObjektPane extends GridPane{
+public class SystemObjektPane extends GridPane {
 
     private Controller controller;
 
@@ -230,7 +230,6 @@ public class SystemObjektPane extends GridPane{
         lwProdukt.getSelectionModel().selectedItemProperty().addListener(listenerPro);
 
 
-
         // Buttons
         this.add(btnProduktCreate, 5, 7);
         btnProduktCreate.setText("Create");
@@ -338,7 +337,7 @@ public class SystemObjektPane extends GridPane{
 
     private void selectionChangedProdukt() {
         Produkt selected = lwProdukt.getSelectionModel().getSelectedItem();
-        if (selected !=null) {
+        if (selected != null) {
             txfProduktNavn.setText(selected.getNavn());
             txfProduktBeskrivelse.setText(selected.getBeskrivelse());
             //TODO (Tjek om given produkt har pris til salgsituation)
@@ -348,7 +347,7 @@ public class SystemObjektPane extends GridPane{
 
     private void createProdukt() {
         ProduktGruppe selected = lwProduktGruppe.getSelectionModel().getSelectedItem();
-        if (txfProduktNavn.getText() != null && txfProduktBeskrivelse.getText() != null && selected !=null) {
+        if (txfProduktNavn.getText() != null && txfProduktBeskrivelse.getText() != null && selected != null) {
             selected.createProdukt(txfProduktNavn.getText(), txfProduktBeskrivelse.getText());
             lwProdukt.getItems().setAll(selected.getProdukter());
         }
@@ -386,13 +385,14 @@ public class SystemObjektPane extends GridPane{
         if (selectedSS != null && selectedPro != null) {
             if (txfPrisBeløb.getText() != null && txfPrisKlip.getText().isEmpty()) {
                 selectedSS.createPris(Double.parseDouble(txfPrisBeløb.getText()), selectedPro);
-                lwPris.getItems().setAll(selectedSS.getPriser());}
-            else if (txfPrisBeløb.getText() != null && txfPrisKlip.getText() != null) {
+                lwPris.getItems().setAll(selectedSS.getPriser());
+            } else if (txfPrisBeløb.getText() != null && txfPrisKlip.getText() != null) {
                 selectedSS.createPris(Double.parseDouble(txfPrisBeløb.getText()), Integer.parseInt(txfPrisKlip.getText()), selectedPro);
-                lwPris.getItems().setAll(selectedSS.getPriser());}
+                lwPris.getItems().setAll(selectedSS.getPriser());
             }
         }
-    
+    }
+
 
     private void updatePris() {
         Pris selected = lwPris.getSelectionModel().getSelectedItem();

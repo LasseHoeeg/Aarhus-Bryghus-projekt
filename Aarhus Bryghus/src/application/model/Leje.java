@@ -40,11 +40,11 @@ public class Leje extends Salg implements Serializable {
         tidspunktUdlejeStart = tidspunktUdlejeStart;
     }
 
-    public int pantBeloebIndbetalt(){
-        int samletPantbeloeb=0;
-        for (Ordrelinje o : this.getOrdrelinjer()){
-            if (o.getProdukt().getPant()!=null)
-                samletPantbeloeb+=o.getProdukt().getPant().getBeloeb();
+    public int pantBeloebIndbetalt() {
+        int samletPantbeloeb = 0;
+        for (Ordrelinje o : this.getOrdrelinjer()) {
+            if (o.getProdukt().getPant() != null)
+                samletPantbeloeb += o.getProdukt().getPant().getBeloeb();
         }
         return samletPantbeloeb;
     }

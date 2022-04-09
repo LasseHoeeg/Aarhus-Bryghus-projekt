@@ -9,10 +9,10 @@ public class Rundvisning extends Produkt implements Serializable {
     private LocalDateTime datoTidspunkt;
     private boolean betalt;
 
-    Rundvisning(String navn, String beskrivelse, ProduktGruppe produktGruppe, LocalDateTime datoTidspunkt){
-       super(navn, beskrivelse, produktGruppe);
-       this.datoTidspunkt=datoTidspunkt;
-       this.betalt=false;
+    Rundvisning(String navn, String beskrivelse, ProduktGruppe produktGruppe, LocalDateTime datoTidspunkt) {
+        super(navn, beskrivelse, produktGruppe);
+        this.datoTidspunkt = datoTidspunkt;
+        this.betalt = false;
     }
 
     public LocalDateTime getDatoTidspunkt() {

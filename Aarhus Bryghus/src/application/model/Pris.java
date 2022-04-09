@@ -28,7 +28,7 @@ public class Pris implements Serializable {
      * Da constructoren ikke er public oprettes pris-objekter kun igennem Salgssituation-klassen
      * Pre: beloeb > 0
      */
-    Pris(double beloeb, Produkt produkt, Salgssituation salgssituation){
+    Pris(double beloeb, Produkt produkt, Salgssituation salgssituation) {
         this.beloeb = beloeb;
         this.produkt = produkt;
         this.salgssituation = salgssituation;
@@ -79,10 +79,9 @@ public class Pris implements Serializable {
     @Override
     public String toString() {
         String result = "";
-        if (this.getAntalKlip()!=0){
-            result = produkt + ", " + beloeb + "kr, " + antalKlip+"klip";
-        }
-        else {
+        if (this.getAntalKlip() != 0) {
+            result = produkt + ", " + beloeb + "kr, " + antalKlip + "klip";
+        } else {
             result = produkt + ", " + beloeb;
         }
         return result;

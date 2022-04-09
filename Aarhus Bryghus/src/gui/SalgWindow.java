@@ -82,8 +82,8 @@ public class SalgWindow extends Stage {
 
         // Texts
 
-        pane.add(txtAarhusBryghus,0,1);
-        pane.add(txtIndKurvOrdrelinje,2,1);
+        pane.add(txtAarhusBryghus, 0, 1);
+        pane.add(txtIndKurvOrdrelinje, 2, 1);
 
 
         // Buttons
@@ -110,7 +110,7 @@ public class SalgWindow extends Stage {
 
         // TextFields
 
-        pane.add(txfAntalProdukter,0,4);
+        pane.add(txfAntalProdukter, 0, 4);
         txfAntalProdukter.setPromptText("Antal:");
         txfAntalProdukter.setPrefWidth(100);
 
@@ -118,16 +118,16 @@ public class SalgWindow extends Stage {
         txfBeloeb.setPromptText("Klip / Beløb");
         txfBeloeb.setPrefWidth(60);
 
-        pane.add(txfSumOrdrelinje,3,3);
+        pane.add(txfSumOrdrelinje, 3, 3);
         txfSumOrdrelinje.setPromptText("sum:");
         txfSumOrdrelinje.setPrefWidth(60);
         txfSumOrdrelinje.setDisable(true);
 
         // ComboBox
-        pane.add(cbSalgssituation,0,0);
+        pane.add(cbSalgssituation, 0, 0);
         cbSalgssituation.setPromptText("Prislister");
 
-        pane.add(cbBetaling,7,7);
+        pane.add(cbBetaling, 7, 7);
         cbBetaling.setPromptText("Betalingsform");
         cbBetaling.setPrefWidth(90);
 

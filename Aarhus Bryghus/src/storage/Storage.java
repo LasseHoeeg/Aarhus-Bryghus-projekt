@@ -15,7 +15,8 @@ public class Storage implements Serializable {
     private final ArrayList<Pant> altPant = new ArrayList<>();
 
     public static Storage getInstance() {
-        if (uniqueInstance == null) {uniqueInstance = new Storage();
+        if (uniqueInstance == null) {
+            uniqueInstance = new Storage();
         }
         return uniqueInstance;
     }
@@ -25,7 +26,7 @@ public class Storage implements Serializable {
         salgssituationer.add(salgssituation);
     }
 
-    public void removeSalgssituation(Salgssituation salgssituation){
+    public void removeSalgssituation(Salgssituation salgssituation) {
         if (salgssituationer.contains(salgssituation)) {
             salgssituationer.remove(salgssituation);
         }
@@ -40,7 +41,7 @@ public class Storage implements Serializable {
         produktGrupper.add(produktGruppe);
     }
 
-    public void removeProduktGruppe(ProduktGruppe produktGruppe){
+    public void removeProduktGruppe(ProduktGruppe produktGruppe) {
         if (produktGrupper.contains(produktGruppe)) {
             produktGrupper.remove(produktGruppe);
         }
@@ -49,6 +50,7 @@ public class Storage implements Serializable {
     public ArrayList<ProduktGruppe> getProduktGrupper() {
         return new ArrayList<>(produktGrupper);
     }
+
     // ----------------------------------------------------------------------------------------
     public void addSalg(Salg salg) {
         salgsliste.add(salg);
@@ -65,8 +67,7 @@ public class Storage implements Serializable {
     }
 
     // ----------------------------------------------------------------------------------------
-    public void addBetaling(Betaling betaling)
-    {
+    public void addBetaling(Betaling betaling) {
         alleBetalinger.add(betaling);
     }
 
@@ -74,11 +75,12 @@ public class Storage implements Serializable {
         return new ArrayList<>(alleBetalinger);
     }
 
-    public void removeBetaling(Betaling betaling){
+    public void removeBetaling(Betaling betaling) {
         if (alleBetalinger.contains(betaling)) {
             alleBetalinger.remove(betaling);
         }
     }
+
     // ---------------------------------------------------------------------------------------
     public void addPant(Pant pant) {
         altPant.add(pant);

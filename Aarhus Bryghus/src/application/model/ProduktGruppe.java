@@ -25,6 +25,7 @@ public class ProduktGruppe implements Serializable {
         produkter.add(produkt);
         return produkt;
     }
+
     /**
      * Opretter et klippekort-objekt og tilføjer det til sin ProduktGruppes HashSet af produkter
      */
@@ -44,7 +45,7 @@ public class ProduktGruppe implements Serializable {
         return navn;
     }
 
-    public void setNavn(String navn){
+    public void setNavn(String navn) {
         this.navn = navn;
     }
 

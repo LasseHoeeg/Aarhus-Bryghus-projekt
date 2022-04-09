@@ -123,9 +123,10 @@ public class SalgPane extends GridPane {
         cbBetaling.setPromptText("Betaling");
         cbBetaling.setPrefWidth(90);
         cbBetaling.getItems().setAll(Controller.getInstance().getAlleBetalinger());
-        ChangeListener listenerBe = (ov, oldString, newString) -> this.selectionChangedSalgssituation();
+//        ChangeListener listenerBe = (ov, oldString, newString) -> this.selectionChangedSalgssituation();
+        ChangeListener listenerBe = (ov, oldString, newString) -> this.selectionChangedBetalling();
         cbBetaling.getSelectionModel().selectedItemProperty().addListener(listenerBe);
-        cbBetaling.setOnMouseClicked(e -> selectionChangedBetalling());
+//        cbBetaling.setOnMouseClicked(e -> selectionChangedBetalling());
 
 
     }
@@ -146,7 +147,7 @@ public class SalgPane extends GridPane {
 //            lwOrdrelinje.getItems().setAll(salg.getOrdrelinjer());
 
             //FY FY Kode:
-            if(salg.getSalgssituation() != selected) {
+            if (salg.getSalgssituation() != selected) {
                 salg.removeOrdrelinjeAll();
 //                this.salg.getOrdrelinjer().clear();
                 salg.setSalgssituation(selected);
@@ -165,7 +166,14 @@ public class SalgPane extends GridPane {
 
     private void selectionChangedBetalling() {
         Betaling selected = cbBetaling.getSelectionModel().getSelectedItem();
-        cbBetaling.getItems().setAll(Controller.getInstance().getAlleBetalinger());
+//        cbBetaling.getItems().setAll(Controller.getInstance().getAlleBetalinger());
+        if (selected.getBetalingsform() != Betalingsformer.KLIPPEKORTBETALING) {
+            txfBeloeb.setText(txfSumOrdrelinje.getText());
+        }
+        if (selected.getBetalingsform() == Betalingsformer.KLIPPEKORTBETALING) {
+            txfBeloeb.setText(0 + "");
+        }
+
 //        lwSalgsSituationProdukter.getItems().setAll(selected.getPriser());
 //        salg = new Salg(selected);
 
@@ -187,11 +195,16 @@ public class SalgPane extends GridPane {
 
     private void tilføjOrdrelinje() {
         Pris selected = lwSalgsSituationProdukter.getSelectionModel().getSelectedItem();
-        if (selected != null && Integer.parseInt(txfAntalProdukter.getText()) > 0) {
+        if (selected != null && txfAntalProdukter.getText().isEmpty() == false && Integer.parseInt(txfAntalProdukter.getText()) > 0) {
             salg.createOrdrelinje(Integer.parseInt(txfAntalProdukter.getText()), selected.getProdukt());
             lwOrdrelinje.getItems().setAll(salg.getOrdrelinjer());
             sumChanged();
+        } else if (selected != null && txfAntalProdukter.getText().isEmpty() == true) {
+            salg.createOrdrelinje(1, selected.getProdukt());
+            lwOrdrelinje.getItems().setAll(salg.getOrdrelinjer());
+            sumChanged();
         }
+        txfAntalProdukter.setText("");
     }
 
     private void fjernOrdrelinje() {
@@ -204,7 +217,7 @@ public class SalgPane extends GridPane {
 //                txfSumOrdrelinje.clear();
                 txfSumOrdrelinje.setText(0.0 + "");
             } else {
-            salg.removeOrdrelinje(selected);
+                salg.removeOrdrelinje(selected);
                 salg.beregnSamletBeloebOgKlip();
                 lwOrdrelinje.getItems().setAll(salg.getOrdrelinjer());
                 sumChanged();
@@ -229,7 +242,7 @@ public class SalgPane extends GridPane {
                     lwOrdrelinje.getSelectionModel().getSelectedItem().setBetaling((cbBetaling.getSelectionModel().getSelectedItem()), Integer.parseInt(txfBeloeb.getText()));
                     salg.setBetaltAfsamletBeloeb();
                     sumChanged();
-                    if (Double.parseDouble(txfSumOrdrelinje.getText())<=0){
+                    if (Double.parseDouble(txfSumOrdrelinje.getText()) <= 0) {
 //                    if (salg.getSamletBeloeb() <= salg.getBetaltAfsamletBeloeb()) {
                         Controller.getInstance().addSalg(salg);
                         salg = new Salg(cbSalgssituation.getValue());
@@ -247,6 +260,7 @@ public class SalgPane extends GridPane {
             }
             sumChanged();
             lwOrdrelinje.getItems().setAll(salg.getOrdrelinjer());
+            selectionChangedBetalling();
         }
     }
 

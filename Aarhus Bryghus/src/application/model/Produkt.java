@@ -12,10 +12,10 @@ public class Produkt implements Serializable {
     private ArrayList<Pris> priser = new ArrayList<>();
 
 
-     /**
-      *  Da constructoren ikke er public oprettes produkt-objekter kun igennem ProduktGruppe-klassen
-      *  Pre: En ProduktGruppe skal være oprettet før man kan oprette produkter
-      */
+    /**
+     * Da constructoren ikke er public oprettes produkt-objekter kun igennem ProduktGruppe-klassen
+     * Pre: En ProduktGruppe skal være oprettet før man kan oprette produkter
+     */
     Produkt(String navn, String beskrivelse, ProduktGruppe produktGruppe) {
         this.navn = navn;
         this.beskrivelse = beskrivelse;
@@ -27,7 +27,7 @@ public class Produkt implements Serializable {
     }
 
     public void setPant(Pant pant) {
-        if (this.pant!=pant){
+        if (this.pant != pant) {
             this.pant = pant;
         }
     }
@@ -57,28 +57,28 @@ public class Produkt implements Serializable {
     }
 
 
-    /** Tilføjer pris til en salgssituations arraylist af priser
+    /**
+     * Tilføjer pris til en salgssituations arraylist af priser
      * Note: Et produkt kan for en salgssituation kun have én pris.
      * Ellers kastes exception og objektet oprettes ikke.
      */
     public void addPris(Pris pris) {
         //TODO Kan stadigvæk add flere priser af samme produkt
-            if (contiansProduktPris(pris)==true){
-                throw new RuntimeException("Produktet har allerede en pris for den pågældende salgssituation");
-                    }
-            else {
+        if (contiansProduktPris(pris) == true) {
+            throw new RuntimeException("Produktet har allerede en pris for den pågældende salgssituation");
+        } else {
             priser.add(pris);
-            pris.setProdukt(this);}
+            pris.setProdukt(this);
+        }
     }
 
     public boolean contiansProduktPris(Pris pris) {
         int i = 0;
         boolean found = false;
-        while (i<this.getPriser().size()&&found==false){
-            if (pris.getSalgssituation() == this.getPriser().get(i).getSalgssituation()){
+        while (i < this.getPriser().size() && found == false) {
+            if (pris.getSalgssituation() == this.getPriser().get(i).getSalgssituation()) {
                 found = true;
-            }
-            else i++;
+            } else i++;
         }
         return found;
     }
@@ -86,12 +86,12 @@ public class Produkt implements Serializable {
 
     public void removePris(Pris pris) {
         if (priser.contains(pris))
-        priser.remove(pris);
+            priser.remove(pris);
         pris.getSalgssituation().removePris(pris);
     }
 
     @Override
-    public String toString() { 
+    public String toString() {
         return navn;
     }
 }

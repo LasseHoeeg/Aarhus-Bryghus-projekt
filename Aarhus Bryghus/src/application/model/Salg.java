@@ -58,7 +58,7 @@ public class Salg implements Serializable {
     }
 
     public void setBetaltAfsamletBeloeb() {
-        if (getAlleBeloeb().size()>0) {
+        if (getAlleBeloeb().size() > 0) {
             double sum = 0;
             for (Beloeb b : this.getAlleBeloeb()) {
                 sum += b.getTilBetaling();
@@ -72,16 +72,15 @@ public class Salg implements Serializable {
      * Beregner den opdaterede samlede pris for salget.
      */
     public Ordrelinje createOrdrelinje(int antal, Produkt produkt) {
-        if (antal <= 0){
+        if (antal <= 0) {
             throw new IllegalArgumentException("Antal skal være større end 0");
         }
         int contains = this.containsProduct(produkt);
         Ordrelinje ordrelinje = null;
-        if (contains != -1 && tjekOmRabat(contains)==false){
-            this.getOrdrelinjer().get(contains).setAntal(this.getOrdrelinjer().get(contains).getAntal()+antal);
+        if (contains != -1 && tjekOmRabat(contains) == false) {
+            this.getOrdrelinjer().get(contains).setAntal(this.getOrdrelinjer().get(contains).getAntal() + antal);
             this.getOrdrelinjer().get(contains).beregnOrdrelinjeBeloebOgKlip();
-        }
-        else{
+        } else {
             ordrelinjeAntal++;
             ordrelinje = new Ordrelinje(ordrelinjeAntal, antal, produkt, this);
             ordrelinjer.add(ordrelinje);
@@ -90,10 +89,10 @@ public class Salg implements Serializable {
         return ordrelinje;
     }
 
-    public boolean tjekOmRabat(int containsProductInt){
+    public boolean tjekOmRabat(int containsProductInt) {
         boolean rabat = false;
-        if (this.getOrdrelinjer().get(containsProductInt).getRabat() != null)
-        { rabat = true;
+        if (this.getOrdrelinjer().get(containsProductInt).getRabat() != null) {
+            rabat = true;
         }
         return rabat;
     }
@@ -119,9 +118,9 @@ public class Salg implements Serializable {
 
     public void removeOrdrelinjeAll() {
         for (Ordrelinje o : this.getOrdrelinjer())
-        if (ordrelinjer.contains(o)) {
-            ordrelinjer.remove(o);
-        }
+            if (ordrelinjer.contains(o)) {
+                ordrelinjer.remove(o);
+            }
     }
 
     /**
@@ -129,7 +128,7 @@ public class Salg implements Serializable {
      * Rabatten sættes til ordrelinjen
      */
     public Rabat createRabatPct(double procent) {
-        if (procent <= 0){
+        if (procent <= 0) {
             throw new IllegalArgumentException("procent skal være større end 0");
         }
         Rabat rabatPct = new RabatProcent(procent);
@@ -142,8 +141,8 @@ public class Salg implements Serializable {
      * Opretter rabatBeloeb og opdaterer ordrelinjePris
      * Rabatten sættes til ordrelinjen
      */
-    public Rabat createRabatBeloeb(double beloeb){
-        if (beloeb <= 0){
+    public Rabat createRabatBeloeb(double beloeb) {
+        if (beloeb <= 0) {
             throw new IllegalArgumentException("beløb skal være større end 0");
         }
         Rabat rabatBeloeb = new RabatBeloeb(beloeb);
@@ -152,7 +151,7 @@ public class Salg implements Serializable {
         return rabatBeloeb;
     }
 
-    public Beloeb createBeloeb(double tilBetaling, Betaling betalingsform){
+    public Beloeb createBeloeb(double tilBetaling, Betaling betalingsform) {
         Beloeb b = new Beloeb(tilBetaling, betalingsform, this);
         alleBeloeb.add(b);
         return b;
@@ -213,7 +212,6 @@ public class Salg implements Serializable {
     }
 
 
-
     public static int getOrdrelinjeAntal() {
         return ordrelinjeAntal;
     }
@@ -224,4 +222,4 @@ public class Salg implements Serializable {
                 ", " + samletBeloeb +
                 "0, " + this.salgsInt;
     }
- }
+}

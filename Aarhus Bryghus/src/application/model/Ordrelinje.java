@@ -197,11 +197,11 @@ public class Ordrelinje implements Serializable {
         String result = "";
         if (this.getOrdrelinjeKlip() != 0) {
             result = produkt.getNavn() + ", " +
-                +antal +
-                "stk, " + getOrdrelinjeBeloeb() +
-                "0 kr. " + getOrdrelinjeKlip() + " klip";}
-        else {
-            result=produkt.getNavn() + ", " +
+                    +antal +
+                    "stk, " + getOrdrelinjeBeloeb() +
+                    "0 kr. " + getOrdrelinjeKlip() + " klip";
+        } else {
+            result = produkt.getNavn() + ", " +
                     +antal +
                     "stk, " + getOrdrelinjeBeloeb() +
                     "0 kr.";

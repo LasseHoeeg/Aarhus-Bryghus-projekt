@@ -44,6 +44,7 @@ public class StartWindow extends Application {
         this.initTapPane(tabPane);
         pane.setCenter(tabPane);
     }
+
     private void initTapPane(TabPane tabPane) {
         tabPane.setTabClosingPolicy(TabClosingPolicy.UNAVAILABLE);
 
@@ -65,6 +66,9 @@ public class StartWindow extends Application {
         StatistikPane statistikPane = new StatistikPane();
         tabStatistik.setContent(statistikPane);
     }
+
     @Override
-    public void stop(){Controller.getInstance().saveStorage();}
+    public void stop() {
+        Controller.getInstance().saveStorage();
+    }
 }

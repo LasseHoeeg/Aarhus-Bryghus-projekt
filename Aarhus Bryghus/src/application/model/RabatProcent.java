@@ -6,8 +6,8 @@ public class RabatProcent extends Rabat implements Serializable {
     private double procent;
 
     /**
-     Oprettes af enten Ordrelinje eller Salg
-     Pre: procent > 0
+     * Oprettes af enten Ordrelinje eller Salg
+     * Pre: procent > 0
      */
     RabatProcent(double procent) {
         this.procent = procent;

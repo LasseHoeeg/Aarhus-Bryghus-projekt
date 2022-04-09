@@ -31,7 +31,7 @@ class ControllerTest {
     Controller controller = Controller.getInstance();
 
     @BeforeEach
-    void setUp(){
+    void setUp() {
 
         ss1 = controller.createSalgssituation("Butik", "");
         ss2 = controller.createSalgssituation("Fredagsbar", "");
@@ -51,7 +51,7 @@ class ControllerTest {
         pris1 = ss2.createPris(70, p1);
         pris2 = ss1.createPris(70, 2, p2);
         pris2 = ss2.createPris(70, 2, p2);
-        pris3 = ss1.createPris(70,3, p3);
+        pris3 = ss1.createPris(70, 3, p3);
 
         b_klip = controller.createBetaling(Betalingsformer.KLIPPEKORTBETALING);
 
@@ -102,8 +102,8 @@ class ControllerTest {
     @Test
     void getAntalBrugteKlip2() {
         //TC2
-       assertThrows(IllegalArgumentException.class,
-               () -> controller.getAntalBrugteKlip(LocalDate.now(), LocalDate.now().minusDays(1)));
+        assertThrows(IllegalArgumentException.class,
+                () -> controller.getAntalBrugteKlip(LocalDate.now(), LocalDate.now().minusDays(1)));
     }
 
     @Test
@@ -113,6 +113,7 @@ class ControllerTest {
                 LocalDate.now().minusDays(1), LocalDate.now().plusDays(1)), "Afviger fra klip");
 
     }
+
     @Test
     void getAntalBrugteKlip4() {
         //TC4
@@ -145,6 +146,7 @@ class ControllerTest {
                 () -> controller.getPrProduktAntalKlipIPeriode(LocalDate.now(), LocalDate.now().minusDays(1)));
 
     }
+
     @Test
     void getPrProduktAntalKlipIPeriode3() {
         //TC3

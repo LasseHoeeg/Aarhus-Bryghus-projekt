@@ -21,21 +21,16 @@ public class StatistikPane extends GridPane {
     private final DatePicker dpDagsOpgoer = new DatePicker();
 
     // combobox
-    //TODO
     private final ComboBox<Salgssituation> cbSalgssituation = new ComboBox();
     private final ComboBox<ProduktGruppe> cbProductGruppe = new ComboBox();
-
 
 
     // listviews
     private final ListView<String> lwAntalKlipPrProduktPeriode = new ListView();
     private final ListView<Salg> lwDagsOpgoer = new ListView();
     private final ListView<Leje> lwLejedeUafleveredeProdukter = new ListView();
-    //TODO
     private final ListView<Ordrelinje> lwBestemtKvittering = new ListView();
-
-    //TODO
-    private final ListView<String> lwX = new ListView();
+    private final ListView<String> lwProGruSalgsSit = new ListView();
 
 
     // texts
@@ -43,19 +38,15 @@ public class StatistikPane extends GridPane {
     private final Text txtPeriodeForKlipProdukt = new Text("Antal klip pr produkt periode:");
     private final Text txtDagsOpgoer = new Text("Dagsopgør");
     private final Text txtKviteringer = new Text("Kviteringer:");
-    private final Text txtUdeje = new Text("Udlejede Produkter:");
+    //    private final Text txtUdeje = new Text("Udlejede Produkter:");
     private final Text txtLeje = new Text("Leje");
-    //TODO
-    private final Text txtX = new Text("Antal solgte produkter");
-
+    private final Text txtProGruSalgsSit = new Text("Antal solgte produkter");
 
 
     // textfields
     private final TextField txfSumDagsOpgoer = new TextField();
     private final TextField txfSumKlip = new TextField();
-
-    //TODO
-    private final TextField txfSumX = new TextField();
+    private final TextField txfSumProGruSalgsSit = new TextField();
 
 
     public StatistikPane() {
@@ -64,10 +55,10 @@ public class StatistikPane extends GridPane {
         this.setVgap(10);
         this.setGridLinesVisible(false);
 
-        this.add(lwX, 8,3,1,2);
-        lwX.setPrefWidth(25);
-        lwX.setPrefHeight(200);
-        lwX.setScaleX(1.1);
+        this.add(lwProGruSalgsSit, 8, 3, 1, 2);
+        lwProGruSalgsSit.setPrefWidth(25);
+        lwProGruSalgsSit.setPrefHeight(200);
+        lwProGruSalgsSit.setScaleX(1.1);
 
         this.add(lwAntalKlipPrProduktPeriode, 0, 3, 2, 2);
         lwAntalKlipPrProduktPeriode.setPrefWidth(25);
@@ -94,11 +85,11 @@ public class StatistikPane extends GridPane {
         // Texts
 
         this.add(txtPeriodeForKlip, 0, 0);
-        this.add(txtPeriodeForKlipProdukt, 0, 2,2,1);
+        this.add(txtPeriodeForKlipProdukt, 0, 2, 2, 1);
         this.add(txtDagsOpgoer, 3, 0);
         this.add(txtKviteringer, 3, 2);
         this.add(txtLeje, 6, 2);
-        this.add(txtX, 8,0);
+        this.add(txtProGruSalgsSit, 8, 0);
 
         // DatePicker
 
@@ -136,32 +127,32 @@ public class StatistikPane extends GridPane {
         txfSumDagsOpgoer.setPrefWidth(20);
         txfSumDagsOpgoer.setEditable(false);
 
-        this.add(txfSumX,8,5);
-        txfSumX.setPromptText("sum:");
-        txfSumX.setPrefWidth(20);
-        txfSumX.setEditable(false);
-        txfSumX.setScaleX(1.1);
+        this.add(txfSumProGruSalgsSit, 8, 5);
+        txfSumProGruSalgsSit.setPromptText("sum:");
+        txfSumProGruSalgsSit.setPrefWidth(20);
+        txfSumProGruSalgsSit.setEditable(false);
+        txfSumProGruSalgsSit.setScaleX(1.1);
 
         // combobox
 
-        this.add(cbSalgssituation, 8,1);
+        this.add(cbSalgssituation, 8, 1);
         cbSalgssituation.setPromptText("Salgssituation");
         cbSalgssituation.setEditable(false);
         cbSalgssituation.setPrefWidth(125);
-        ChangeListener<Salgssituation> listenerSS= (ov, oldString, newString) -> this.selectionChangedSSogPG();
+        ChangeListener<Salgssituation> listenerSS = (ov, oldString, newString) -> this.selectionChangedSSogPG();
         cbSalgssituation.valueProperty().addListener(listenerSS);
         cbSalgssituation.getItems().setAll(Controller.getInstance().getSalgssituationer());
         cbSalgssituation.setScaleX(1.1);
 
 
-        this.add(cbProductGruppe, 8,2);
+        this.add(cbProductGruppe, 8, 2);
         cbProductGruppe.setPromptText("Produktgruppe");
         cbProductGruppe.setEditable(false);
         cbProductGruppe.setPrefWidth(125);
-        ChangeListener<ProduktGruppe> listenerPG= (ov, oldString, newString) -> this.selectionChangedSSogPG();
+        ChangeListener<ProduktGruppe> listenerPG = (ov, oldString, newString) -> this.selectionChangedSSogPG();
         cbProductGruppe.valueProperty().addListener(listenerPG);
-        cbProductGruppe.setScaleX(1.1);
         cbProductGruppe.getItems().setAll(Controller.getInstance().getProduktGrupper());
+        cbProductGruppe.setScaleX(1.1);
 
     }
 
@@ -171,15 +162,14 @@ public class StatistikPane extends GridPane {
         Salg selected = lwDagsOpgoer.getSelectionModel().getSelectedItem();
         if (selected != null)
             lwBestemtKvittering.getItems().setAll(selected.getOrdrelinjer());
-        }
+    }
 
     private void selectionChangedSSogPG() {
         Salgssituation selectedSS = cbSalgssituation.getSelectionModel().getSelectedItem();
         ProduktGruppe selectedPG = cbProductGruppe.getSelectionModel().getSelectedItem();
-        if (selectedPG != null&&selectedSS != null)
-            lwX.getItems().setAll(Controller.getInstance().getProduktSolgtPrSalgssituationPrProduktGruppe(selectedSS,selectedPG));
+        if (selectedPG != null && selectedSS != null)
+            lwProGruSalgsSit.getItems().setAll(Controller.getInstance().getProduktSolgtPrSalgssituationPrProduktGruppe(selectedSS, selectedPG));
     }
-
 
 
     private void selectionChangedDagsOpgoer() {
